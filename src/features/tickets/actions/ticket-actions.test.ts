@@ -46,6 +46,9 @@ describe("Ticket Server Actions", () => {
     const lineSpy = vi
       .spyOn(lineNotifyLib, "sendLineStatusNotification")
       .mockResolvedValue({ success: true });
+    const adminAlertSpy = vi
+      .spyOn(lineNotifyLib, "sendLineAdminNewTicketAlert")
+      .mockResolvedValue({ success: true });
 
     const input = {
       lineUserId: "U_TEST_USER_123",
@@ -73,6 +76,13 @@ describe("Ticket Server Actions", () => {
       expect.objectContaining({
         lineUserId: "U_TEST_USER_123",
         status: "new",
+      })
+    );
+    expect(adminAlertSpy).toHaveBeenCalledTimes(1);
+    expect(adminAlertSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        fullName: "นายทดสอบ ไอที",
+        priority: "high",
       })
     );
   });
@@ -133,6 +143,9 @@ describe("Ticket Server Actions", () => {
     );
     const lineSpy = vi
       .spyOn(lineNotifyLib, "sendLineStatusNotification")
+      .mockResolvedValue({ success: true });
+    const adminAlertSpy = vi
+      .spyOn(lineNotifyLib, "sendLineAdminNewTicketAlert")
       .mockResolvedValue({ success: true });
 
     // Act

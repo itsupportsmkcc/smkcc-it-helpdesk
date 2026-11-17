@@ -8,7 +8,10 @@ import {
   UpdateTicketStatusInput,
 } from "../schemas/ticket-schema";
 import { ActionResult, TicketItem } from "../types";
-import { sendLineStatusNotification } from "@/features/notifications/services/line-notify";
+import {
+  sendLineStatusNotification,
+  sendLineAdminNewTicketAlert,
+} from "@/features/notifications/services/line-notify";
 
 interface DbTicketRow {
   id: string;
@@ -100,6 +103,18 @@ export async function createTicket(
     ticketId: item.id,
     issueType: item.issueType,
     status: "new",
+  });
+
+  // แจ้งเตือนไปยัง LINE ส่วนตัวของแอดมิน (นายเอกพงศ์)
+  await sendLineAdminNewTicketAlert({
+    ticketId: item.id,
+    fullName: item.fullName,
+    userType: item.userType,
+    phone: item.phone,
+    issueType: item.issueType,
+    location: item.location,
+    priority: item.priority,
+    description: item.description ?? undefined,
   });
 
   return { success: true, data: item };
