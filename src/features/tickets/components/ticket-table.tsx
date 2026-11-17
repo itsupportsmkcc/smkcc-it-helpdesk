@@ -13,6 +13,7 @@ import {
   Loader2,
   ExternalLink,
   MessageSquare,
+  Star,
 } from "lucide-react";
 
 interface TicketTableProps {
@@ -129,6 +130,27 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                 <div className="flex items-center gap-2 flex-wrap">
                   <StatusBadge status={ticket.status} />
                   <PriorityBadge priority={ticket.priority} />
+                  {ticket.rating ? (
+                    <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#faf6ee] border border-[#dfc49d] text-[#8c6b2d] text-xs font-bold shadow-sm">
+                      <div className="flex items-center text-[#d97706]">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star
+                            key={star}
+                            className={`w-3 h-3 ${
+                              star <= (ticket.rating || 0)
+                                ? "fill-[#d97706] text-[#d97706]"
+                                : "text-gray-300"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <span className="ml-0.5">{ticket.rating}/5</span>
+                    </div>
+                  ) : ticket.status === "resolved" ? (
+                    <span className="text-[10px] text-[rgba(0,0,0,0.5)] px-2 py-0.5 rounded-full bg-[#f2f0eb] border border-[#e7e7e7] font-medium">
+                      รอผู้ใช้ประเมิน
+                    </span>
+                  ) : null}
                   <span className="text-xs text-[rgba(0,0,0,0.4)] font-mono">
                     #{ticket.id.slice(0, 8)}
                   </span>
@@ -202,6 +224,48 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                   </a>
                 </div>
               )}
+
+              {/* Satisfaction Rating & Feedback Box */}
+              {ticket.rating ? (
+                <div className="mb-4 bg-[#faf6ee] p-3.5 rounded-xl border border-[#dfc49d] text-xs">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                    <span className="font-bold text-[#8c6b2d] flex items-center gap-1.5">
+                      <Star className="w-4 h-4 fill-[#d97706] text-[#d97706]" />
+                      ผลการประเมินความพึงพอใจ:
+                    </span>
+                    <div className="flex items-center gap-1.5 font-bold text-[#8c6b2d]">
+                      <div className="flex items-center text-[#d97706]">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <Star
+                            key={s}
+                            className={`w-3.5 h-3.5 ${
+                              s <= (ticket.rating || 0)
+                                ? "fill-[#d97706] text-[#d97706]"
+                                : "text-gray-300"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <span>({ticket.rating} จาก 5 ดาว)</span>
+                    </div>
+                  </div>
+                  {ticket.comment && ticket.comment.trim() !== "" ? (
+                    <p className="text-[rgba(0,0,0,0.78)] bg-white/90 p-2.5 rounded-lg border border-[#dfc49d]/60 mt-1 leading-relaxed">
+                      <span className="font-semibold text-[#8c6b2d]">ความคิดเห็น/ข้อเสนอแนะ: </span>
+                      "{ticket.comment.trim()}"
+                    </p>
+                  ) : (
+                    <p className="text-[rgba(0,0,0,0.45)] text-[11px] italic mt-0.5">
+                      (ไม่มีข้อเสนอแนะเพิ่มเติม)
+                    </p>
+                  )}
+                </div>
+              ) : ticket.status === "resolved" ? (
+                <div className="mb-4 bg-[#faf9f7] p-2.5 rounded-xl border border-dashed border-[#d6dbde] text-xs text-[rgba(0,0,0,0.5)] flex items-center justify-between">
+                  <span>สถานะงาน: ดำเนินการเสร็จสิ้นแล้ว</span>
+                  <span className="italic text-[11px]">⏳ รอผู้ใช้กดส่งแบบประเมินความพึงพอใจผ่าน LINE...</span>
+                </div>
+              ) : null}
 
               {/* Status Actions: Starbucks 50px Pills */}
               <div className="pt-3 border-t border-[#e7e7e7] flex flex-col sm:flex-row sm:items-center justify-between gap-3">

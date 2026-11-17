@@ -183,7 +183,31 @@ export async function getTickets(filterStatus?: string): Promise<ActionResult<Ti
     return { success: false, error: error?.message || "ไม่สามารถดึงข้อมูล Ticket ได้" };
   }
 
-  const items = (data as DbTicketRow[]).map(mapRowToTicketItem);
+  // ดึง feedbacks เพื่อผูกคะแนนและความคิดเห็นกับแต่ละงาน
+  const { data: feedbacks } = await supabase
+    .from("feedbacks")
+    .select("ticket_id, rating, comment");
+
+  const feedbackMap = new Map<string, { rating: number; comment: string | null }>();
+  if (feedbacks) {
+    for (const fb of feedbacks) {
+      feedbackMap.set(fb.ticket_id, {
+        rating: fb.rating,
+        comment: fb.comment,
+      });
+    }
+  }
+
+  const items = (data as DbTicketRow[]).map((row) => {
+    const item = mapRowToTicketItem(row);
+    const fb = feedbackMap.get(item.id);
+    if (fb) {
+      item.rating = fb.rating;
+      item.comment = fb.comment;
+    }
+    return item;
+  });
+
   return { success: true, data: items };
 }
 
@@ -203,5 +227,17 @@ export async function getTicketById(ticketId: string): Promise<ActionResult<Tick
     return { success: false, error: "ไม่พบข้อมูล Ticket นี้" };
   }
 
-  return { success: true, data: mapRowToTicketItem(data as DbTicketRow) };
+  const { data: feedback } = await supabase
+    .from("feedbacks")
+    .select("rating, comment")
+    .eq("ticket_id", ticketId)
+    .maybeSingle();
+
+  const item = mapRowToTicketItem(data as DbTicketRow);
+  if (feedback) {
+    item.rating = feedback.rating;
+    item.comment = feedback.comment;
+  }
+
+  return { success: true, data: item };
 }

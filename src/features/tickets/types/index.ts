@@ -18,6 +18,8 @@ export interface TicketItem {
   assignee: string;
   createdAt: string;
   updatedAt: string;
+  rating?: number | null;
+  comment?: string | null;
 }
 
 export type ActionResult<T> =
