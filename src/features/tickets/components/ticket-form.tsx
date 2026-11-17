@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { createTicket } from "../actions/ticket-actions";
@@ -53,7 +53,10 @@ export function TicketForm() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  // Initialize LIFF
+  // ป้องกันการรีเซ็ตชื่อซ้ำเมื่อผู้ใช้กดลบเพื่อพิมพ์ชื่อใหม่
+  const hasAutoFilledNameRef = useRef<boolean>(false);
+
+  // Initialize LIFF (รันเพียงครั้งเดียวเมื่อหน้าเว็บโหลด)
   useEffect(() => {
     async function initLiff() {
       const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
@@ -61,6 +64,10 @@ export function TicketForm() {
         console.warn("LIFF ID not configured. Using local dev identity.");
         setLineUserId("local-dev-user-001");
         setLineProfileName("ผู้ทดสอบระบบ");
+        if (!hasAutoFilledNameRef.current) {
+          setFullName("ผู้ทดสอบระบบ");
+          hasAutoFilledNameRef.current = true;
+        }
         setIsLiffReady(true);
         return;
       }
@@ -73,8 +80,9 @@ export function TicketForm() {
           const profile = await liff.getProfile();
           setLineUserId(profile.userId);
           setLineProfileName(profile.displayName);
-          if (!fullName) {
+          if (!hasAutoFilledNameRef.current) {
             setFullName(profile.displayName);
+            hasAutoFilledNameRef.current = true;
           }
         } else {
           liff.login();
@@ -89,7 +97,7 @@ export function TicketForm() {
     }
 
     initLiff();
-  }, [fullName]);
+  }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
