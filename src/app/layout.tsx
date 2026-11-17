@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="th">
-      <body className="min-h-screen antialiased flex flex-col">{children}</body>
+      <body className="min-h-screen antialiased flex flex-col font-sukhumvit">{children}</body>
     </html>
   );
 }

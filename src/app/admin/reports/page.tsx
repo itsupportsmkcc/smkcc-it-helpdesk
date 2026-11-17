@@ -99,7 +99,7 @@ export default async function AdminReportPage({
   });
 
   return (
-    <main className="min-h-screen bg-[#f2f0eb] p-4 sm:p-8 print:p-0 print:bg-white text-[rgba(0,0,0,0.87)]">
+    <main className="min-h-screen bg-[#f2f0eb] p-4 sm:p-8 print:p-0 print:bg-white text-[rgba(0,0,0,0.87)] font-sarabun">
       {/* Top Action Bar & Filter (ซ่อนเมื่อพิมพ์) */}
       <div className="max-w-5xl mx-auto mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 print:hidden">
         <Link

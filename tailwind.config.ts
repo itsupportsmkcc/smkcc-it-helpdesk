@@ -75,6 +75,10 @@ const config: Config = {
       letterSpacing: {
         tightest: "-0.16px",
       },
+      fontFamily: {
+        sukhumvit: ["'Sukhumvit Set'", "'Prompt'", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+        sarabun: ["'Sarabun'", "'TH Sarabun New'", "'THSarabunNew'", "Garuda", "sans-serif"],
+      },
     },
   },
   plugins: [],
