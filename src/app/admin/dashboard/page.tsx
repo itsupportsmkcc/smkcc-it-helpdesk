@@ -1,10 +1,12 @@
 import { redirect } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { isAdminAuthenticated, logoutAdmin } from "../actions";
 import { getTickets } from "@/features/tickets/actions/ticket-actions";
 import { TicketTable } from "@/features/tickets/components/ticket-table";
+import { ExportCsvButton } from "@/features/tickets/components/export-csv-button";
 import { getAdminSupabase } from "@/lib/supabase";
-import { LogOut, Star } from "lucide-react";
+import { LogOut, Star, FileText } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -61,13 +63,13 @@ export default async function AdminDashboardPage() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-2.5 sm:gap-4">
             {feedbackStats.totalFeedbacks > 0 && (
               <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 bg-white/10 border border-[#dfc49d]/40 text-[#faf6ee] rounded-full text-xs font-semibold">
                 <Star className="w-3.5 h-3.5 fill-[#cba258] text-[#cba258]" />
-                <span>คะแนนความพึงพอใจ: {feedbackStats.averageRating} / 5</span>
+                <span>ความพึงพอใจ: {feedbackStats.averageRating} / 5</span>
                 <span className="text-white/60 font-normal">
-                  ({feedbackStats.totalFeedbacks} รีวิว)
+                  ({feedbackStats.totalFeedbacks})
                 </span>
               </div>
             )}
@@ -86,7 +88,33 @@ export default async function AdminDashboardPage() {
       </header>
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
+        {/* Quick Report & Export Toolbar */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-[#e7e7e7] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)]">
+          <div>
+            <h2 className="text-sm font-bold text-[#1E3932] tracking-[-0.16px]">
+              แผงควบคุมและจัดการคำขอแจ้งซ่อมไอที
+            </h2>
+            <p className="text-xs text-[rgba(0,0,0,0.58)] mt-0.5">
+              จัดการสถานะงาน ส่งการแจ้งเตือนกลับทาง LINE และส่งออกข้อมูลสรุป
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 flex-wrap">
+            <ExportCsvButton />
+
+            <Link
+              href="/admin/reports"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#00754A] hover:bg-[#006241] text-white text-xs font-semibold tracking-[-0.16px] transition-all duration-200 active:scale-[0.95] shadow-sm"
+              title="ดูหน้ารายงานสรุปทางการสำหรับพิมพ์หรือบันทึก PDF"
+            >
+              <FileText className="w-3.5 h-3.5" />
+              <span>พิมพ์รายงานสรุป (PDF)</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Tickets Management Table */}
         <TicketTable initialTickets={tickets} />
       </div>
     </main>
