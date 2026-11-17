@@ -32,6 +32,23 @@ const priorityTextMap: Record<Priority, string> = {
   low: "🟢 ทั่วไป / ต่ำ",
 };
 
+/**
+ * ดึง Base URL ของระบบ โดยตัด localhost ออก เพื่อให้ลิงก์ที่ส่งเข้า LINE กดเข้าจากมือถือได้จริงเสมอ
+ */
+function getAppUrl(): string {
+  const envUrl = process.env.NEXT_PUBLIC_APP_URL;
+  if (envUrl && !envUrl.includes("localhost")) {
+    return envUrl.replace(/\/$/, "");
+  }
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return "https://smkcc-it-helpdesk.vercel.app";
+}
+
 export async function sendLineStatusNotification({
   lineUserId,
   ticketId,
@@ -40,7 +57,8 @@ export async function sendLineStatusNotification({
   adminNote,
 }: SendStatusNotificationParams): Promise<{ success: boolean; error?: string }> {
   const channelAccessToken = process.env.LINE_CHANNEL_ACCESS_TOKEN;
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://smkcc-helpdesk.vercel.app";
+  const appUrl = getAppUrl();
+
 
   if (!channelAccessToken) {
     console.warn("[LINE Notification] Skipped: LINE_CHANNEL_ACCESS_TOKEN not configured.");
@@ -111,7 +129,7 @@ export async function sendLineAdminNewTicketAlert({
 }: SendAdminNewTicketParams): Promise<{ success: boolean; error?: string }> {
   const adminLineUserId = process.env.ADMIN_LINE_USER_ID;
   const channelAccessToken = process.env.LINE_CHANNEL_ACCESS_TOKEN;
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3001";
+  const appUrl = getAppUrl();
 
   if (!channelAccessToken || !adminLineUserId) {
     console.warn(
