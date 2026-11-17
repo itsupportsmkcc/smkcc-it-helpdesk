@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>คู่มือการใช้งานระบบแจ้งซ่อมไอที (User Guide) - SMKCC IT Helpdesk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700;800&family=Prompt:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: #f2f0eb;
+      font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1a202c;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      padding: 24px 16px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Top Action Bar */
+    .top-bar {
+      width: 100%;
+      max-width: 960px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #1E3932;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      padding: 8px 16px;
+      background: #ffffff;
+      border: 1px solid #d6dbde;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .back-btn:hover {
+      background: #e6f4ea;
+      color: #006241;
+      border-color: #00754A;
+    }
+    .print-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #1E3932;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 14px;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(30,57,50,0.25);
+      transition: all 0.2s ease;
+    }
+    .print-btn:hover {
+      background: #00754A;
+      transform: translateY(-1px);
+    }
+
+    /* Main Poster Container */
+    .poster {
+      width: 100%;
+      max-width: 960px;
+      background: #fbfaf8;
+      border-radius: 24px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content-area {
+      padding: 36px 36px 28px 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      flex: 1;
+    }
+
+    /* Header Section */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e2e8f0;
+      flex-wrap: wrap;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex: 1;
+      min-width: 280px;
+    }
+    .logo {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      border: 3px solid #1E3932;
+      flex-shrink: 0;
+      background: #ffffff;
+    }
+    .badge {
+      display: inline-block;
+      font-family: 'Prompt', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      color: #006241;
+      background: #d4e9e2;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .title {
+      font-family: 'Prompt', sans-serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: #1E3932;
+      line-height: 1.25;
+      letter-spacing: -0.5px;
+    }
+    .subtitle {
+      font-size: 14px;
+      color: #4a5568;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
+    /* QR Code Card in Header */
+    .qr-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #ffffff;
+      border: 1.5px solid #d6dbde;
+      border-radius: 16px;
+      padding: 10px 14px 10px 10px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .qr-img {
+      width: 76px;
+      height: 76px;
+      border-radius: 8px;
+      background: white;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .qr-info {
+      text-align: left;
+    }
+    .qr-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: 'Prompt', sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      color: #06C755;
+      margin-bottom: 2px;
+    }
+    .qr-badge svg {
+      width: 14px;
+      height: 14px;
+      fill: #06C755;
+    }
+    .qr-desc {
+      font-size: 11px;
+      color: #718096;
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    /* 4 Steps Grid (2x2) */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    /* Step Card */
+    .card {
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      transition: all 0.2s ease;
+    }
+    .card-num {
+      position: absolute;
+      top: 14px;
+      right: 18px;
+      font-family: 'Prompt', sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+      color: #006241;
+      background: #e6f4ea;
+      padding: 2px 10px;
+      border-radius: 9999px;
+    }
+    .card.num-brown .card-num {
+      color: #8c6b2d;
+      background: #faf4e8;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+      padding-right: 48px;
+    }
+    .card-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+    .card-icon svg {
+      width: 22px;
+      height: 22px;
+    }
+    .card-title {
+      font-family: 'Prompt', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      color: #1E3932;
+      line-height: 1.25;
+    }
+    .card-subtitle {
+      font-size: 13px;
+      color: #64748b;
+      margin-bottom: 12px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* Inner Box */
+    .inner-box {
+      background: #fbfaf8;
+      border: 1px solid #f1ece4;
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
+
+    /* Step 1 Styles */
+    .line-guide-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 12px;
+    }
+    .guide-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .guide-label {
+      font-weight: 700;
+      color: #1E3932;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .guide-label svg {
+      width: 14px;
+      height: 14px;
+    }
+    .guide-desc {
+      color: #4a5568;
+      padding-left: 20px;
+      font-size: 12px;
+      margin-top: 1px;
+    }
+    .illustration-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 8px 0 4px 0;
+    }
+
+    /* Step 2 Styles (4 mini cards) */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .form-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px 10px;
+    }
+    .form-step-num {
+      font-size: 11px;
+      color: #8c6b2d;
+      font-weight: 700;
+      display: block;
+    }
+    .form-step-text {
+      font-size: 12px;
+      font-weight: 700;
+      color: #1a202c;
+    }
+
+    /* Step 3 Styles (Status list) */
+    .status-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .status-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      border: 1px solid transparent;
+    }
+    .st-yellow { background: #fefce8; border-color: #fef08a; }
+    .st-blue { background: #eff6ff; border-color: #bfdbfe; }
+    .st-orange { background: #fff7ed; border-color: #fed7aa; }
+    .st-green { background: #f0fdf4; border-color: #bbf7d0; }
+    .status-tag {
+      font-weight: 800;
+      font-family: 'Prompt', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+    }
+    .tag-yellow { color: #854d0e; }
+    .tag-blue { color: #1e40af; }
+    .tag-orange { color: #c2410c; }
+    .tag-green { color: #166534; }
+    .status-meaning {
+      color: #4b5563;
+      font-weight: 600;
+      font-size: 11.5px;
+    }
+
+    /* Step 4 Styles (Star Rating) */
+    .rating-box {
+      text-align: center;
+      padding: 8px 0;
+    }
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin: 4px 0 6px 0;
+    }
+    .star {
+      width: 22px;
+      height: 22px;
+      fill: #f59e0b;
+      stroke: #d97706;
+      stroke-width: 1;
+    }
+
+    /* Card Footer Check Pill */
+    .card-footer {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-top: 10px;
+      border-top: 1px dashed #e2e8f0;
+      font-size: 12px;
+      font-weight: 700;
+      color: #006241;
+    }
+    .card.num-brown .card-footer {
+      color: #8c6b2d;
+    }
+    .check-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Bottom Dark Banner */
+    .footer-banner {
+      background-color: #1E3932;
+      color: #ffffff;
+      padding: 18px 24px;
+      text-align: center;
+      font-family: 'Prompt', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body {
+        padding: 12px 8px;
+      }
+      .content-area {
+        padding: 20px 16px;
+        gap: 16px;
+      }
+      .steps-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .qr-card {
+        width: 100%;
+        justify-content: center;
+      }
+      .title {
+        font-size: 22px;
+      }
+      .logo {
+        width: 64px;
+        height: 64px;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 6mm 8mm;
+      }
+      body {
+        background: #ffffff !important;
+        padding: 0 !important;
+        color: #000000 !important;
+      }
+      .top-bar {
+        display: none !important;
+      }
+      .poster {
+        max-width: 100% !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+      }
+      .content-area {
+        padding: 10px 16px !important;
+        gap: 14px !important;
+      }
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 14px !important;
+      }
+      .card {
+        padding: 14px !important;
+        box-shadow: none !important;
+        border: 1.5px solid #cbd5e1 !important;
+      }
+      .footer-banner {
+        padding: 12px 16px !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Action Bar -->
+  <div class="top-bar">
+    <a href="/" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      <span>กลับหน้าแจ้งซ่อม</span>
+    </a>
+    <button class="print-btn" onclick="window.print()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+        <rect x="6" y="14" width="12" height="8"></rect>
+      </svg>
+      <span>พิมพ์คู่มือ / บันทึก PDF</span>
+    </button>
+  </div>
+
+  <!-- Main Poster -->
+  <main class="poster">
+    <div class="content-area">
+      
+      <!-- Header -->
+      <header class="header">
+        <div class="header-left">
+          <img src="/logo.jpg" alt="SMKCC IT Logo" class="logo">
+          <div>
+            <div class="badge">SMKCC IT HELPDESK • QUICK GUIDE</div>
+            <h1 class="title">4 ขั้นตอนง่ายๆ ในการแจ้งซ่อมไอทีผ่าน LINE</h1>
+            <p class="subtitle">งานเทคโนโลยีสารสนเทศ วิทยาลัยชุมชนสมุทรสาคร (สะดวก รวดเร็ว ไม่ต้องจำรหัสผ่าน)</p>
+          </div>
+        </div>
+
+        <!-- QR Code -->
+        <div class="qr-card">
+          <img src="/qr-line.png" alt="LINE QR Code" class="qr-img">
+          <div class="qr-info">
+            <div class="qr-badge">
+              <svg viewBox="0 0 24 24">
+                <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.477.254l2.484 3.372V8.108c0-.345.282-.63.63-.63.345 0 .625.285.625.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 13.393 24 11.458 24 10.314"/>
+              </svg>
+              <span>แอดไลน์ที่นี่</span>
+            </div>
+            <div class="qr-desc">สแกนเพิ่มเพื่อน<br>เพื่อเริ่มแจ้งซ่อม</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- 4 Steps Grid -->
+      <div class="steps-grid">
+        
+        <!-- STEP 1 -->
+        <div class="card">
+          <div class="card-num">01</div>
+          <div>
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#00754A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                  <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                </svg>
+              </div>
+              <h2 class="card-title">เปิดหน้าแจ้งซ่อมผ่าน LINE</h2>
+            </div>
+            <p class="card-subtitle">เข้า LINE (SMKCC IT Service) หรือ สแกน QR Code ด้านบน</p>
+
+            <div class="inner-box">
+              <div class="line-guide-row">
+                <div class="guide-item">
+                  <div class="guide-label">
+                    <span style="display:inline-block; width:6px; height:6px; background:#00754A; border-radius:50%;"></span>
+                    <span>บนมือถือ (Smartphone):</span>
+                  </div>
+                  <div class="guide-desc">กดปุ่ม <b>"แจ้งซ่อมไอที"</b> ที่ริชเมนูด้านล่างแชท</div>
+                </div>
+                <div class="guide-item" style="border-top:1px dashed #e2e8f0; padding-top:6px;">
+                  <div class="guide-label">
+                    <span style="display:inline-block; width:6px; height:6px; background:#cba258; border-radius:50%;"></span>
+                    <span>บนคอมพิวเตอร์ (LINE PC):</span>
+                  </div>
+                  <div class="guide-desc">คลิกหรือพิมพ์ <b>"แจ้งซ่อม"</b> ในห้องแชท</div>
+                </div>
+              </div>
+
+              <!-- Illustration Phone & Desktop -->
+              <div class="illustration-row">
+                <!-- Phone SVG -->
+                <svg width="44" height="54" viewBox="0 0 50 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="5" y="2" width="40" height="66" rx="8" fill="#1E293B" stroke="#0F172A" stroke-width="2"/>
+                  <rect x="8" y="8" width="34" height="50" rx="4" fill="#FCE7F3"/>
+                  <circle cx="25" cy="5" r="1.5" fill="#64748B"/>
+                  <line x1="20" y1="62" x2="30" y2="62" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <!-- Desktop Monitor SVG -->
+                <svg width="68" height="54" viewBox="0 0 80 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="4" y="4" width="72" height="46" rx="6" fill="#1E293B" stroke="#0F172A" stroke-width="2"/>
+                  <rect x="8" y="8" width="64" height="38" rx="3" fill="#CCFBF1"/>
+                  <path d="M35 50L32 64H48L45 50" fill="#CBD5E1" stroke="#94A3B8" stroke-width="2"/>
+                  <rect x="24" y="64" width="32" height="4" rx="2" fill="#94A3B8"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00754A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>ระบบดึงโปรไฟล์และ LINE ID อัตโนมัติ (ไม่ต้องสมัครใหม่)</span>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="card num-brown">
+          <div class="card-num">02</div>
+          <div>
+            <div class="card-header">
+              <div class="card-icon" style="background:#fefce8; border-color:#fef08a;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#8c6b2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                </svg>
+              </div>
+              <h2 class="card-title">กรอกข้อมูลแจ้งปัญหา (1 นาที)</h2>
+            </div>
+            <p class="card-subtitle">ระบุรายละเอียดสั้นๆ เพื่อให้เจ้าหน้าที่เข้าดำเนินการได้ตรงจุด</p>
+
+            <div class="inner-box">
+              <div class="form-grid">
+                <div class="form-item">
+                  <span class="form-step-num">1. ข้อมูลผู้แจ้ง</span>
+                  <span class="form-step-text">ชื่อ-สกุล & เบอร์โทร</span>
+                </div>
+                <div class="form-item">
+                  <span class="form-step-num">2. สถานที่</span>
+                  <span class="form-step-text">ระบุอาคาร / ห้อง</span>
+                </div>
+                <div class="form-item">
+                  <span class="form-step-num">3. หมวดหมู่</span>
+                  <span class="form-step-text">เน็ต, คอม, ซูม ฯลฯ</span>
+                </div>
+                <div class="form-item">
+                  <span class="form-step-num">4. แนบรูปภาพ</span>
+                  <span class="form-step-text">ถ่ายภาพอาการเสีย</span>
+                </div>
+              </div>
+
+              <!-- Illustration Note & Camera -->
+              <div class="illustration-row">
+                <!-- Note SVG -->
+                <svg width="44" height="48" viewBox="0 0 50 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="6" y="4" width="38" height="50" rx="4" fill="#E0F2FE" stroke="#0284C7" stroke-width="2"/>
+                  <line x1="12" y1="14" x2="32" y2="14" stroke="#0369A1" stroke-width="2.5" stroke-linecap="round"/>
+                  <line x1="12" y1="22" x2="28" y2="22" stroke="#0369A1" stroke-width="2" stroke-linecap="round"/>
+                  <line x1="12" y1="30" x2="34" y2="30" stroke="#0369A1" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M28 42L42 28L46 32L32 46H28V42Z" fill="#F59E0B" stroke="#D97706" stroke-width="1.5"/>
+                </svg>
+                <!-- Camera SVG -->
+                <svg width="54" height="48" viewBox="0 0 64 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="4" y="12" width="56" height="38" rx="6" fill="#F1F5F9" stroke="#475569" stroke-width="2.5"/>
+                  <path d="M22 12L25 6H39L42 12H22Z" fill="#64748B"/>
+                  <circle cx="32" cy="31" r="12" fill="#E2E8F0" stroke="#334155" stroke-width="2.5"/>
+                  <circle cx="32" cy="31" r="6" fill="#1E293B"/>
+                  <circle cx="50" cy="18" r="2.5" fill="#EF4444"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#8c6b2d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>สามารถเลือกระดับความเร่งด่วน เช่น กระทบการเรียนการสอน</span>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="card">
+          <div class="card-num">03</div>
+          <div>
+            <div class="card-header">
+              <div class="card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#00754A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              </div>
+              <h2 class="card-title">รับการแจ้งเตือนสถานะผ่าน LINE</h2>
+            </div>
+            <p class="card-subtitle">ระบบจะส่งข้อความแจ้งเตือนอัตโนมัติเข้าแชท LINE เมื่อช่างรับเรื่อง</p>
+
+            <div class="inner-box" style="padding: 8px 10px;">
+              <div class="status-list">
+                <div class="status-item st-yellow">
+                  <span class="status-tag tag-yellow">🟡 รับเรื่องแล้ว (New)</span>
+                  <span class="status-meaning">ส่งถึงเจ้าหน้าที่เรียบร้อย</span>
+                </div>
+                <div class="status-item st-blue">
+                  <span class="status-tag tag-blue">🔵 กำลังดำเนินการ (In Progress)</span>
+                  <span class="status-meaning">เจ้าหน้าที่กำลังแก้ไข/ลงพื้นที่</span>
+                </div>
+                <div class="status-item st-orange">
+                  <span class="status-tag tag-orange">🟠 อยู่ระหว่างดำเนินการ (Pending)</span>
+                  <span class="status-meaning">รอชิ้นส่วน หรือขอข้อมูลเพิ่ม</span>
+                </div>
+                <div class="status-item st-green">
+                  <span class="status-tag tag-green">🟢 เสร็จสิ้น (Complete)</span>
+                  <span class="status-meaning">ดำเนินการแก้ไขเรียบร้อยแล้ว</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#00754A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>ติดตามสถานะงานได้ตลอด 24 ชม. ไม่ต้องโทรตาม</span>
+          </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="card num-brown">
+          <div class="card-num">04</div>
+          <div>
+            <div class="card-header">
+              <div class="card-icon" style="background:#fff1f2; border-color:#fecdd3;">
+                <svg viewBox="0 0 24 24" fill="#f43f5e" stroke="#e11d48" stroke-width="1.5">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </div>
+              <h2 class="card-title">ประเมินความพึงพอใจการบริการ</h2>
+            </div>
+            <p class="card-subtitle">เมื่อช่างปิดงาน จะมีลิงก์ส่งมาใน LINE เพื่อให้ร่วมประเมิน</p>
+
+            <div class="inner-box rating-box">
+              <div style="font-size:12px; font-weight:700; color:#8c6b2d;">ให้คะแนนการให้บริการ (1 ถึง 5 ดาว)</div>
+              <div class="stars">
+                <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <svg class="star" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              </div>
+              <div style="font-size:11px; color:#64748b; margin-bottom:8px;">พร้อมกล่องพิมพ์ข้อเสนอแนะเพื่อนำไปปรับปรุงการบริการ</div>
+
+              <!-- Illustration Review Balloon -->
+              <div class="illustration-row">
+                <svg width="120" height="42" viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <!-- Heart sticker -->
+                  <circle cx="20" cy="24" r="14" fill="#FDA4AF"/>
+                  <path d="M20 30L15 25C13 23 13 20 15 18C17 16 20 17 20 19C20 17 23 16 25 18C27 20 27 23 25 25L20 30Z" fill="#BE123C"/>
+                  <!-- Review Box -->
+                  <rect x="42" y="8" width="112" height="34" rx="8" fill="#F1F5F9" stroke="#CBD5E1" stroke-width="1.5"/>
+                  <line x1="50" y1="18" x2="110" y2="18" stroke="#94A3B8" stroke-width="2.5" stroke-linecap="round"/>
+                  <line x1="50" y1="26" x2="90" y2="26" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round"/>
+                  <!-- Mini Star on Box -->
+                  <polygon points="135,16 137,20 141,20 138,23 139,27 135,24 131,27 132,23 129,20 133,20" fill="#F59E0B"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="#8c6b2d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>ทุกคำติชมถูกส่งตรงถึงฝ่ายไอทีเพื่อพัฒนาคุณภาพการบริการ</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Bottom Dark Banner -->
+    <footer class="footer-banner">
+      งานเทคโนโลยีสารสนเทศ วิทยาลัยชุมชนสมุทรสาคร (SMKCC)
+    </footer>
+  </main>
+
+</body>
+</html>
