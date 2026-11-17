@@ -5,7 +5,8 @@ import { isAdminAuthenticated } from "../actions";
 import { getReportData, ReportItem } from "@/features/tickets/actions/report-actions";
 import { ArrowLeft, Star } from "lucide-react";
 import { PrintButton } from "@/features/tickets/components/print-button";
-import { ReportFilter, THAI_MONTHS } from "@/features/tickets/components/report-filter";
+import { ReportFilter } from "@/features/tickets/components/report-filter";
+import { THAI_MONTHS } from "@/features/tickets/constants";
 import { ExportCsvButton } from "@/features/tickets/components/export-csv-button";
 
 export const dynamic = "force-dynamic";
