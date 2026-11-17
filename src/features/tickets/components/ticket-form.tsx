@@ -64,10 +64,6 @@ export function TicketForm() {
         console.warn("LIFF ID not configured. Using local dev identity.");
         setLineUserId("local-dev-user-001");
         setLineProfileName("ผู้ทดสอบระบบ");
-        if (!hasAutoFilledNameRef.current) {
-          setFullName("ผู้ทดสอบระบบ");
-          hasAutoFilledNameRef.current = true;
-        }
         setIsLiffReady(true);
         return;
       }
@@ -80,10 +76,6 @@ export function TicketForm() {
           const profile = await liff.getProfile();
           setLineUserId(profile.userId);
           setLineProfileName(profile.displayName);
-          if (!hasAutoFilledNameRef.current) {
-            setFullName(profile.displayName);
-            hasAutoFilledNameRef.current = true;
-          }
         } else {
           liff.login();
         }
@@ -164,6 +156,7 @@ export function TicketForm() {
 
       const result = await createTicket({
         lineUserId: lineUserId || "line-user-unknown",
+        lineDisplayName: lineProfileName || undefined,
         fullName: fullName.trim(),
         phone: phone.trim(),
         userType,
@@ -281,10 +274,13 @@ export function TicketForm() {
                 required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="เช่น นายสมชาย ใจดี"
+                placeholder="กรุณากรอกชื่อ-นามสกุลจริง เช่น นายสมชาย ใจดี"
                 className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30 focus:border-[#00754A] transition-all bg-[#faf9f7] focus:bg-white"
               />
             </div>
+            <p className="text-[11px] text-[rgba(0,0,0,0.45)] mt-1">
+              กรุณาระบุชื่อ-นามสกุลจริงเพื่อความถูกต้องในการติดตามงาน
+            </p>
           </div>
 
           {/* Phone */}

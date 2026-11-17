@@ -16,6 +16,7 @@ import {
 interface DbTicketRow {
   id: string;
   line_user_id: string;
+  line_display_name?: string | null;
   full_name: string;
   phone: string;
   user_type: "student" | "staff";
@@ -34,6 +35,7 @@ function mapRowToTicketItem(row: DbTicketRow): TicketItem {
   return {
     id: row.id,
     lineUserId: row.line_user_id,
+    lineDisplayName: row.line_display_name,
     fullName: row.full_name,
     phone: row.phone,
     userType: row.user_type,
@@ -60,6 +62,7 @@ export async function createTicket(
 
   const {
     lineUserId,
+    lineDisplayName,
     fullName,
     phone,
     userType,
@@ -76,6 +79,7 @@ export async function createTicket(
     .from("tickets")
     .insert({
       line_user_id: lineUserId,
+      line_display_name: lineDisplayName || null,
       full_name: fullName,
       phone,
       user_type: userType,

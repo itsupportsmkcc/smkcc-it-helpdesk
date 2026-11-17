@@ -7,6 +7,7 @@
 CREATE TABLE IF NOT EXISTS public.tickets (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     line_user_id TEXT NOT NULL,
+    line_display_name TEXT,
     full_name TEXT NOT NULL,
     phone TEXT NOT NULL,
     user_type TEXT NOT NULL CHECK (user_type IN ('student', 'staff')),
@@ -101,3 +102,6 @@ CREATE POLICY "Allow public read from ticket-attachments"
 ON storage.objects FOR SELECT
 TO anon, authenticated
 USING (bucket_id = 'ticket-attachments');
+
+-- อัปเดตโครงสร้างเพิ่มเติม: รองรับการเก็บชื่อโปรไฟล์ LINE ไว้หลังบ้าน
+ALTER TABLE public.tickets ADD COLUMN IF NOT EXISTS line_display_name TEXT;

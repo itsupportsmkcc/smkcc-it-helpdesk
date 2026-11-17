@@ -158,12 +158,20 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
 
               {/* Requester Info */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs text-[rgba(0,0,0,0.87)] mb-4 bg-[#faf9f7] p-3 rounded-xl border border-[#e7e7e7]">
-                <div className="flex items-center gap-2">
-                  <User className="w-4 h-4 text-[#00754A] shrink-0" />
-                  <span className="font-semibold">{ticket.fullName}</span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#d4e9e2] text-[#006241] font-semibold">
-                    {ticket.userType === "student" ? "นักศึกษา" : "บุคลากร"}
-                  </span>
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2">
+                    <User className="w-4 h-4 text-[#00754A] shrink-0" />
+                    <span className="font-semibold">{ticket.fullName}</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#d4e9e2] text-[#006241] font-semibold">
+                      {ticket.userType === "student" ? "นักศึกษา" : "บุคลากร"}
+                    </span>
+                  </div>
+                  {ticket.lineDisplayName && (
+                    <div className="text-[11px] text-[rgba(0,0,0,0.55)] pl-6 flex items-center gap-1">
+                      <span className="font-medium text-[#1E3932]">LINE Profile:</span>
+                      <span className="text-[#00754A] font-semibold">{ticket.lineDisplayName}</span>
+                    </div>
+                  )}
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-[#00754A] shrink-0" />

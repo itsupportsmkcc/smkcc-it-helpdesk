@@ -273,6 +273,11 @@ export default async function AdminReportPage({
                         <span className="text-[10px] text-slate-400 block">
                           ({row.userType === "student" ? "นักศึกษา" : "บุคลากร"})
                         </span>
+                        {row.lineDisplayName && (
+                          <span className="text-[10px] text-[#00754A] block font-medium">
+                            LINE: {row.lineDisplayName}
+                          </span>
+                        )}
                       </td>
                       <td className="p-2.5 font-medium text-[#1E3932]">{row.issueType}</td>
                       <td className="p-2.5 text-slate-600">{row.location}</td>

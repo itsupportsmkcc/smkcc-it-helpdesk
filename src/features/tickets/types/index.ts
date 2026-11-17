@@ -5,6 +5,7 @@ export type TicketStatus = "new" | "in_progress" | "pending" | "resolved";
 export interface TicketItem {
   id: string;
   lineUserId: string;
+  lineDisplayName?: string | null;
   fullName: string;
   phone: string;
   userType: UserType;

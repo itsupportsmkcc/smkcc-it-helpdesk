@@ -6,6 +6,7 @@ export const TicketStatusEnum = z.enum(["new", "in_progress", "pending", "resolv
 
 export const createTicketSchema = z.object({
   lineUserId: z.string().min(1, "ไม่พบข้อมูล LINE User ID กรุณาเปิดผ่าน LINE"),
+  lineDisplayName: z.string().optional(),
   fullName: z.string().trim().min(2, "กรุณากรอกชื่อ-นามสกุล (อย่างน้อย 2 ตัวอักษร)"),
   phone: z.string().trim().regex(/^0[0-9]{8,9}$/, "กรุณากรอกเบอร์โทรศัพท์ให้ถูกต้อง (9-10 หลักขึ้นต้นด้วย 0)"),
   userType: UserTypeEnum,

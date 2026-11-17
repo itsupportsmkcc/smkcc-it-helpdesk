@@ -8,6 +8,7 @@ export interface ReportItem {
   createdAt: string;
   updatedAt: string;
   fullName: string;
+  lineDisplayName?: string | null;
   phone: string;
   userType: "student" | "staff";
   issueType: string;
@@ -54,6 +55,7 @@ export async function getReportData(): Promise<ActionResult<ReportItem[]>> {
       createdAt: t.created_at,
       updatedAt: t.updated_at,
       fullName: t.full_name,
+      lineDisplayName: t.line_display_name,
       phone: t.phone,
       userType: t.user_type,
       issueType: t.issue_type,
