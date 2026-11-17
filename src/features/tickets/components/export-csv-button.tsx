@@ -17,20 +17,30 @@ const priorityTextMap: Record<string, string> = {
   low: "ทั่วไป / ต่ำ",
 };
 
-export function ExportCsvButton() {
+interface ExportCsvButtonProps {
+  filteredItems?: ReportItem[];
+  labelSuffix?: string;
+}
+
+export function ExportCsvButton({ filteredItems, labelSuffix }: ExportCsvButtonProps) {
   const [isExporting, setIsExporting] = useState<boolean>(false);
 
   const handleExport = async () => {
     setIsExporting(true);
     try {
-      const res = await getReportData();
-      if (!res.success) {
-        alert("ไม่สามารถส่งออกข้อมูลได้: " + res.error);
-        setIsExporting(false);
-        return;
-      }
+      let rows: ReportItem[] = [];
 
-      const rows: ReportItem[] = res.data;
+      if (filteredItems) {
+        rows = filteredItems;
+      } else {
+        const res = await getReportData();
+        if (!res.success) {
+          alert("ไม่สามารถส่งออกข้อมูลได้: " + res.error);
+          setIsExporting(false);
+          return;
+        }
+        rows = res.data;
+      }
 
       // หัวตาราง CSV ภาษาไทย
       const headers = [
@@ -97,9 +107,10 @@ export function ExportCsvButton() {
       const url = URL.createObjectURL(blob);
 
       const link = document.createElement("a");
+      const suffix = labelSuffix ? `_${labelSuffix}` : "";
       const nowStr = new Date().toISOString().slice(0, 10);
       link.setAttribute("href", url);
-      link.setAttribute("download", `SMKCC_IT_Helpdesk_Report_${nowStr}.csv`);
+      link.setAttribute("download", `SMKCC_IT_Helpdesk_Report${suffix}_${nowStr}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

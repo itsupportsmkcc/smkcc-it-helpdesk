@@ -3,19 +3,63 @@ import Image from "next/image";
 import Link from "next/link";
 import { isAdminAuthenticated } from "../actions";
 import { getReportData, ReportItem } from "@/features/tickets/actions/report-actions";
-import { ArrowLeft, Printer, Star } from "lucide-react";
+import { ArrowLeft, Star } from "lucide-react";
 import { PrintButton } from "@/features/tickets/components/print-button";
+import { ReportFilter, THAI_MONTHS } from "@/features/tickets/components/report-filter";
+import { ExportCsvButton } from "@/features/tickets/components/export-csv-button";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminReportPage() {
+export default async function AdminReportPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ year?: string; month?: string }>;
+}) {
   const authenticated = await isAdminAuthenticated();
   if (!authenticated) {
     redirect("/admin/login");
   }
 
+  const { year = "all", month = "all" } = await searchParams;
+
   const res = await getReportData();
-  const reports: ReportItem[] = res.success ? res.data : [];
+  const allReports: ReportItem[] = res.success ? res.data : [];
+
+  // หาปีทั้งหมดที่มีในระบบ
+  const yearsSet = new Set<number>();
+  const currentCalendarYear = new Date().getFullYear();
+  yearsSet.add(currentCalendarYear);
+  for (const r of allReports) {
+    const yr = new Date(r.createdAt).getFullYear();
+    if (!isNaN(yr)) yearsSet.add(yr);
+  }
+  const availableYears = Array.from(yearsSet).sort((a, b) => b - a);
+
+  // กรองตามปีและเดือน
+  const reports = allReports.filter((r) => {
+    const d = new Date(r.createdAt);
+    if (year !== "all" && d.getFullYear() !== Number(year)) {
+      return false;
+    }
+    if (month !== "all" && d.getMonth() + 1 !== Number(month)) {
+      return false;
+    }
+    return true;
+  });
+
+  // ข้อความระบุช่วงเวลาของรายงาน
+  let periodLabel = "สรุปภาพรวมสะสมทั้งหมด";
+  const selectedMonthObj = THAI_MONTHS.find((m) => m.value === month);
+  const monthName = selectedMonthObj && month !== "all" ? selectedMonthObj.label : "";
+  const yearBe = year !== "all" ? Number(year) + 543 : "";
+
+  if (year !== "all" && month !== "all") {
+    periodLabel = `ประจำเดือน${monthName} พ.ศ. ${yearBe}`;
+  } else if (year !== "all") {
+    periodLabel = `ประจำปี พ.ศ. ${yearBe}`;
+  } else if (month !== "all") {
+    periodLabel = `ประจำเดือน${monthName} (ทุกปี)`;
+  }
 
   // คำนวณสถิติ
   const total = reports.length;
@@ -55,17 +99,27 @@ export default async function AdminReportPage() {
 
   return (
     <main className="min-h-screen bg-[#f2f0eb] p-4 sm:p-8 print:p-0 print:bg-white text-[rgba(0,0,0,0.87)]">
-      {/* Top Action Bar (ซ่อนเมื่อพิมพ์) */}
-      <div className="max-w-5xl mx-auto mb-6 flex items-center justify-between print:hidden">
+      {/* Top Action Bar & Filter (ซ่อนเมื่อพิมพ์) */}
+      <div className="max-w-5xl mx-auto mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 print:hidden">
         <Link
           href="/admin/dashboard"
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-[#d6dbde] text-xs font-semibold text-[#1E3932] hover:bg-[#faf6ee] transition-all shadow-sm"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-[#d6dbde] text-xs font-semibold text-[#1E3932] hover:bg-[#faf6ee] transition-all shadow-sm w-fit"
         >
           <ArrowLeft className="w-4 h-4 text-[#00754A]" />
           กลับหน้า Dashboard
         </Link>
 
-        <PrintButton />
+        {/* ตัวเลือกกรองแยกตามเดือนและปี */}
+        <ReportFilter
+          availableYears={availableYears}
+          currentYear={year}
+          currentMonth={month}
+        />
+
+        <div className="flex items-center gap-2">
+          <ExportCsvButton filteredItems={reports} labelSuffix={`${year}_${month}`} />
+          <PrintButton />
+        </div>
       </div>
 
       {/* Official Report Document: กระดาษรายงาน A4 สีขาว */}
@@ -87,15 +141,18 @@ export default async function AdminReportPage() {
           <h2 className="text-base sm:text-lg font-semibold text-[rgba(0,0,0,0.87)] mt-1">
             รายงานสรุปสถิติการให้บริการและแจ้งซ่อมงานเทคโนโลยีสารสนเทศ (IT Support)
           </h2>
+          <div className="mt-2 inline-block px-4 py-1 rounded-full bg-[#faf6ee] border border-[#dfc49d] text-xs font-bold text-[#8c6b2d]">
+            {periodLabel}
+          </div>
           <p className="text-xs text-[rgba(0,0,0,0.58)] mt-1.5 font-medium">
-            ฝ่ายเทคโนโลยีสารสนเทศ • ข้อมูล ณ วันที่ {todayThai}
+            ฝ่ายเทคโนโลยีสารสนเทศ • ข้อมูลรายงานออก ณ วันที่ {todayThai}
           </p>
         </div>
 
         {/* 1. Summary KPI Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
           <div className="p-4 rounded-xl bg-[#faf9f7] border border-[#e7e7e7] text-center">
-            <p className="text-xs font-semibold text-[rgba(0,0,0,0.58)] uppercase">คำขอทั้งหมด</p>
+            <p className="text-xs font-semibold text-[rgba(0,0,0,0.58)] uppercase">คำขอในช่วงเวลา</p>
             <p className="text-2xl sm:text-3xl font-bold text-[#1E3932] mt-1">{total}</p>
             <p className="text-[11px] text-[rgba(0,0,0,0.45)] mt-0.5">รายการ</p>
           </div>
@@ -125,28 +182,32 @@ export default async function AdminReportPage() {
           {/* ปัญหาแยกตามประเภท */}
           <div className="border border-[#e7e7e7] rounded-xl p-4 bg-[#faf9f7]">
             <h3 className="text-xs font-bold text-[#1E3932] uppercase tracking-wider mb-3 pb-2 border-b border-[#e7e7e7]">
-              จำแนกตามประเภทปัญหา / บริการ
+              จำแนกตามประเภทปัญหา / บริการ ({periodLabel})
             </h3>
-            <table className="w-full text-xs">
-              <tbody>
-                {issueStats.map(([issue, count]) => {
-                  const pct = total > 0 ? ((count / total) * 100).toFixed(0) : "0";
-                  return (
-                    <tr key={issue} className="border-b border-[#e7e7e7]/60 last:border-none">
-                      <td className="py-1.5 text-[rgba(0,0,0,0.87)]">{issue}</td>
-                      <td className="py-1.5 text-right font-bold text-[#1E3932]">{count} เคส</td>
-                      <td className="py-1.5 text-right text-[rgba(0,0,0,0.45)] w-14 font-mono">({pct}%)</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            {issueStats.length === 0 ? (
+              <p className="text-xs text-slate-400 py-3 text-center">ไม่มีข้อมูลในช่วงเวลานี้</p>
+            ) : (
+              <table className="w-full text-xs">
+                <tbody>
+                  {issueStats.map(([issue, count]) => {
+                    const pct = total > 0 ? ((count / total) * 100).toFixed(0) : "0";
+                    return (
+                      <tr key={issue} className="border-b border-[#e7e7e7]/60 last:border-none">
+                        <td className="py-1.5 text-[rgba(0,0,0,0.87)]">{issue}</td>
+                        <td className="py-1.5 text-right font-bold text-[#1E3932]">{count} เคส</td>
+                        <td className="py-1.5 text-right text-[rgba(0,0,0,0.45)] w-14 font-mono">({pct}%)</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
           </div>
 
           {/* สัดส่วนกลุ่มผู้ใช้ */}
           <div className="border border-[#e7e7e7] rounded-xl p-4 bg-[#faf9f7]">
             <h3 className="text-xs font-bold text-[#1E3932] uppercase tracking-wider mb-3 pb-2 border-b border-[#e7e7e7]">
-              จำแนกตามกลุ่มผู้รับบริการ
+              จำแนกตามกลุ่มผู้รับบริการ ({periodLabel})
             </h3>
             <table className="w-full text-xs mb-4">
               <tbody>
@@ -168,8 +229,8 @@ export default async function AdminReportPage() {
             </table>
 
             <div className="p-3 bg-[#d4e9e2]/30 rounded-lg border border-[#a3d2c1]/40 text-[11px] text-[#006241]">
-              <span className="font-semibold block mb-0.5">ผลสัมฤทธิ์การให้บริการ:</span>
-              มีอัตราการดำเนินการสำเร็จ ({resolutionRate}%) ภายใต้ผู้ดูแลระบบคนเดียว (นายเอกพงศ์)
+              <span className="font-semibold block mb-0.5">การให้บริการประจำช่วงเวลา:</span>
+              มีอัตราการดำเนินการสำเร็จ ({resolutionRate}%) ผู้รับผิดชอบหลัก: นายเอกพงศ์ (เจ้าหน้าที่ไอที)
             </div>
           </div>
         </div>
@@ -177,7 +238,7 @@ export default async function AdminReportPage() {
         {/* 3. Detailed Tickets Log */}
         <div className="mb-10">
           <h3 className="text-xs font-bold text-[#1E3932] uppercase tracking-wider mb-3">
-            รายการบันทึกการให้บริการ (ประวัติล่าสุด)
+            รายการบันทึกการให้บริการ ({periodLabel} : รวม {reports.length} รายการ)
           </h3>
           <div className="overflow-x-auto border border-[#e7e7e7] rounded-xl">
             <table className="w-full text-[11px] text-left">
@@ -195,8 +256,8 @@ export default async function AdminReportPage() {
               <tbody className="divide-y divide-[#e7e7e7]">
                 {reports.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="p-4 text-center text-slate-400">
-                      ยังไม่มีข้อมูลรายการแจ้งซ่อม
+                    <td colSpan={7} className="p-6 text-center text-slate-400">
+                      ไม่พบข้อมูลรายการแจ้งซ่อมในช่วงเวลาที่เลือก
                     </td>
                   </tr>
                 ) : (
