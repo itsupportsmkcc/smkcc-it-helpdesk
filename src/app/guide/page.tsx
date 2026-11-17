@@ -1,18 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Smartphone,
   ClipboardCheck,
-  BellRing,
   Star,
   CheckCircle2,
-  AlertCircle,
-  HelpCircle,
-  Clock,
-  Printer,
-  ChevronRight,
   ArrowLeft,
   Sparkles,
+  Smartphone,
+  Laptop,
+  MessageCircle,
 } from "lucide-react";
 import { PrintButton } from "./print-button";
 
@@ -20,6 +16,19 @@ export const metadata = {
   title: "คู่มือการใช้งานระบบแจ้งซ่อมไอที (User Guide) | SMKCC IT Helpdesk",
   description: "คู่มือสรุปวิธีแจ้งซ่อมและบริการด้านไอที วิทยาลัยชุมชนสมุทรสาคร",
 };
+
+function OfficialLineIcon({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="#06C755"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.477.254l2.484 3.372V8.108c0-.345.282-.63.63-.63.345 0 .625.285.625.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 13.393 24 11.458 24 10.314" />
+    </svg>
+  );
+}
 
 export default function GuidePage() {
   return (
@@ -60,7 +69,7 @@ export default function GuidePage() {
               4 ขั้นตอนง่ายๆ ในการแจ้งซ่อมไอทีผ่าน LINE
             </h1>
             <p className="text-xs sm:text-sm text-[rgba(0,0,0,0.65)] font-medium mt-0.5">
-              ฝ่ายเทคโนโลยีสารสนเทศ วิทยาลัยชุมชนสมุทรสาคร (สะดวก รวดเร็ว ไม่ต้องจำรหัสผ่าน)
+              งานเทคโนโลยีสารสนเทศ วิทยาลัยชุมชนสมุทรสาคร (สะดวก รวดเร็ว ไม่ต้องจำรหัสผ่าน)
             </p>
           </div>
         </header>
@@ -75,8 +84,8 @@ export default function GuidePage() {
 
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-[#00754A] text-white flex items-center justify-center shadow-sm">
-                  <Smartphone className="w-4 h-4" />
+                <div className="w-9 h-9 rounded-xl bg-white border border-[#06C755]/30 shadow-sm flex items-center justify-center shrink-0">
+                  <OfficialLineIcon className="w-6 h-6" />
                 </div>
                 <h2 className="text-sm sm:text-base font-bold text-[#1E3932]">
                   เปิดหน้าแจ้งซ่อมผ่าน LINE
@@ -87,27 +96,32 @@ export default function GuidePage() {
               </p>
 
               {/* Visual Mockup Card */}
-              <div className="bg-white rounded-lg p-2.5 border border-[#dfc49d] space-y-1.5 text-xs">
-                <div className="flex items-center gap-2 text-[#1E3932] font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-[#00754A]"></span>
-                  <span>บนมือถือ (Smartphone):</span>
+              <div className="bg-white rounded-lg p-2.5 border border-[#dfc49d] space-y-2 text-xs">
+                <div>
+                  <div className="flex items-center gap-1.5 text-[#1E3932] font-bold">
+                    <Smartphone className="w-3.5 h-3.5 text-[#00754A]" />
+                    <span>บนมือถือ (Smartphone):</span>
+                  </div>
+                  <p className="text-[11px] text-[rgba(0,0,0,0.65)] pl-5 mt-0.5">
+                    กดปุ่มเมนู <b>"แจ้งซ่อมไอที"</b> จากแถบริชเมนู (Rich Menu) ด้านล่างแชท
+                  </p>
                 </div>
-                <p className="text-[11px] text-[rgba(0,0,0,0.6)] pl-4">
-                  กดปุ่มเมนู <b>"แจ้งซ่อมไอที"</b> จาก Rich Menu แถบด้านล่างห้องแชท
-                </p>
-                <div className="flex items-center gap-2 text-[#1E3932] font-semibold pt-1 border-t border-[#f2f0eb]">
-                  <span className="w-2 h-2 rounded-full bg-[#cba258]"></span>
-                  <span>บนคอมพิวเตอร์ (LINE PC):</span>
+
+                <div className="pt-1.5 border-t border-[#f2f0eb]">
+                  <div className="flex items-center gap-1.5 text-[#1E3932] font-bold">
+                    <Laptop className="w-3.5 h-3.5 text-[#cba258]" />
+                    <span>บนคอมพิวเตอร์ (LINE PC):</span>
+                  </div>
+                  <p className="text-[11px] text-[rgba(0,0,0,0.65)] pl-5 mt-0.5">
+                    คลิกลิงก์ในข้อความทักทาย หรือพิมพ์ <b>"แจ้งซ่อม"</b> ในห้องแชท
+                  </p>
                 </div>
-                <p className="text-[11px] text-[rgba(0,0,0,0.6)] pl-4">
-                  คลิกลิงก์ในข้อความทักทาย หรือพิมพ์คำว่า <b>"แจ้งซ่อม"</b> ในแชท
-                </p>
               </div>
             </div>
 
             <div className="mt-3 pt-2 border-t border-[#e7e7e7] flex items-center text-[10px] text-[#006241] font-semibold">
-              <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-[#00754A]" />
-              ระบบดึงชื่อและ LINE ID ให้ทันทีโดยไม่ต้องลงทะเบียนใหม่
+              <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-[#00754A] shrink-0" />
+              ระบบดึงชื่อโปรไฟล์และ LINE ID ให้อัตโนมัติ ไม่ต้องสมัครสมาชิก
             </div>
           </div>
 
@@ -119,8 +133,8 @@ export default function GuidePage() {
 
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-[#8c6b2d] text-white flex items-center justify-center shadow-sm">
-                  <ClipboardCheck className="w-4 h-4" />
+                <div className="w-9 h-9 rounded-xl bg-[#8c6b2d] text-white flex items-center justify-center shadow-sm shrink-0">
+                  <ClipboardCheck className="w-5 h-5" />
                 </div>
                 <h2 className="text-sm sm:text-base font-bold text-[#1E3932]">
                   กรอกข้อมูลแจ้งปัญหา (1 นาที)
@@ -154,7 +168,7 @@ export default function GuidePage() {
             </div>
 
             <div className="mt-3 pt-2 border-t border-[#e7e7e7] flex items-center text-[10px] text-[#8c6b2d] font-semibold">
-              <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-[#8c6b2d]" />
+              <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-[#8c6b2d] shrink-0" />
               สามารถเลือกระดับความเร่งด่วน เช่น เร่งด่วนกระทบการเรียนการสอน
             </div>
           </div>
@@ -167,8 +181,8 @@ export default function GuidePage() {
 
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-[#00754A] text-white flex items-center justify-center shadow-sm">
-                  <BellRing className="w-4 h-4" />
+                <div className="w-9 h-9 rounded-xl bg-white border border-[#06C755]/30 shadow-sm flex items-center justify-center shrink-0">
+                  <MessageCircle className="w-5 h-5 text-[#06C755]" />
                 </div>
                 <h2 className="text-sm sm:text-base font-bold text-[#1E3932]">
                   รับการแจ้งเตือนสถานะผ่าน LINE
@@ -196,7 +210,7 @@ export default function GuidePage() {
             </div>
 
             <div className="mt-3 pt-2 border-t border-[#e7e7e7] flex items-center text-[10px] text-[#006241] font-semibold">
-              <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-[#00754A]" />
+              <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-[#00754A] shrink-0" />
               ติดตามความคืบหน้าได้ตลอด 24 ชม. โดยไม่ต้องโทรตามงาน
             </div>
           </div>
@@ -209,8 +223,8 @@ export default function GuidePage() {
 
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-8 h-8 rounded-lg bg-[#cba258] text-white flex items-center justify-center shadow-sm">
-                  <Star className="w-4 h-4 fill-white" />
+                <div className="w-9 h-9 rounded-xl bg-[#cba258] text-white flex items-center justify-center shadow-sm shrink-0">
+                  <Star className="w-5 h-5 fill-white" />
                 </div>
                 <h2 className="text-sm sm:text-base font-bold text-[#1E3932]">
                   ประเมินความพึงพอใจการบริการ
@@ -237,29 +251,22 @@ export default function GuidePage() {
             </div>
 
             <div className="mt-3 pt-2 border-t border-[#e7e7e7] flex items-center text-[10px] text-[#8c6b2d] font-semibold">
-              <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-[#8c6b2d]" />
-              ทุกคำติชมถูกส่งตรงถึงผู้บริหารและทีมงานไอทีเพื่อพัฒนาคุณภาพ
+              <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-[#8c6b2d] shrink-0" />
+              ทุกคำติชมถูกส่งตรงถึงฝ่ายไอทีเพื่อพัฒนาคุณภาพการบริการ
             </div>
           </div>
         </div>
 
-        {/* Footer Contact Bar */}
-        <footer className="mt-6 pt-4 border-t border-[#e7e7e7] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[rgba(0,0,0,0.6)]">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-[#1E3932]">
-              ฝ่ายเทคโนโลยีสารสนเทศ วิทยาลัยชุมชนสมุทรสาคร (SMKCC)
-            </span>
-          </div>
-          <div className="flex items-center gap-4 text-[11px]">
-            <span>📍 ศูนย์คอมพิวเตอร์ อาคารวิทยบริการ</span>
-            <span className="text-[#00754A] font-semibold">📞 สายตรงไอที: 087-666-2006</span>
-          </div>
+        {/* Footer: จัดกึ่งกลางตามที่ผู้ใช้ร้องขอ */}
+        <footer className="mt-6 pt-4 border-t border-[#e7e7e7] text-center text-xs text-[rgba(0,0,0,0.65)] font-semibold tracking-wide">
+          งานเทคโนโลยีสารสนเทศ วิทยาลัยชุมชนสมุทรสาคร (SMKCC)
         </footer>
       </article>
 
       {/* Print Style Optimization (เฉพาะตอนสั่งพิมพ์ A4) */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
           @media print {
             @page {
               size: A4 portrait;
@@ -277,7 +284,8 @@ export default function GuidePage() {
             }
           }
         `,
-      }} />
+        }}
+      />
     </main>
   );
 }
