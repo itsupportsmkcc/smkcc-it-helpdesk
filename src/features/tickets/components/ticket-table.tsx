@@ -7,12 +7,9 @@ import { StatusBadge } from "./status-badge";
 import { PriorityBadge } from "./priority-badge";
 import {
   Clock,
-  Filter,
   Phone,
   MapPin,
   User,
-  CheckCircle2,
-  AlertTriangle,
   Loader2,
   ExternalLink,
   MessageSquare,
@@ -67,29 +64,29 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
 
   return (
     <div className="space-y-6">
-      {/* Stats Overview Cards */}
+      {/* Stats Cards: Starbucks Clean Café Style */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-          <p className="text-xs font-medium text-slate-500">เคสทั้งหมด</p>
-          <p className="text-2xl font-bold text-slate-800 mt-1">{stats.total}</p>
+        <div className="bg-white p-5 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] border border-[#e7e7e7]">
+          <p className="text-xs font-semibold text-[rgba(0,0,0,0.58)] uppercase tracking-wider">เคสทั้งหมด</p>
+          <p className="text-3xl font-bold text-[#1E3932] mt-1 tracking-tight">{stats.total}</p>
         </div>
-        <div className="bg-blue-50/50 p-4 rounded-xl border border-blue-200/60 shadow-sm">
-          <p className="text-xs font-semibold text-blue-700">งานใหม่ (New)</p>
-          <p className="text-2xl font-bold text-blue-800 mt-1">{stats.new}</p>
+        <div className="bg-[#faf6ee] p-5 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] border border-[#dfc49d]">
+          <p className="text-xs font-semibold text-[#8c6b2d] uppercase tracking-wider">งานใหม่ (New)</p>
+          <p className="text-3xl font-bold text-[#8c6b2d] mt-1 tracking-tight">{stats.new}</p>
         </div>
-        <div className="bg-amber-50/50 p-4 rounded-xl border border-amber-200/60 shadow-sm">
-          <p className="text-xs font-semibold text-amber-700">กำลังทำ (In Progress)</p>
-          <p className="text-2xl font-bold text-amber-800 mt-1">{stats.inProgress}</p>
+        <div className="bg-[#d4e9e2]/60 p-5 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] border border-[#a3d2c1]">
+          <p className="text-xs font-semibold text-[#006241] uppercase tracking-wider">กำลังทำ (In Progress)</p>
+          <p className="text-3xl font-bold text-[#006241] mt-1 tracking-tight">{stats.inProgress}</p>
         </div>
-        <div className="bg-emerald-50/50 p-4 rounded-xl border border-emerald-200/60 shadow-sm">
-          <p className="text-xs font-semibold text-emerald-700">ปิดงานแล้ว (Resolved)</p>
-          <p className="text-2xl font-bold text-emerald-800 mt-1">{stats.resolved}</p>
+        <div className="bg-[#1E3932] p-5 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] text-white">
+          <p className="text-xs font-semibold text-[#d4e9e2] uppercase tracking-wider">ปิดงานแล้ว (Resolved)</p>
+          <p className="text-3xl font-bold text-white mt-1 tracking-tight">{stats.resolved}</p>
         </div>
       </div>
 
-      {/* Filter Tabs */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex items-center gap-1 overflow-x-auto pb-1 sm:pb-0">
+      {/* Filter Tabs: Starbucks 50px Pills */}
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-3 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] border border-[#e7e7e7]">
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           {[
             { id: "all", label: "ทั้งหมด" },
             { id: "new", label: "งานใหม่" },
@@ -100,43 +97,44 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
             <button
               key={tab.id}
               onClick={() => setSelectedStatus(tab.id)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors shrink-0 ${
+              className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-[-0.16px] transition-all duration-200 active:scale-[0.95] shrink-0 border ${
                 selectedStatus === tab.id
-                  ? "bg-slate-900 text-white"
-                  : "text-slate-600 hover:bg-slate-100"
+                  ? "bg-[#00754A] text-white border-[#00754A] shadow-sm"
+                  : "bg-transparent text-[rgba(0,0,0,0.87)] border-transparent hover:bg-[#edebe9]"
               }`}
             >
               {tab.label}
             </button>
           ))}
         </div>
-        <span className="text-xs text-slate-500">
+        <span className="text-xs text-[rgba(0,0,0,0.58)] font-medium">
           แสดง {filteredTickets.length} รายการ
         </span>
       </div>
 
       {/* Tickets List */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         {filteredTickets.length === 0 ? (
-          <div className="bg-white rounded-xl border border-slate-200 p-8 text-center text-slate-500 text-sm">
+          <div className="bg-white rounded-[12px] border border-[#e7e7e7] p-10 text-center text-[rgba(0,0,0,0.58)] text-sm">
             ไม่มีรายการแจ้งซ่อมในสถานะนี้
           </div>
         ) : (
           filteredTickets.map((ticket) => (
             <div
               key={ticket.id}
-              className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow"
+              className="bg-white rounded-[12px] border border-[#e7e7e7] p-5 sm:p-6 shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] hover:shadow-md transition-shadow"
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-3">
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#e7e7e7] pb-3 mb-3">
                 <div className="flex items-center gap-2 flex-wrap">
                   <StatusBadge status={ticket.status} />
                   <PriorityBadge priority={ticket.priority} />
-                  <span className="text-xs text-slate-400">
-                    ID: {ticket.id.slice(0, 8)}...
+                  <span className="text-xs text-[rgba(0,0,0,0.4)] font-mono">
+                    #{ticket.id.slice(0, 8)}
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                  <Clock className="w-3.5 h-3.5" />
+                <div className="flex items-center gap-1.5 text-xs text-[rgba(0,0,0,0.58)] font-medium">
+                  <Clock className="w-3.5 h-3.5 text-[#00754A]" />
                   <span>
                     {new Date(ticket.createdAt).toLocaleString("th-TH", {
                       dateStyle: "short",
@@ -146,61 +144,61 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                 </div>
               </div>
 
-              {/* Title & Location */}
-              <div className="mb-3">
-                <h3 className="text-base font-bold text-slate-800">
+              {/* Title & Description */}
+              <div className="mb-4">
+                <h3 className="text-base font-bold text-[#1E3932] tracking-[-0.16px]">
                   {ticket.issueType}
                 </h3>
                 {ticket.description && (
-                  <p className="text-xs text-slate-600 mt-1 leading-relaxed bg-slate-50 p-2.5 rounded-lg">
+                  <p className="text-xs text-[rgba(0,0,0,0.7)] mt-1.5 leading-relaxed bg-[#f2f0eb] p-3 rounded-xl border border-[#e7e7e7]">
                     {ticket.description}
                   </p>
                 )}
               </div>
 
-              {/* User details */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-slate-600 mb-4 bg-slate-50/50 p-3 rounded-lg border border-slate-100">
-                <div className="flex items-center gap-1.5">
-                  <User className="w-4 h-4 text-slate-400 shrink-0" />
-                  <span className="font-semibold text-slate-800">{ticket.fullName}</span>
-                  <span className="text-[11px] px-1.5 py-0.5 rounded bg-slate-200 text-slate-700">
+              {/* Requester Info */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs text-[rgba(0,0,0,0.87)] mb-4 bg-[#faf9f7] p-3 rounded-xl border border-[#e7e7e7]">
+                <div className="flex items-center gap-2">
+                  <User className="w-4 h-4 text-[#00754A] shrink-0" />
+                  <span className="font-semibold">{ticket.fullName}</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#d4e9e2] text-[#006241] font-semibold">
                     {ticket.userType === "student" ? "นักศึกษา" : "บุคลากร"}
                   </span>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <Phone className="w-4 h-4 text-slate-400 shrink-0" />
+                <div className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-[#00754A] shrink-0" />
                   <a
                     href={`tel:${ticket.phone}`}
-                    className="text-blue-600 hover:underline font-mono"
+                    className="text-[#00754A] hover:underline font-mono font-medium"
                   >
                     {ticket.phone}
                   </a>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-[#00754A] shrink-0" />
                   <span className="truncate">{ticket.location}</span>
                 </div>
               </div>
 
-              {/* Image Preview if available */}
+              {/* Image Preview Link */}
               {ticket.imageUrl && (
                 <div className="mb-4">
                   <a
                     href={ticket.imageUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs text-blue-600 hover:underline"
+                    className="inline-flex items-center gap-1.5 text-xs text-[#00754A] font-semibold hover:underline"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
-                    ดูรูปภาพแนบ
+                    ดูรูปภาพปัญหาที่แนบ
                   </a>
                 </div>
               )}
 
-              {/* Actions & Status Control */}
-              <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-xs font-semibold text-slate-700">
+              {/* Status Actions: Starbucks 50px Pills */}
+              <div className="pt-3 border-t border-[#e7e7e7] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="text-xs font-semibold text-[rgba(0,0,0,0.87)] mr-1">
                     ปรับสถานะ:
                   </span>
                   {(["new", "in_progress", "pending", "resolved"] as TicketStatus[]).map(
@@ -210,10 +208,10 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                         type="button"
                         disabled={updatingId === ticket.id || ticket.status === st}
                         onClick={() => handleStatusChange(ticket, st)}
-                        className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
+                        className={`px-3 py-1 rounded-full text-xs font-semibold tracking-[-0.16px] border transition-all duration-200 active:scale-[0.95] disabled:opacity-40 disabled:cursor-not-allowed ${
                           ticket.status === st
-                            ? "bg-slate-800 text-white border-slate-800"
-                            : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                            ? "bg-[#00754A] text-white border-[#00754A] shadow-sm"
+                            : "bg-[#f2f0eb] text-[rgba(0,0,0,0.87)] border-[#d6dbde] hover:bg-[#edebe9]"
                         }`}
                       >
                         {st === "new" && "New"}
@@ -224,7 +222,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                     )
                   )}
                   {updatingId === ticket.id && (
-                    <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
+                    <Loader2 className="w-4 h-4 animate-spin text-[#00754A]" />
                   )}
                 </div>
 
@@ -235,25 +233,25 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                       activeNoteTicketId === ticket.id ? null : ticket.id
                     )
                   }
-                  className="text-xs text-slate-500 hover:text-blue-600 inline-flex items-center gap-1"
+                  className="text-xs text-[#00754A] hover:text-[#006241] font-semibold inline-flex items-center gap-1"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
-                  {activeNoteTicketId === ticket.id ? "ปิดข้อความ" : "+ แนบโน้ตแจ้งผู้ใช้"}
+                  {activeNoteTicketId === ticket.id ? "ปิดกล่องโน้ต" : "+ แนบโน้ตแจ้งผู้ใช้ใน LINE"}
                 </button>
               </div>
 
-              {/* Admin Note Box */}
+              {/* Admin Note Input */}
               {activeNoteTicketId === ticket.id && (
-                <div className="mt-3 p-3 bg-blue-50/60 border border-blue-200 rounded-lg">
-                  <label className="block text-xs font-semibold text-blue-900 mb-1">
-                    ข้อความหมายเหตุส่งเข้า LINE ผู้ใช้ (เมื่อกดย้ายสถานะ):
+                <div className="mt-3 p-3 bg-[#faf6ee] border border-[#dfc49d] rounded-xl">
+                  <label className="block text-xs font-semibold text-[#8c6b2d] mb-1">
+                    ข้อความหมายเหตุส่งเข้าแชท LINE ผู้แจ้ง (เมื่อกดย้ายสถานะ):
                   </label>
                   <input
                     type="text"
                     value={adminNote}
                     onChange={(e) => setAdminNote(e.target.value)}
-                    placeholder="เช่น รออะไหล่จอภาพ 2 วัน หรือ กำลังเข้าไปตรวจสอบที่ห้อง 102..."
-                    className="w-full px-3 py-1.5 text-xs rounded-md border border-blue-300 bg-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    placeholder="เช่น กำลังเข้าไปดูที่ห้อง 102 ภายใน 15 นาที หรือ รออะไหล่ 2 วัน..."
+                    className="w-full px-3 py-2 text-xs rounded-lg border border-[#dfc49d] bg-white focus:outline-none focus:ring-1 focus:ring-[#00754A]"
                   />
                 </div>
               )}

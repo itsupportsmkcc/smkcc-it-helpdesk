@@ -2,10 +2,10 @@ import { TicketForm } from "@/features/tickets/components/ticket-form";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-slate-100/70 p-3 sm:p-6 flex flex-col justify-center items-center">
+    <main className="min-h-screen bg-[#f2f0eb] px-3 py-6 sm:py-10 flex flex-col justify-center items-center">
       <TicketForm />
-      <footer className="mt-4 text-center text-[11px] text-slate-400">
-        ฝ่ายเทคโนโลยีสารสนเทศ วิทยาลัยชุมชนสมุทรสาคร
+      <footer className="mt-6 text-center text-xs text-[rgba(0,0,0,0.58)] font-medium">
+        ฝ่ายเทคโนโลยีสารสนเทศ วิทยาลัยชุมชนสมุทรสาคร (SMKCC)
       </footer>
     </main>
   );

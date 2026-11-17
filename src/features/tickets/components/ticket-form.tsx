@@ -2,17 +2,21 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { createTicket } from "../actions/ticket-actions";
 import { UserType, Priority } from "../types";
 import { supabase } from "@/lib/supabase";
 import {
   AlertCircle,
   Camera,
-  CheckCircle2,
-  Computer,
   Loader2,
   Send,
-  Upload,
+  PhoneCall,
+  MapPin,
+  FileText,
+  User,
+  Wrench,
+  Check,
 } from "lucide-react";
 
 const COMMON_ISSUES = [
@@ -55,7 +59,6 @@ export function TicketForm() {
     async function initLiff() {
       const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
       if (!liffId) {
-        // Fallback สำหรับกรณีทดสอบ Localhost
         console.warn("LIFF ID not configured. Using local dev identity.");
         setLineUserId("local-dev-user-001");
         setLineProfileName("ผู้ทดสอบระบบ");
@@ -75,14 +78,12 @@ export function TicketForm() {
             setFullName(profile.displayName);
           }
         } else {
-          // หากเปิดใน LINE Browser ปกติจะ auto-login แต่ถ้าไม่ ให้ redirect login
           liff.login();
         }
         setIsLiffReady(true);
       } catch (err) {
         console.error("LIFF Init Error:", err);
-        setLiffError("ไม่สามารถเชื่อมต่อ LINE ได้ กรุณาเปิดผ่านแอปพลิเคชัน LINE");
-        // Fallback เพื่อให้ทดสอบได้
+        setLiffError("เปิดในบราวเซอร์ทั่วไป (ระบบจำลองโหมดทดสอบ)");
         setLineUserId("guest-fallback-user");
         setIsLiffReady(true);
       }
@@ -172,7 +173,6 @@ export function TicketForm() {
         return;
       }
 
-      // นำทางไปยังหน้าสำเร็จ
       router.push(`/success?ticketId=${result.data.id}`);
     } catch (err) {
       setErrorMessage("เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง");
@@ -181,265 +181,313 @@ export function TicketForm() {
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-indigo-700 p-6 text-white text-center">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-white/20 mb-3 backdrop-blur-sm">
-          <Computer className="w-6 h-6 text-white" />
-        </div>
-        <h1 className="text-xl font-bold tracking-tight">ระบบแจ้งซ่อมและบริการไอที</h1>
-        <p className="text-xs text-blue-100 mt-1">วิทยาลัยชุมชนสมุทรสาคร (SMKCC IT Helpdesk)</p>
-        {lineProfileName && (
-          <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-xs">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            LINE: {lineProfileName}
-          </div>
-        )}
-      </div>
-
-      {liffError && (
-        <div className="m-4 p-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-xs flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 shrink-0 text-amber-600" />
-          <span>{liffError}</span>
-        </div>
-      )}
-
-      {errorMessage && (
-        <div className="m-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
-          <span>{errorMessage}</span>
-        </div>
-      )}
-
-      {/* Form */}
-      <form onSubmit={handleSubmit} className="p-6 space-y-5">
-        {/* กลุ่มผู้ใช้งาน */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
-            กลุ่มผู้ใช้งาน <span className="text-red-500">*</span>
-          </label>
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => setUserType("student")}
-              className={`py-3 px-4 rounded-xl border text-sm font-medium transition-all ${
-                userType === "student"
-                  ? "bg-blue-50 border-blue-600 text-blue-700 ring-2 ring-blue-500/20"
-                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
-              }`}
-            >
-              🎓 นักศึกษา
-            </button>
-            <button
-              type="button"
-              onClick={() => setUserType("staff")}
-              className={`py-3 px-4 rounded-xl border text-sm font-medium transition-all ${
-                userType === "staff"
-                  ? "bg-blue-50 border-blue-600 text-blue-700 ring-2 ring-blue-500/20"
-                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
-              }`}
-            >
-              💼 บุคลากร / อาจารย์
-            </button>
-          </div>
-        </div>
-
-        {/* ชื่อ-นามสกุล */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-            ชื่อ-นามสกุล ผู้แจ้ง <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            required
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-            placeholder="เช่น นายสมชาย ใจดี"
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-sm"
-          />
-        </div>
-
-        {/* เบอร์โทรศัพท์ */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-            เบอร์โทรศัพท์ติดต่อกลับ <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="tel"
-            required
-            pattern="0[0-9]{8,9}"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="เช่น 0812345678"
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-sm"
-          />
-          <p className="text-[11px] text-slate-400 mt-1">เบอร์โทร 9-10 หลัก เพื่อให้เจ้าหน้าที่ติดต่อสะดวก</p>
-        </div>
-
-        {/* หัวข้อปัญหา */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-            หัวข้อการแจ้งเรื่อง <span className="text-red-500">*</span>
-          </label>
-          <select
-            value={issueType}
-            onChange={(e) => setIssueType(e.target.value)}
-            required
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-sm bg-white"
-          >
-            <option value="">-- เลือกประเภทปัญหา --</option>
-            {COMMON_ISSUES.map((issue) => (
-              <option key={issue} value={issue}>
-                {issue}
-              </option>
-            ))}
-          </select>
-          {issueType === "อื่นๆ (ระบุในรายละเอียด)" && (
-            <input
-              type="text"
-              required
-              value={customIssue}
-              onChange={(e) => setCustomIssue(e.target.value)}
-              placeholder="กรุณาระบุหัวข้อเรื่อง..."
-              className="mt-2 w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+    <div className="w-full max-w-lg mx-auto">
+      {/* Main Container Card: Warm Clean Café Aesthetic */}
+      <div className="bg-white rounded-[16px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_2px_8px_rgba(0,0,0,0.08)] border border-[#e7e7e7] overflow-hidden">
+        {/* Feature Band: Starbucks House Green (#1E3932) */}
+        <div className="bg-[#1E3932] px-6 py-7 text-white text-center relative">
+          {/* Logo Badge */}
+          <div className="relative w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden shadow-lg ring-4 ring-white/15 bg-white">
+            <Image
+              src="/logo.jpg"
+              alt="SMKCC IT Support Logo"
+              fill
+              priority
+              className="object-cover"
             />
-          )}
-        </div>
-
-        {/* สถานที่/ห้อง */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-            สถานที่ / อาคาร / ห้อง <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            required
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="เช่น อาคาร 1 ห้องคอมพิวเตอร์ 102"
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-sm"
-          />
-        </div>
-
-        {/* ระดับความรุนแรง (Priority) */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">
-            ระดับผลกระทบ (Priority) <span className="text-red-500">*</span>
-          </label>
-          <div className="grid grid-cols-3 gap-2">
-            <button
-              type="button"
-              onClick={() => setPriority("high")}
-              className={`py-2.5 px-3 rounded-xl border text-xs font-medium transition-all ${
-                priority === "high"
-                  ? "bg-red-50 border-red-500 text-red-700 ring-2 ring-red-400/20 font-bold"
-                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
-              }`}
-            >
-              🔴 สูง (กระทบการสอน)
-            </button>
-            <button
-              type="button"
-              onClick={() => setPriority("medium")}
-              className={`py-2.5 px-3 rounded-xl border text-xs font-medium transition-all ${
-                priority === "medium"
-                  ? "bg-orange-50 border-orange-500 text-orange-700 ring-2 ring-orange-400/20 font-bold"
-                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
-              }`}
-            >
-              🟠 ปานกลาง
-            </button>
-            <button
-              type="button"
-              onClick={() => setPriority("low")}
-              className={`py-2.5 px-3 rounded-xl border text-xs font-medium transition-all ${
-                priority === "low"
-                  ? "bg-slate-100 border-slate-400 text-slate-700 ring-2 ring-slate-400/20 font-bold"
-                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
-              }`}
-            >
-              🟢 ทั่วไป / ต่ำ
-            </button>
           </div>
-        </div>
 
-        {/* รายละเอียดเพิ่มเติม */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-            รายละเอียดปัญหาเพิ่มเติม (ถ้ามี)
-          </label>
-          <textarea
-            rows={3}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="อธิบายอาการ เช่น หน้าจอฟ้า, ต่อโปรเจกเตอร์ไม่ติด, สายหลุด..."
-            className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 text-sm resize-none"
-          />
-        </div>
+          <h1 className="text-xl font-bold tracking-[-0.16px] text-white">
+            บริการไอที วิทยาลัยชุมชนสมุทรสาคร
+          </h1>
+          <p className="text-xs text-[#d4e9e2] font-medium mt-1">
+            IT SUPPORT SMKCC • Helpdesk Service
+          </p>
 
-        {/* แนบรูปภาพ */}
-        <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-            แนบรูปภาพปัญหา (ถ้ามี)
-          </label>
-          <div className="flex items-center gap-3">
-            <label className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 cursor-pointer text-sm font-medium transition-colors">
-              <Camera className="w-4 h-4 text-slate-500" />
-              <span>เลือกหรือถ่ายภาพ</span>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                className="hidden"
-              />
-            </label>
-            {imageFile && (
-              <span className="text-xs text-slate-500 truncate max-w-[180px]">
-                {imageFile.name}
-              </span>
-            )}
-          </div>
-          {previewUrl && (
-            <div className="mt-3 relative w-32 h-32 rounded-xl overflow-hidden border border-slate-200 shadow-sm">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={previewUrl}
-                alt="Preview"
-                className="w-full h-full object-cover"
-              />
-              <button
-                type="button"
-                onClick={() => {
-                  setImageFile(null);
-                  setPreviewUrl(null);
-                }}
-                className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-md"
-              >
-                ×
-              </button>
+          {lineProfileName && (
+            <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs text-[#faf6ee] backdrop-blur-sm border border-white/10">
+              <span className="w-2 h-2 rounded-full bg-[#00754A] ring-2 ring-emerald-300"></span>
+              ผู้ใช้งาน LINE: {lineProfileName}
             </div>
           )}
         </div>
 
-        {/* ปุ่มส่งข้อมูล */}
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold text-base shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
-        >
-          {isSubmitting ? (
-            <>
-              <Loader2 className="w-5 h-5 animate-spin" />
-              กำลังส่งข้อมูล...
-            </>
-          ) : (
-            <>
-              <Send className="w-5 h-5" />
-              ส่งเรื่องแจ้งซ่อม
-            </>
-          )}
-        </button>
-      </form>
+        {/* Notices */}
+        {liffError && (
+          <div className="mx-6 mt-4 p-3 bg-[#faf6ee] border border-[#dfc49d] text-[#1E3932] rounded-xl text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-[#cba258]" />
+            <span>{liffError}</span>
+          </div>
+        )}
+
+        {errorMessage && (
+          <div className="mx-6 mt-4 p-3 bg-red-50 border border-red-200 text-[#c82014] rounded-xl text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>{errorMessage}</span>
+          </div>
+        )}
+
+        {/* Ticket Form */}
+        <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-5">
+          {/* User Type: Starbucks Pill Toggle */}
+          <div>
+            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-2">
+              กลุ่มผู้ใช้งาน <span className="text-[#c82014]">*</span>
+            </label>
+            <div className="grid grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={() => setUserType("student")}
+                className={`py-2.5 px-4 rounded-full text-xs font-semibold tracking-[-0.16px] transition-all duration-200 active:scale-[0.95] flex items-center justify-center gap-1.5 border ${
+                  userType === "student"
+                    ? "bg-[#00754A] text-white border-[#00754A] shadow-sm"
+                    : "bg-[#f2f0eb] text-[rgba(0,0,0,0.87)] border-[#d6dbde] hover:bg-[#edebe9]"
+                }`}
+              >
+                {userType === "student" && <Check className="w-3.5 h-3.5" />}
+                นักศึกษา (Student)
+              </button>
+              <button
+                type="button"
+                onClick={() => setUserType("staff")}
+                className={`py-2.5 px-4 rounded-full text-xs font-semibold tracking-[-0.16px] transition-all duration-200 active:scale-[0.95] flex items-center justify-center gap-1.5 border ${
+                  userType === "staff"
+                    ? "bg-[#00754A] text-white border-[#00754A] shadow-sm"
+                    : "bg-[#f2f0eb] text-[rgba(0,0,0,0.87)] border-[#d6dbde] hover:bg-[#edebe9]"
+                }`}
+              >
+                {userType === "staff" && <Check className="w-3.5 h-3.5" />}
+                บุคลากร / อาจารย์ (Staff)
+              </button>
+            </div>
+          </div>
+
+          {/* Full Name */}
+          <div>
+            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-1.5">
+              ชื่อ-นามสกุล ผู้แจ้ง <span className="text-[#c82014]">*</span>
+            </label>
+            <div className="relative">
+              <User className="w-4 h-4 text-[rgba(0,0,0,0.38)] absolute left-3.5 top-3.5" />
+              <input
+                type="text"
+                required
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="เช่น นายสมชาย ใจดี"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30 focus:border-[#00754A] transition-all bg-[#faf9f7] focus:bg-white"
+              />
+            </div>
+          </div>
+
+          {/* Phone */}
+          <div>
+            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-1.5">
+              เบอร์โทรศัพท์ติดต่อกลับ <span className="text-[#c82014]">*</span>
+            </label>
+            <div className="relative">
+              <PhoneCall className="w-4 h-4 text-[rgba(0,0,0,0.38)] absolute left-3.5 top-3.5" />
+              <input
+                type="tel"
+                required
+                pattern="0[0-9]{8,9}"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="เช่น 0812345678"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30 focus:border-[#00754A] transition-all bg-[#faf9f7] focus:bg-white font-mono"
+              />
+            </div>
+            <p className="text-[11px] text-[rgba(0,0,0,0.45)] mt-1">
+              เบอร์โทรศัพท์ 9-10 หลักสำหรับติดต่อประสานงาน
+            </p>
+          </div>
+
+          {/* Issue Type */}
+          <div>
+            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-1.5">
+              หัวข้อการแจ้งเรื่อง / ประเภทปัญหา <span className="text-[#c82014]">*</span>
+            </label>
+            <div className="relative">
+              <Wrench className="w-4 h-4 text-[rgba(0,0,0,0.38)] absolute left-3.5 top-3.5 pointer-events-none" />
+              <select
+                value={issueType}
+                onChange={(e) => setIssueType(e.target.value)}
+                required
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30 focus:border-[#00754A] transition-all bg-[#faf9f7] focus:bg-white"
+              >
+                <option value="">-- เลือกประเภทปัญหา --</option>
+                {COMMON_ISSUES.map((issue) => (
+                  <option key={issue} value={issue}>
+                    {issue}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {issueType === "อื่นๆ (ระบุในรายละเอียด)" && (
+              <input
+                type="text"
+                required
+                value={customIssue}
+                onChange={(e) => setCustomIssue(e.target.value)}
+                placeholder="กรุณาระบุหัวข้อเรื่อง..."
+                className="mt-2 w-full px-4 py-2.5 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30"
+              />
+            )}
+          </div>
+
+          {/* Location */}
+          <div>
+            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-1.5">
+              สถานที่ / อาคาร / ห้องที่เกิดปัญหา <span className="text-[#c82014]">*</span>
+            </label>
+            <div className="relative">
+              <MapPin className="w-4 h-4 text-[rgba(0,0,0,0.38)] absolute left-3.5 top-3.5" />
+              <input
+                type="text"
+                required
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="เช่น อาคาร 1 ห้องปฏิบัติการคอมพิวเตอร์ 102"
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30 focus:border-[#00754A] transition-all bg-[#faf9f7] focus:bg-white"
+              />
+            </div>
+          </div>
+
+          {/* Priority: Starbucks Pill Selectors */}
+          <div>
+            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-2">
+              ระดับความเร่งด่วน (Impact / Priority) <span className="text-[#c82014]">*</span>
+            </label>
+            <div className="grid grid-cols-3 gap-2">
+              <button
+                type="button"
+                onClick={() => setPriority("high")}
+                className={`py-2 px-3 rounded-full text-xs font-semibold transition-all duration-200 active:scale-[0.95] border text-center ${
+                  priority === "high"
+                    ? "bg-[#c82014] text-white border-[#c82014] shadow-sm"
+                    : "bg-[#f2f0eb] text-[rgba(0,0,0,0.87)] border-[#d6dbde] hover:bg-[#edebe9]"
+                }`}
+              >
+                🔴 สูง (กระทบสอน)
+              </button>
+              <button
+                type="button"
+                onClick={() => setPriority("medium")}
+                className={`py-2 px-3 rounded-full text-xs font-semibold transition-all duration-200 active:scale-[0.95] border text-center ${
+                  priority === "medium"
+                    ? "bg-[#00754A] text-white border-[#00754A] shadow-sm"
+                    : "bg-[#f2f0eb] text-[rgba(0,0,0,0.87)] border-[#d6dbde] hover:bg-[#edebe9]"
+                }`}
+              >
+                🟠 ปานกลาง
+              </button>
+              <button
+                type="button"
+                onClick={() => setPriority("low")}
+                className={`py-2 px-3 rounded-full text-xs font-semibold transition-all duration-200 active:scale-[0.95] border text-center ${
+                  priority === "low"
+                    ? "bg-[#1E3932] text-white border-[#1E3932] shadow-sm"
+                    : "bg-[#f2f0eb] text-[rgba(0,0,0,0.87)] border-[#d6dbde] hover:bg-[#edebe9]"
+                }`}
+              >
+                🟢 ทั่วไป / ต่ำ
+              </button>
+            </div>
+          </div>
+
+          {/* Description */}
+          <div>
+            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-1.5">
+              รายละเอียดเพิ่มเติม (Description)
+            </label>
+            <div className="relative">
+              <FileText className="w-4 h-4 text-[rgba(0,0,0,0.38)] absolute left-3.5 top-3.5" />
+              <textarea
+                rows={3}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="ระบุอาการ เช่น เปิดเครื่องแล้วจอดำ, ต่อสัญญาณโปรเจกเตอร์ไม่ขึ้น..."
+                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30 focus:border-[#00754A] transition-all bg-[#faf9f7] focus:bg-white resize-none"
+              />
+            </div>
+          </div>
+
+          {/* Image Upload */}
+          <div>
+            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-1.5">
+              รูปภาพประกอบปัญหา (ถ้ามี)
+            </label>
+            <div className="flex items-center gap-3">
+              <label className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-[#00754A] text-[#00754A] hover:bg-[#d4e9e2]/30 cursor-pointer text-xs font-semibold transition-all active:scale-[0.95]">
+                <Camera className="w-4 h-4 text-[#00754A]" />
+                <span>ถ่ายภาพ / เลือกรูปภาพ</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+              </label>
+              {imageFile && (
+                <span className="text-xs text-[rgba(0,0,0,0.6)] truncate max-w-[170px]">
+                  {imageFile.name}
+                </span>
+              )}
+            </div>
+
+            {previewUrl && (
+              <div className="mt-3 relative w-28 h-28 rounded-xl overflow-hidden border border-[#d6dbde] shadow-sm">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={previewUrl}
+                  alt="Preview"
+                  className="w-full h-full object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    setImageFile(null);
+                    setPreviewUrl(null);
+                  }}
+                  className="absolute top-1 right-1 bg-[#c82014] text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-md active:scale-90"
+                >
+                  ×
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Primary CTA Button: Starbucks 50px Full-Pill with scale(0.95) */}
+          <div className="pt-2">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full h-[50px] rounded-full bg-[#00754A] hover:bg-[#006241] active:scale-[0.95] text-white font-semibold text-sm tracking-[-0.16px] shadow-[0_2px_6px_rgba(0,117,74,0.3)] transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  กำลังส่งข้อมูลแจ้งเรื่อง...
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4" />
+                  ส่งเรื่องแจ้งซ่อมไอที
+                </>
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* Signature Floating Frap-style Button: 56px circular floating quick contact */}
+      <a
+        href="tel:034427500"
+        title="โทรติดต่อด่วนฝ่ายไอที"
+        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#00754A] text-white shadow-[0_0_6px_rgba(0,0,0,0.24),0_8px_12px_rgba(0,0,0,0.14)] active:scale-[0.95] transition-all duration-200 flex items-center justify-center z-40 hover:bg-[#006241]"
+      >
+        <PhoneCall className="w-6 h-6" />
+      </a>
     </div>
   );
 }

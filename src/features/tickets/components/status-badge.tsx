@@ -7,19 +7,19 @@ interface StatusBadgeProps {
 const statusConfig: Record<TicketStatus, { label: string; className: string }> = {
   new: {
     label: "งานใหม่ (New)",
-    className: "bg-blue-100 text-blue-800 border-blue-200",
+    className: "bg-[#d4e9e2] text-[#006241] border-[#a3d2c1]",
   },
   in_progress: {
     label: "กำลังทำ (In Progress)",
-    className: "bg-amber-100 text-amber-800 border-amber-200",
+    className: "bg-[#faf6ee] text-[#8c6b2d] border-[#dfc49d]",
   },
   pending: {
     label: "ติดปัญหา (Pending)",
-    className: "bg-purple-100 text-purple-800 border-purple-200",
+    className: "bg-[#edebe9] text-[rgba(0,0,0,0.87)] border-[#d6dbde]",
   },
   resolved: {
     label: "ปิดงานแล้ว (Resolved)",
-    className: "bg-emerald-100 text-emerald-800 border-emerald-200",
+    className: "bg-[#1E3932] text-white border-[#1E3932]",
   },
 };
 
@@ -31,7 +31,7 @@ export function StatusBadge({ status }: StatusBadgeProps) {
 
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border ${config.className}`}
+      className={`inline-flex items-center px-3 py-0.5 rounded-full text-xs font-semibold border tracking-[-0.16px] ${config.className}`}
     >
       {config.label}
     </span>

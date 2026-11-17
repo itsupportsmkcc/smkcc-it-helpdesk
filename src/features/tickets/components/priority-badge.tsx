@@ -6,16 +6,16 @@ interface PriorityBadgeProps {
 
 const priorityConfig: Record<Priority, { label: string; className: string }> = {
   high: {
-    label: "สูง (กระทบการสอน/เร่งด่วน)",
-    className: "bg-red-100 text-red-700 border-red-200",
+    label: "🔴 สูง (กระทบการสอน/เร่งด่วน)",
+    className: "bg-red-50 text-[#c82014] border-red-200",
   },
   medium: {
-    label: "ปานกลาง",
-    className: "bg-orange-100 text-orange-700 border-orange-200",
+    label: "🟠 ปานกลาง",
+    className: "bg-[#d4e9e2] text-[#00754A] border-[#a3d2c1]",
   },
   low: {
-    label: "ทั่วไป / ต่ำ",
-    className: "bg-slate-100 text-slate-700 border-slate-200",
+    label: "🟢 ทั่วไป / ต่ำ",
+    className: "bg-[#edebe9] text-[rgba(0,0,0,0.7)] border-[#d6dbde]",
   },
 };
 
@@ -27,7 +27,7 @@ export function PriorityBadge({ priority }: PriorityBadgeProps) {
 
   return (
     <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border ${config.className}`}
+      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border tracking-[-0.16px] ${config.className}`}
     >
       {config.label}
     </span>
