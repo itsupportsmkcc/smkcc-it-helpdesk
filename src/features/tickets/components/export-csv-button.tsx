@@ -5,10 +5,10 @@ import { getReportData, ReportItem } from "../actions/report-actions";
 import { Download, Loader2 } from "lucide-react";
 
 const statusTextMap: Record<string, string> = {
-  new: "งานใหม่ (New)",
+  new: "รับเรื่องแล้ว (New)",
   in_progress: "กำลังดำเนินการ (In Progress)",
-  pending: "ติดปัญหา (Pending)",
-  resolved: "ปิดงานแล้ว (Resolved)",
+  pending: "อยู่ระหว่างดำเนินการ (Pending)",
+  resolved: "เสร็จสิ้น (Complete)",
 };
 
 const priorityTextMap: Record<string, string> = {

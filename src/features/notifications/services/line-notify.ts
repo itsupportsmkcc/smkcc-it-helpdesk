@@ -20,10 +20,10 @@ export interface SendAdminNewTicketParams {
 }
 
 const statusTextMap: Record<TicketStatus, string> = {
-  new: "รับเรื่องเรียบร้อย (New)",
+  new: "รับเรื่องแล้ว (New)",
   in_progress: "กำลังดำเนินการ (In Progress)",
-  pending: "ติดปัญหา/รออะไหล่ (Pending)",
-  resolved: "ดำเนินการเสร็จสิ้น (Resolved)",
+  pending: "อยู่ระหว่างดำเนินการ (Pending)",
+  resolved: "เสร็จสิ้น (Complete)",
 };
 
 const priorityTextMap: Record<Priority, string> = {

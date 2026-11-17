@@ -6,19 +6,19 @@ interface StatusBadgeProps {
 
 const statusConfig: Record<TicketStatus, { label: string; className: string }> = {
   new: {
-    label: "งานใหม่ (New)",
-    className: "bg-[#d4e9e2] text-[#006241] border-[#a3d2c1]",
-  },
-  in_progress: {
-    label: "กำลังทำ (In Progress)",
+    label: "รับเรื่องแล้ว (New)",
     className: "bg-[#faf6ee] text-[#8c6b2d] border-[#dfc49d]",
   },
+  in_progress: {
+    label: "กำลังดำเนินการ (In Progress)",
+    className: "bg-[#d4e9e2] text-[#006241] border-[#a3d2c1]",
+  },
   pending: {
-    label: "ติดปัญหา (Pending)",
-    className: "bg-[#edebe9] text-[rgba(0,0,0,0.87)] border-[#d6dbde]",
+    label: "อยู่ระหว่างดำเนินการ (Pending)",
+    className: "bg-[#fff7ed] text-[#c2410c] border-[#fed7aa]",
   },
   resolved: {
-    label: "ปิดงานแล้ว (Resolved)",
+    label: "เสร็จสิ้น (Complete)",
     className: "bg-[#1E3932] text-white border-[#1E3932]",
   },
 };

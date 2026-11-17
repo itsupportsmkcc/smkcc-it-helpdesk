@@ -72,15 +72,15 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
           <p className="text-3xl font-bold text-[#1E3932] mt-1 tracking-tight">{stats.total}</p>
         </div>
         <div className="bg-[#faf6ee] p-5 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] border border-[#dfc49d]">
-          <p className="text-xs font-semibold text-[#8c6b2d] uppercase tracking-wider">งานใหม่ (New)</p>
+          <p className="text-xs font-semibold text-[#8c6b2d] uppercase tracking-wider">รับเรื่องแล้ว (New)</p>
           <p className="text-3xl font-bold text-[#8c6b2d] mt-1 tracking-tight">{stats.new}</p>
         </div>
         <div className="bg-[#d4e9e2]/60 p-5 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] border border-[#a3d2c1]">
-          <p className="text-xs font-semibold text-[#006241] uppercase tracking-wider">กำลังทำ (In Progress)</p>
+          <p className="text-xs font-semibold text-[#006241] uppercase tracking-wider">กำลังดำเนินการ (In Progress)</p>
           <p className="text-3xl font-bold text-[#006241] mt-1 tracking-tight">{stats.inProgress}</p>
         </div>
         <div className="bg-[#1E3932] p-5 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] text-white">
-          <p className="text-xs font-semibold text-[#d4e9e2] uppercase tracking-wider">ปิดงานแล้ว (Resolved)</p>
+          <p className="text-xs font-semibold text-[#d4e9e2] uppercase tracking-wider">เสร็จสิ้น (Complete)</p>
           <p className="text-3xl font-bold text-white mt-1 tracking-tight">{stats.resolved}</p>
         </div>
       </div>
@@ -90,10 +90,10 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           {[
             { id: "all", label: "ทั้งหมด" },
-            { id: "new", label: "งานใหม่" },
-            { id: "in_progress", label: "กำลังทำ" },
-            { id: "pending", label: "ติดปัญหา" },
-            { id: "resolved", label: "ปิดงานแล้ว" },
+            { id: "new", label: "รับเรื่องแล้ว" },
+            { id: "in_progress", label: "กำลังดำเนินการ" },
+            { id: "pending", label: "อยู่ระหว่างดำเนินการ" },
+            { id: "resolved", label: "เสร็จสิ้น" },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -289,7 +289,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                         {st === "new" && "New"}
                         {st === "in_progress" && "In Progress"}
                         {st === "pending" && "Pending"}
-                        {st === "resolved" && "Resolved"}
+                        {st === "resolved" && "Complete"}
                       </button>
                     )
                   )}

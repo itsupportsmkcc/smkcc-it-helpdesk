@@ -11,6 +11,13 @@ import { ExportCsvButton } from "@/features/tickets/components/export-csv-button
 
 export const dynamic = "force-dynamic";
 
+const statusTextMap: Record<string, string> = {
+  new: "รับเรื่องแล้ว",
+  in_progress: "กำลังดำเนินการ",
+  pending: "อยู่ระหว่างดำเนินการ",
+  resolved: "เสร็จสิ้น",
+};
+
 export default async function AdminReportPage({
   searchParams,
 }: {
@@ -160,10 +167,10 @@ export default async function AdminReportPage({
           <div className="p-4 rounded-xl bg-[#faf6ee] border border-[#dfc49d] text-center">
             <p className="text-xs font-semibold text-[#8c6b2d] uppercase">กำลังดำเนินการ</p>
             <p className="text-2xl sm:text-3xl font-bold text-[#8c6b2d] mt-1">{inProgress + newCases + pending}</p>
-            <p className="text-[11px] text-[#8c6b2d]/80 mt-0.5">ใหม่ {newCases} | กำลังทำ {inProgress} | รอ {pending}</p>
+            <p className="text-[11px] text-[#8c6b2d]/80 mt-0.5">รับเรื่อง {newCases} | กำลังทำ {inProgress} | รอ {pending}</p>
           </div>
           <div className="p-4 rounded-xl bg-[#d4e9e2]/50 border border-[#a3d2c1] text-center">
-            <p className="text-xs font-semibold text-[#006241] uppercase">ปิดงานสำเร็จ</p>
+            <p className="text-xs font-semibold text-[#006241] uppercase">เสร็จสิ้น (Complete)</p>
             <p className="text-2xl sm:text-3xl font-bold text-[#006241] mt-1">{resolved}</p>
             <p className="text-[11px] text-[#006241]/80 mt-0.5">สำเร็จ {resolutionRate}%</p>
           </div>
@@ -286,12 +293,14 @@ export default async function AdminReportPage({
                           className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold ${
                             row.status === "resolved"
                               ? "bg-[#1E3932] text-white"
+                              : row.status === "pending"
+                              ? "bg-[#fff7ed] text-[#c2410c]"
                               : row.status === "in_progress"
-                              ? "bg-[#faf6ee] text-[#8c6b2d]"
-                              : "bg-[#d4e9e2] text-[#006241]"
+                              ? "bg-[#d4e9e2] text-[#006241]"
+                              : "bg-[#faf6ee] text-[#8c6b2d]"
                           }`}
                         >
-                          {row.status}
+                          {statusTextMap[row.status] || row.status}
                         </span>
                       </td>
                       <td className="p-2.5 text-center">

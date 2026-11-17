@@ -222,15 +222,19 @@ export default function GuidePage() {
               <div className="bg-white rounded-lg p-2.5 border border-[#e7e7e7] space-y-1.5 text-[11px]">
                 <div className="flex items-center justify-between bg-[#faf6ee] p-1.5 rounded border border-[#dfc49d]/60">
                   <span className="font-bold text-[#8c6b2d]">🟡 รับเรื่องแล้ว (New)</span>
-                  <span className="text-[10px] text-[rgba(0,0,0,0.55)]">คำขอถึงเจ้าหน้าที่แล้ว</span>
+                  <span className="text-[10px] text-[rgba(0,0,0,0.55)]">ส่งถึงเจ้าหน้าที่เรียบร้อย</span>
                 </div>
                 <div className="flex items-center justify-between bg-[#d4e9e2]/50 p-1.5 rounded border border-[#a3d2c1]">
-                  <span className="font-bold text-[#006241]">🔵 กำลังดำเนินการ</span>
-                  <span className="text-[10px] text-[rgba(0,0,0,0.55)]">ช่างกำลังลงพื้นที่แก้ไข</span>
+                  <span className="font-bold text-[#006241]">🔵 กำลังดำเนินการ (In Progress)</span>
+                  <span className="text-[10px] text-[rgba(0,0,0,0.55)]">เจ้าหน้าที่กำลังแก้ไข/ลงพื้นที่</span>
+                </div>
+                <div className="flex items-center justify-between bg-[#fff7ed] p-1.5 rounded border border-[#fed7aa]">
+                  <span className="font-bold text-[#c2410c]">🟠 อยู่ระหว่างดำเนินการ (Pending)</span>
+                  <span className="text-[10px] text-[rgba(0,0,0,0.55)]">อยู่ระหว่างรอชิ้นส่วน หรือรอข้อมูลเพิ่มเติม</span>
                 </div>
                 <div className="flex items-center justify-between bg-[#1E3932] text-white p-1.5 rounded">
-                  <span className="font-bold text-[#d4e9e2]">🟢 เสร็จสิ้น (Resolved)</span>
-                  <span className="text-[10px] text-white/80">แก้ไขปัญหาเรียบร้อย</span>
+                  <span className="font-bold text-[#d4e9e2]">🟢 เสร็จสิ้น (Complete)</span>
+                  <span className="text-[10px] text-white/80">ดำเนินการแก้ไขเรียบร้อยแล้ว</span>
                 </div>
               </div>
             </div>
