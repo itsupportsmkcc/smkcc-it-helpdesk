@@ -6,6 +6,7 @@ import {
   updateTicketStatus,
   softDeleteTicket,
   restoreTicket,
+  sendDirectMessageToUser,
 } from "../actions/ticket-actions";
 import { StatusBadge } from "./status-badge";
 import { PriorityBadge } from "./priority-badge";
@@ -21,6 +22,7 @@ import {
   Trash2,
   RotateCcw,
   AlertTriangle,
+  Send,
 } from "lucide-react";
 
 interface TicketTableProps {
@@ -36,6 +38,10 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
   const [confirmDeleteTicketItem, setConfirmDeleteTicketItem] = useState<TicketItem | null>(null);
   const [activeNoteTicketId, setActiveNoteTicketId] = useState<string | null>(null);
   const [adminNote, setAdminNote] = useState<string>("");
+  const [activeDirectMsgTicketId, setActiveDirectMsgTicketId] = useState<string | null>(null);
+  const [directMsgText, setDirectMsgText] = useState<string>("");
+  const [sendingDirectMsgId, setSendingDirectMsgId] = useState<string | null>(null);
+  const [directMsgSuccessTicketId, setDirectMsgSuccessTicketId] = useState<string | null>(null);
 
   const activeTickets = tickets.filter((t) => !t.isDeleted);
   const trashTickets = tickets.filter((t) => t.isDeleted);
@@ -105,6 +111,28 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
       );
     } else {
       alert("ไม่สามารถกู้คืนได้: " + result.error);
+    }
+  };
+
+  const handleSendDirectMessage = async (ticketId: string) => {
+    if (!directMsgText.trim()) return;
+
+    setSendingDirectMsgId(ticketId);
+    const result = await sendDirectMessageToUser({
+      ticketId,
+      message: directMsgText.trim(),
+    });
+    setSendingDirectMsgId(null);
+
+    if (result.success) {
+      setDirectMsgSuccessTicketId(ticketId);
+      setDirectMsgText("");
+      setTimeout(() => {
+        setDirectMsgSuccessTicketId(null);
+        setActiveDirectMsgTicketId(null);
+      }, 3500);
+    } else {
+      alert("ไม่สามารถส่งข้อความได้: " + result.error);
     }
   };
 
@@ -418,18 +446,88 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                     )}
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setActiveNoteTicketId(
-                        activeNoteTicketId === ticket.id ? null : ticket.id
-                      )
-                    }
-                    className="text-xs text-[#00754A] hover:text-[#006241] font-semibold inline-flex items-center gap-1"
-                  >
-                    <MessageSquare className="w-3.5 h-3.5" />
-                    {activeNoteTicketId === ticket.id ? "ปิดกล่องโน้ต" : "+ แนบโน้ตแจ้งผู้ใช้ใน LINE"}
-                  </button>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveDirectMsgTicketId(
+                          activeDirectMsgTicketId === ticket.id ? null : ticket.id
+                        );
+                        setActiveNoteTicketId(null);
+                      }}
+                      className={`text-xs font-semibold inline-flex items-center gap-1.5 px-3 py-1 rounded-full border transition-all duration-200 active:scale-[0.95] ${
+                        activeDirectMsgTicketId === ticket.id
+                          ? "bg-[#06C755] text-white border-[#06C755] shadow-sm"
+                          : "bg-white text-[#06C755] border-[#06C755]/50 hover:bg-[#06C755]/10"
+                      }`}
+                    >
+                      <Send className="w-3.5 h-3.5" />
+                      <span>{activeDirectMsgTicketId === ticket.id ? "ปิดกล่องแชท" : "แชทส่งเข้า LINE"}</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveNoteTicketId(
+                          activeNoteTicketId === ticket.id ? null : ticket.id
+                        );
+                        setActiveDirectMsgTicketId(null);
+                      }}
+                      className="text-xs text-[#00754A] hover:text-[#006241] font-semibold inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-transparent hover:bg-[#f2f0eb]"
+                    >
+                      <MessageSquare className="w-3.5 h-3.5" />
+                      {activeNoteTicketId === ticket.id ? "ปิดกล่องโน้ต" : "+ โน้ตย้ายสถานะ"}
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Direct Message to User Box (แชทตรงเข้า LINE) */}
+              {!ticket.isDeleted && activeDirectMsgTicketId === ticket.id && (
+                <div className="mt-3 p-3.5 bg-[#f0fdf4] border border-[#bbf7d0] rounded-xl space-y-2.5">
+                  <div className="flex flex-wrap items-center justify-between gap-1">
+                    <label className="text-xs font-bold text-[#166534] flex items-center gap-1.5">
+                      <Send className="w-3.5 h-3.5 text-[#06C755]" />
+                      <span>ส่งข้อความด่วนเข้า LINE ผู้แจ้ง (Push Message ทันที):</span>
+                    </label>
+                    <span className="text-[11px] text-[#166534]/80 font-medium">
+                      ผู้รับ: <b>{ticket.fullName}</b> {ticket.lineDisplayName ? `(@${ticket.lineDisplayName})` : ""}
+                    </span>
+                  </div>
+
+                  <textarea
+                    rows={2}
+                    value={directMsgText}
+                    onChange={(e) => setDirectMsgText(e.target.value)}
+                    placeholder="พิมพ์ข้อความที่ต้องการแจ้งผู้ใช้ เช่น ช่างกำลังเข้าไปตรวจสอบที่ห้อง 201 ภายใน 10 นาที หรือ รบกวนโทรกลับ 087-xxx-xxxx..."
+                    className="w-full px-3 py-2 text-xs rounded-lg border border-[#86efac] bg-white focus:outline-none focus:ring-1 focus:ring-[#00754A] resize-none"
+                  />
+
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-0.5">
+                    <div className="text-[11px] text-[rgba(0,0,0,0.58)]">
+                      {directMsgSuccessTicketId === ticket.id ? (
+                        <span className="text-[#166534] font-bold inline-flex items-center gap-1">
+                          ✅ ส่งข้อความเข้า LINE ผู้ใช้เรียบร้อยแล้ว
+                        </span>
+                      ) : (
+                        <span>💡 ข้อความจะเด้งเข้าแชท LINE SMKCC IT Service ของผู้ใช้ทันที</span>
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      disabled={sendingDirectMsgId === ticket.id || !directMsgText.trim()}
+                      onClick={() => handleSendDirectMessage(ticket.id)}
+                      className="px-4 py-1.5 rounded-full text-xs font-bold text-white bg-[#06C755] hover:bg-[#05a847] transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-sm inline-flex items-center justify-center gap-1.5 self-end sm:self-auto"
+                    >
+                      {sendingDirectMsgId === ticket.id ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : (
+                        <Send className="w-3.5 h-3.5" />
+                      )}
+                      <span>ส่งเข้า LINE ทันที</span>
+                    </button>
+                  </div>
                 </div>
               )}
 

@@ -3,6 +3,7 @@ import {
   createTicketSchema,
   updateTicketStatusSchema,
   ticketIdSchema,
+  sendDirectMessageSchema,
 } from "./ticket-schema";
 
 describe("Ticket Schema Validation", () => {
@@ -109,6 +110,37 @@ describe("Ticket Schema Validation", () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.issues[0].message).toContain("UUID ที่ถูกต้อง");
+    }
+  });
+
+  it("should validate a valid direct message input", () => {
+    // Arrange
+    const input = {
+      ticketId: "123e4567-e89b-12d3-a456-426614174000",
+      message: "ช่างกำลังเข้าไปตรวจสอบที่ห้อง 201 ครับ",
+    };
+
+    // Act
+    const result = sendDirectMessageSchema.safeParse(input);
+
+    // Assert
+    expect(result.success).toBe(true);
+  });
+
+  it("should fail direct message validation when message is empty or whitespace only", () => {
+    // Arrange
+    const input = {
+      ticketId: "123e4567-e89b-12d3-a456-426614174000",
+      message: "   ",
+    };
+
+    // Act
+    const result = sendDirectMessageSchema.safeParse(input);
+
+    // Assert
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues[0].message).toContain("กรุณากรอกข้อความ");
     }
   });
 });

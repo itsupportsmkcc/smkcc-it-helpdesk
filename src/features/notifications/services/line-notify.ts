@@ -185,3 +185,70 @@ export async function sendLineAdminNewTicketAlert({
     return { success: false, error: message };
   }
 }
+
+export interface SendDirectAdminMessageParams {
+  lineUserId: string;
+  ticketId: string;
+  issueType: string;
+  message: string;
+  adminName?: string;
+}
+
+/**
+ * ส่งข้อความด่วนจากแอดมินตรงเข้าแชท LINE ของผู้ใช้โดยเฉพาะ
+ */
+export async function sendLineDirectAdminMessage({
+  lineUserId,
+  ticketId,
+  issueType,
+  message,
+  adminName = "เจ้าหน้าที่ไอที (นายเอกพงศ์)",
+}: SendDirectAdminMessageParams): Promise<{ success: boolean; error?: string }> {
+  const channelAccessToken = process.env.LINE_CHANNEL_ACCESS_TOKEN;
+
+  if (!channelAccessToken) {
+    console.warn("[LINE Direct Message] Skipped: LINE_CHANNEL_ACCESS_TOKEN not configured.");
+    return { success: true };
+  }
+
+  if (!lineUserId || lineUserId.trim() === "") {
+    return { success: false, error: "Missing lineUserId" };
+  }
+
+  const shortTicketId = ticketId.slice(0, 8);
+  let messageText = `💬 ข้อความจากงานไอที SMKCC\n`;
+  messageText += `(อ้างอิงเคส #${shortTicketId}: ${issueType})\n\n`;
+  messageText += `${message.trim()}\n\n`;
+  messageText += `— จาก: ${adminName}`;
+
+  try {
+    const response = await fetch("https://api.line.me/v2/bot/message/push", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${channelAccessToken}`,
+      },
+      body: JSON.stringify({
+        to: lineUserId,
+        messages: [
+          {
+            type: "text",
+            text: messageText,
+          },
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.text();
+      console.error("[LINE Direct Message Error]", errorBody);
+      return { success: false, error: errorBody };
+    }
+
+    return { success: true };
+  } catch (err) {
+    const errorMsg = err instanceof Error ? err.message : "Unknown error sending direct LINE message";
+    console.error("[LINE Direct Message Exception]", errorMsg);
+    return { success: false, error: errorMsg };
+  }
+}

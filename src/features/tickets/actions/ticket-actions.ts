@@ -7,11 +7,13 @@ import {
   updateTicketStatusSchema,
   UpdateTicketStatusInput,
   ticketIdSchema,
+  sendDirectMessageSchema,
 } from "../schemas/ticket-schema";
 import { ActionResult, TicketItem } from "../types";
 import {
   sendLineStatusNotification,
   sendLineAdminNewTicketAlert,
+  sendLineDirectAdminMessage,
 } from "@/features/notifications/services/line-notify";
 
 interface DbTicketRow {
@@ -234,6 +236,56 @@ export async function restoreTicket(
 
   const item = mapRowToTicketItem(data as DbTicketRow);
   return { success: true, data: item };
+}
+
+export async function sendDirectMessageToUser(
+  rawInput: unknown
+): Promise<ActionResult<{ ticketId: string; sentAt: string }>> {
+  const parsed = sendDirectMessageSchema.safeParse(rawInput);
+  if (!parsed.success) {
+    const errorMsg = parsed.error.issues[0]?.message ?? "ข้อมูลไม่ถูกต้อง";
+    return { success: false, error: errorMsg };
+  }
+
+  const { ticketId, message } = parsed.data;
+  const supabase = getAdminSupabase();
+
+  const { data: ticket, error } = await supabase
+    .from("tickets")
+    .select("id, line_user_id, issue_type, assignee")
+    .eq("id", ticketId)
+    .single();
+
+  if (error || !ticket) {
+    return { success: false, error: "ไม่พบข้อมูลเคสนี้ในระบบ" };
+  }
+
+  if (!ticket.line_user_id) {
+    return { success: false, error: "เคสนี้ไม่มีข้อมูล LINE User ID ของผู้แจ้ง" };
+  }
+
+  const lineResult = await sendLineDirectAdminMessage({
+    lineUserId: ticket.line_user_id,
+    ticketId: ticket.id,
+    issueType: ticket.issue_type,
+    message,
+    adminName: ticket.assignee || "เจ้าหน้าที่ไอที (นายเอกพงศ์)",
+  });
+
+  if (!lineResult.success) {
+    return {
+      success: false,
+      error: lineResult.error || "ไม่สามารถส่งข้อความเข้า LINE ได้",
+    };
+  }
+
+  return {
+    success: true,
+    data: {
+      ticketId: ticket.id,
+      sentAt: new Date().toISOString(),
+    },
+  };
 }
 
 export async function getTickets(filterStatus?: string): Promise<ActionResult<TicketItem[]>> {

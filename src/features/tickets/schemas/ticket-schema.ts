@@ -32,3 +32,14 @@ export const ticketIdSchema = z.object({
 });
 
 export type TicketIdInput = z.infer<typeof ticketIdSchema>;
+
+export const sendDirectMessageSchema = z.object({
+  ticketId: z.string().uuid("รหัสเคสต้องเป็น UUID ที่ถูกต้อง"),
+  message: z
+    .string()
+    .trim()
+    .min(1, "กรุณากรอกข้อความที่ต้องการส่งถึงผู้ใช้")
+    .max(1000, "ข้อความต้องมีความยาวไม่เกิน 1,000 ตัวอักษร"),
+});
+
+export type SendDirectMessageInput = z.infer<typeof sendDirectMessageSchema>;

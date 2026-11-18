@@ -4,6 +4,7 @@ import {
   updateTicketStatus,
   softDeleteTicket,
   restoreTicket,
+  sendDirectMessageToUser,
 } from "./ticket-actions";
 import * as supabaseLib from "@/lib/supabase";
 import * as lineNotifyLib from "@/features/notifications/services/line-notify";
@@ -287,6 +288,96 @@ describe("Ticket Server Actions", () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error).toContain("UUID ที่ถูกต้อง");
+    }
+  });
+
+  it("should send direct message to user successfully via LINE push", async () => {
+    // Arrange
+    const mockTicketRow = {
+      id: "123e4567-e89b-12d3-a456-426614174000",
+      line_user_id: "U_TEST_USER_123",
+      issue_type: "แจ้งซ่อมโปรเจกเตอร์",
+      assignee: "นายเอกพงศ์ (IT Admin)",
+    };
+
+    const mockSupabase = {
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            single: vi.fn().mockResolvedValue({
+              data: mockTicketRow,
+              error: null,
+            }),
+          }),
+        }),
+      }),
+    };
+
+    vi.spyOn(supabaseLib, "getAdminSupabase").mockReturnValue(
+      mockSupabase as unknown as ReturnType<typeof supabaseLib.getAdminSupabase>
+    );
+
+    const directMsgSpy = vi
+      .spyOn(lineNotifyLib, "sendLineDirectAdminMessage")
+      .mockResolvedValue({ success: true });
+
+    // Act
+    const result = await sendDirectMessageToUser({
+      ticketId: "123e4567-e89b-12d3-a456-426614174000",
+      message: "กำลังนำหลอดภาพสำรองไปเปลี่ยนที่ห้อง 301 ครับ",
+    });
+
+    // Assert
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.ticketId).toBe("123e4567-e89b-12d3-a456-426614174000");
+      expect(result.data.sentAt).toBeDefined();
+    }
+    expect(directMsgSpy).toHaveBeenCalledTimes(1);
+    expect(directMsgSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        lineUserId: "U_TEST_USER_123",
+        message: "กำลังนำหลอดภาพสำรองไปเปลี่ยนที่ห้อง 301 ครับ",
+      })
+    );
+  });
+
+  it("should fail sendDirectMessageToUser when ticket has no lineUserId", async () => {
+    // Arrange
+    const mockTicketRow = {
+      id: "123e4567-e89b-12d3-a456-426614174000",
+      line_user_id: "",
+      issue_type: "แจ้งซ่อมโปรเจกเตอร์",
+      assignee: "นายเอกพงศ์ (IT Admin)",
+    };
+
+    const mockSupabase = {
+      from: vi.fn().mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            single: vi.fn().mockResolvedValue({
+              data: mockTicketRow,
+              error: null,
+            }),
+          }),
+        }),
+      }),
+    };
+
+    vi.spyOn(supabaseLib, "getAdminSupabase").mockReturnValue(
+      mockSupabase as unknown as ReturnType<typeof supabaseLib.getAdminSupabase>
+    );
+
+    // Act
+    const result = await sendDirectMessageToUser({
+      ticketId: "123e4567-e89b-12d3-a456-426614174000",
+      message: "ทดสอบ",
+    });
+
+    // Assert
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error).toContain("LINE User ID");
     }
   });
 });
