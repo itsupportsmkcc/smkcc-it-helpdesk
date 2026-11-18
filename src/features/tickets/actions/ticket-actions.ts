@@ -6,6 +6,7 @@ import {
   CreateTicketInput,
   updateTicketStatusSchema,
   UpdateTicketStatusInput,
+  ticketIdSchema,
 } from "../schemas/ticket-schema";
 import { ActionResult, TicketItem } from "../types";
 import {
@@ -29,6 +30,8 @@ interface DbTicketRow {
   assignee: string;
   created_at: string;
   updated_at: string;
+  is_deleted?: boolean | null;
+  deleted_at?: string | null;
 }
 
 function mapRowToTicketItem(row: DbTicketRow): TicketItem {
@@ -48,6 +51,8 @@ function mapRowToTicketItem(row: DbTicketRow): TicketItem {
     assignee: row.assignee,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
+    isDeleted: Boolean(row.is_deleted),
+    deletedAt: row.deleted_at ?? null,
   };
 }
 
@@ -162,6 +167,72 @@ export async function updateTicketStatus(
     adminNote,
   });
 
+  return { success: true, data: item };
+}
+
+export async function softDeleteTicket(
+  rawInput: unknown
+): Promise<ActionResult<TicketItem>> {
+  const parsed = ticketIdSchema.safeParse(rawInput);
+  if (!parsed.success) {
+    const errorMsg = parsed.error.issues[0]?.message ?? "ข้อมูลไม่ถูกต้อง";
+    return { success: false, error: errorMsg };
+  }
+
+  const { ticketId } = parsed.data;
+  const supabase = getAdminSupabase();
+  const now = new Date().toISOString();
+
+  const { data, error } = await supabase
+    .from("tickets")
+    .update({
+      is_deleted: true,
+      deleted_at: now,
+      updated_at: now,
+    })
+    .eq("id", ticketId)
+    .select()
+    .single();
+
+  if (error || !data) {
+    console.error("[softDeleteTicket error]", error);
+    return { success: false, error: error?.message || "ไม่สามารถย้ายเคสลงถังขยะได้" };
+  }
+
+  const item = mapRowToTicketItem(data as DbTicketRow);
+  return { success: true, data: item };
+}
+
+export async function restoreTicket(
+  rawInput: unknown
+): Promise<ActionResult<TicketItem>> {
+  const parsed = ticketIdSchema.safeParse(rawInput);
+  if (!parsed.success) {
+    const errorMsg = parsed.error.issues[0]?.message ?? "ข้อมูลไม่ถูกต้อง";
+    return { success: false, error: errorMsg };
+  }
+
+  const { ticketId } = parsed.data;
+  const supabase = getAdminSupabase();
+  const now = new Date().toISOString();
+
+  const { data, error } = await supabase
+    .from("tickets")
+    .update({
+      is_deleted: false,
+      deleted_at: null,
+      updated_at: now,
+    })
+    .eq("id", ticketId)
+    .select()
+    .single();
+
+  if (error || !data) {
+    console.error("[restoreTicket error]", error);
+    return { success: false, error: error?.message || "ไม่สามารถกู้คืนเคสได้" };
+  }
+
+  const item = mapRowToTicketItem(data as DbTicketRow);
   return { success: true, data: item };
 }
 

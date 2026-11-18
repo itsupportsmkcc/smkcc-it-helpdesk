@@ -1,5 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { createTicket, updateTicketStatus } from "./ticket-actions";
+import {
+  createTicket,
+  updateTicketStatus,
+  softDeleteTicket,
+  restoreTicket,
+} from "./ticket-actions";
 import * as supabaseLib from "@/lib/supabase";
 import * as lineNotifyLib from "@/features/notifications/services/line-notify";
 
@@ -166,5 +171,122 @@ describe("Ticket Server Actions", () => {
         adminNote: "เปลี่ยนสายจอภาพเรียบร้อยแล้วครับ",
       })
     );
+  });
+
+  it("should soft delete ticket successfully", async () => {
+    // Arrange
+    const mockDeletedRow = {
+      id: "123e4567-e89b-12d3-a456-426614174000",
+      line_user_id: "U_TEST_USER_123",
+      full_name: "นายทดสอบ ไอที",
+      phone: "0891234567",
+      user_type: "staff",
+      issue_type: "แจ้งซ่อมจอภาพ",
+      location: "ห้อง 201",
+      priority: "high",
+      description: null,
+      image_url: null,
+      status: "new",
+      assignee: "นายเอกพงศ์ (IT Admin)",
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      is_deleted: true,
+      deleted_at: new Date().toISOString(),
+    };
+
+    const mockSupabase = {
+      from: vi.fn().mockReturnValue({
+        update: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            select: vi.fn().mockReturnValue({
+              single: vi.fn().mockResolvedValue({
+                data: mockDeletedRow,
+                error: null,
+              }),
+            }),
+          }),
+        }),
+      }),
+    };
+
+    vi.spyOn(supabaseLib, "getAdminSupabase").mockReturnValue(
+      mockSupabase as unknown as ReturnType<typeof supabaseLib.getAdminSupabase>
+    );
+
+    // Act
+    const result = await softDeleteTicket({
+      ticketId: "123e4567-e89b-12d3-a456-426614174000",
+    });
+
+    // Assert
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.isDeleted).toBe(true);
+      expect(result.data.deletedAt).toBeDefined();
+    }
+  });
+
+  it("should restore ticket successfully", async () => {
+    // Arrange
+    const mockRestoredRow = {
+      id: "123e4567-e89b-12d3-a456-426614174000",
+      line_user_id: "U_TEST_USER_123",
+      full_name: "นายทดสอบ ไอที",
+      phone: "0891234567",
+      user_type: "staff",
+      issue_type: "แจ้งซ่อมจอภาพ",
+      location: "ห้อง 201",
+      priority: "high",
+      description: null,
+      image_url: null,
+      status: "new",
+      assignee: "นายเอกพงศ์ (IT Admin)",
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      is_deleted: false,
+      deleted_at: null,
+    };
+
+    const mockSupabase = {
+      from: vi.fn().mockReturnValue({
+        update: vi.fn().mockReturnValue({
+          eq: vi.fn().mockReturnValue({
+            select: vi.fn().mockReturnValue({
+              single: vi.fn().mockResolvedValue({
+                data: mockRestoredRow,
+                error: null,
+              }),
+            }),
+          }),
+        }),
+      }),
+    };
+
+    vi.spyOn(supabaseLib, "getAdminSupabase").mockReturnValue(
+      mockSupabase as unknown as ReturnType<typeof supabaseLib.getAdminSupabase>
+    );
+
+    // Act
+    const result = await restoreTicket({
+      ticketId: "123e4567-e89b-12d3-a456-426614174000",
+    });
+
+    // Assert
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.isDeleted).toBe(false);
+      expect(result.data.deletedAt).toBeNull();
+    }
+  });
+
+  it("should fail soft delete when ticketId is invalid", async () => {
+    // Act
+    const result = await softDeleteTicket({ ticketId: "invalid-id" });
+
+    // Assert
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error).toContain("UUID ที่ถูกต้อง");
+    }
   });
 });

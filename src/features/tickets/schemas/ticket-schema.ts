@@ -26,3 +26,9 @@ export const updateTicketStatusSchema = z.object({
 });
 
 export type UpdateTicketStatusInput = z.infer<typeof updateTicketStatusSchema>;
+
+export const ticketIdSchema = z.object({
+  ticketId: z.string().uuid("Ticket ID ต้องเป็น UUID ที่ถูกต้อง"),
+});
+
+export type TicketIdInput = z.infer<typeof ticketIdSchema>;

@@ -20,6 +20,8 @@ export interface TicketItem {
   updatedAt: string;
   rating?: number | null;
   comment?: string | null;
+  isDeleted?: boolean;
+  deletedAt?: string | null;
 }
 
 export type ActionResult<T> =

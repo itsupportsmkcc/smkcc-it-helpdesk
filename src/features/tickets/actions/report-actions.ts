@@ -48,7 +48,9 @@ export async function getReportData(): Promise<ActionResult<ReportItem[]>> {
     }
   }
 
-  const reports: ReportItem[] = tickets.map((t) => {
+  const reports: ReportItem[] = tickets
+    .filter((t) => !t.is_deleted)
+    .map((t) => {
     const fb = feedbackMap.get(t.id);
     return {
       id: t.id,

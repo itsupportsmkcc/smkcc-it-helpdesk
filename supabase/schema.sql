@@ -18,12 +18,15 @@ CREATE TABLE IF NOT EXISTS public.tickets (
     image_url TEXT,
     status TEXT NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'in_progress', 'pending', 'resolved')),
     assignee TEXT NOT NULL DEFAULT 'นายเอกพงศ์ (IT Admin)',
+    is_deleted BOOLEAN NOT NULL DEFAULT false,
+    deleted_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now()),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT timezone('utc'::text, now())
 );
 
 -- Index สำหรับค้นหาและจัดเรียง
 CREATE INDEX IF NOT EXISTS idx_tickets_status ON public.tickets (status);
+CREATE INDEX IF NOT EXISTS idx_tickets_is_deleted ON public.tickets (is_deleted);
 CREATE INDEX IF NOT EXISTS idx_tickets_created_at ON public.tickets (created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_tickets_line_user_id ON public.tickets (line_user_id);
 
