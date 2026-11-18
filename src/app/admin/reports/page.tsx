@@ -8,6 +8,7 @@ import { PrintButton } from "@/features/tickets/components/print-button";
 import { ReportFilter } from "@/features/tickets/components/report-filter";
 import { THAI_MONTHS } from "@/features/tickets/constants";
 import { ExportCsvButton } from "@/features/tickets/components/export-csv-button";
+import { AdminNavbar } from "@/components/admin/admin-navbar";
 
 export const dynamic = "force-dynamic";
 
@@ -106,16 +107,25 @@ export default async function AdminReportPage({
   });
 
   return (
-    <main className="min-h-screen bg-[#f2f0eb] p-4 sm:p-8 print:p-0 print:bg-white text-[rgba(0,0,0,0.87)] font-sarabun">
-      {/* Top Action Bar & Filter (ซ่อนเมื่อพิมพ์) */}
-      <div className="max-w-5xl mx-auto mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 print:hidden">
-        <Link
-          href="/admin/dashboard"
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-[#d6dbde] text-xs font-semibold text-[#1E3932] hover:bg-[#faf6ee] transition-all shadow-sm w-fit"
-        >
-          <ArrowLeft className="w-4 h-4 text-[#00754A]" />
-          กลับหน้า Dashboard
-        </Link>
+    <main className="min-h-screen bg-[#f2f0eb] print:p-0 print:bg-white text-[rgba(0,0,0,0.87)] font-sarabun">
+      <div className="print:hidden">
+        <AdminNavbar
+          activeTab="reports"
+          averageRating={Number(avgRating)}
+          totalFeedbacks={ratedReports.length}
+        />
+      </div>
+
+      <div className="p-4 sm:p-8 print:p-0">
+        {/* Top Action Bar & Filter (ซ่อนเมื่อพิมพ์) */}
+        <div className="max-w-5xl mx-auto mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 print:hidden">
+          <Link
+            href="/admin/tickets"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-[#d6dbde] text-xs font-semibold text-[#1E3932] hover:bg-[#faf6ee] transition-all shadow-sm w-fit"
+          >
+            <ArrowLeft className="w-4 h-4 text-[#00754A]" />
+            กลับหน้ารายการแจ้งซ่อม
+          </Link>
 
         {/* ตัวเลือกกรองแยกตามเดือนและปี */}
         <ReportFilter
@@ -342,6 +352,7 @@ export default async function AdminReportPage({
           </div>
         </div>
       </div>
-    </main>
-  );
+    </div>
+  </main>
+);
 }
