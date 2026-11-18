@@ -31,9 +31,9 @@ export function ReportFilter({
   };
 
   return (
-    <div className="flex items-center gap-2 flex-wrap bg-white px-4 py-2 rounded-full border border-[#d6dbde] shadow-sm text-xs">
-      <div className="flex items-center gap-1.5 text-[#1E3932] font-semibold">
-        <Filter className="w-3.5 h-3.5 text-[#00754A]" />
+    <div className="flex items-center gap-2 flex-wrap bg-white px-4 py-1.5 rounded-full border border-[#e0e0e0] text-xs">
+      <div className="flex items-center gap-1.5 text-[#1d1d1f] font-medium">
+        <Filter className="w-3.5 h-3.5 text-[#666666]" />
         <span>เลือกช่วงเวลา:</span>
       </div>
 
@@ -41,7 +41,7 @@ export function ReportFilter({
       <select
         value={currentYear}
         onChange={(e) => handleYearChange(e.target.value)}
-        className="px-2.5 py-1 rounded-lg border border-[#d6dbde] bg-[#faf9f7] text-[#1E3932] font-semibold focus:outline-none focus:ring-1 focus:ring-[#00754A]"
+        className="px-2.5 py-1 rounded-[2px] border border-[#c4c4c6] bg-white text-[#1d1d1f] font-medium focus:outline-none focus:border-[#1d1d1f]"
       >
         <option value="all">ทุกปี (ทั้งหมด)</option>
         {availableYears.map((yr) => (
@@ -55,7 +55,7 @@ export function ReportFilter({
       <select
         value={currentMonth}
         onChange={(e) => handleMonthChange(e.target.value)}
-        className="px-2.5 py-1 rounded-lg border border-[#d6dbde] bg-[#faf9f7] text-[#1E3932] font-semibold focus:outline-none focus:ring-1 focus:ring-[#00754A]"
+        className="px-2.5 py-1 rounded-[2px] border border-[#c4c4c6] bg-white text-[#1d1d1f] font-medium focus:outline-none focus:border-[#1d1d1f]"
       >
         {THAI_MONTHS.map((m) => (
           <option key={m.value} value={m.value}>

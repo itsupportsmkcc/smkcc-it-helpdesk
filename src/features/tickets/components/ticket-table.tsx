@@ -138,28 +138,28 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
 
   return (
     <div className="space-y-6">
-      {/* Stats Cards: Starbucks Clean Café Style */}
+      {/* Stats Cards: MUJI Two-Tier Radius (2px) & Paper Canvas */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-        <div className="bg-white p-5 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] border border-[#e7e7e7]">
-          <p className="text-xs font-semibold text-[rgba(0,0,0,0.58)] uppercase tracking-wider">เคสทั้งหมด</p>
-          <p className="text-3xl font-bold text-[#1E3932] mt-1 tracking-tight">{stats.total}</p>
+        <div className="bg-white p-5 rounded-[2px] border border-[#e0e0e0]">
+          <p className="text-xs font-medium text-[#666666] uppercase tracking-wider">เคสทั้งหมด</p>
+          <p className="text-3xl font-bold text-[#1d1d1f] mt-1 tracking-tight">{stats.total}</p>
         </div>
-        <div className="bg-[#faf6ee] p-5 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] border border-[#dfc49d]">
-          <p className="text-xs font-semibold text-[#8c6b2d] uppercase tracking-wider">รับเรื่องแล้ว (New)</p>
-          <p className="text-3xl font-bold text-[#8c6b2d] mt-1 tracking-tight">{stats.new}</p>
+        <div className="bg-[#ebebec] p-5 rounded-[2px] border border-[#e0e0e0]">
+          <p className="text-xs font-medium text-[#666666] uppercase tracking-wider">รับเรื่องแล้ว (New)</p>
+          <p className="text-3xl font-bold text-[#1d1d1f] mt-1 tracking-tight">{stats.new}</p>
         </div>
-        <div className="bg-[#d4e9e2]/60 p-5 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] border border-[#a3d2c1]">
-          <p className="text-xs font-semibold text-[#006241] uppercase tracking-wider">กำลังดำเนินการ (In Progress)</p>
-          <p className="text-3xl font-bold text-[#006241] mt-1 tracking-tight">{stats.inProgress}</p>
+        <div className="bg-white p-5 rounded-[2px] border border-[#c4c4c6]">
+          <p className="text-xs font-medium text-[#666666] uppercase tracking-wider">กำลังดำเนินการ (In Progress)</p>
+          <p className="text-3xl font-bold text-[#1d1d1f] mt-1 tracking-tight">{stats.inProgress}</p>
         </div>
-        <div className="bg-[#1E3932] p-5 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] text-white">
-          <p className="text-xs font-semibold text-[#d4e9e2] uppercase tracking-wider">เสร็จสิ้น (Complete)</p>
+        <div className="bg-[#1d1d1f] p-5 rounded-[2px] border border-[#1d1d1f] text-white">
+          <p className="text-xs font-medium text-[#c4c4c6] uppercase tracking-wider">เสร็จสิ้น (Complete)</p>
           <p className="text-3xl font-bold text-white mt-1 tracking-tight">{stats.resolved}</p>
         </div>
       </div>
 
-      {/* Filter Tabs: Starbucks 50px Pills */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-3 rounded-[12px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] border border-[#e7e7e7]">
+      {/* Filter Tabs: MUJI 9999px Pills */}
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-3 rounded-[2px] border border-[#e0e0e0]">
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
           {[
             { id: "all", label: "ทั้งหมด" },
@@ -167,26 +167,26 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
             { id: "in_progress", label: "กำลังดำเนินการ" },
             { id: "pending", label: "อยู่ระหว่างดำเนินการ" },
             { id: "resolved", label: "เสร็จสิ้น" },
-            { id: "trash", label: `🗑️ ถังขยะ (${stats.trash})` },
+            { id: "trash", label: `ถังขยะ (${stats.trash})` },
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setSelectedStatus(tab.id)}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-[-0.16px] transition-all duration-200 active:scale-[0.95] shrink-0 border ${
+              className={`px-4 py-1.5 rounded-full text-xs font-medium tracking-[-0.16px] transition-all duration-150 shrink-0 border ${
                 selectedStatus === tab.id
                   ? tab.id === "trash"
-                    ? "bg-[#c2410c] text-white border-[#c2410c] shadow-sm"
-                    : "bg-[#00754A] text-white border-[#00754A] shadow-sm"
+                    ? "bg-[#7f0019] text-white border-[#7f0019]"
+                    : "bg-[#1d1d1f] text-white border-[#1d1d1f]"
                   : tab.id === "trash"
-                  ? "bg-transparent text-[#c2410c] border-[#fed7aa] hover:bg-[#fff7ed]"
-                  : "bg-transparent text-[rgba(0,0,0,0.87)] border-transparent hover:bg-[#edebe9]"
+                  ? "bg-transparent text-[#7f0019] border-[#c4c4c6] hover:bg-[#ebebec]"
+                  : "bg-transparent text-[#666666] border-transparent hover:text-[#1d1d1f] hover:bg-[#ebebec]"
               }`}
             >
               {tab.label}
             </button>
           ))}
         </div>
-        <span className="text-xs text-[rgba(0,0,0,0.58)] font-medium">
+        <span className="text-xs text-[#8f8f8f] font-normal">
           แสดง {filteredTickets.length} รายการ
         </span>
       </div>
@@ -194,7 +194,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
       {/* Tickets List */}
       <div className="space-y-4">
         {filteredTickets.length === 0 ? (
-          <div className="bg-white rounded-[12px] border border-[#e7e7e7] p-10 text-center text-[rgba(0,0,0,0.58)] text-sm">
+          <div className="bg-white rounded-[2px] border border-[#e0e0e0] p-10 text-center text-[#8f8f8f] text-sm">
             {selectedStatus === "trash"
               ? "ไม่มีรายการในถังขยะ"
               : "ไม่มีรายการแจ้งซ่อมในสถานะนี้"}
@@ -203,17 +203,17 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
           filteredTickets.map((ticket) => (
             <div
               key={ticket.id}
-              className={`bg-white rounded-[12px] border p-5 sm:p-6 shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)] hover:shadow-md transition-shadow ${
+              className={`bg-white rounded-[2px] border p-5 sm:p-6 transition-colors ${
                 ticket.isDeleted
-                  ? "border-red-200 bg-red-50/20"
-                  : "border-[#e7e7e7]"
+                  ? "border-[#c4c4c6] bg-[#ebebec]/40"
+                  : "border-[#e0e0e0]"
               }`}
             >
               {/* Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#e7e7e7] pb-3 mb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#e0e0e0] pb-3 mb-3">
                 <div className="flex items-center gap-2 flex-wrap">
                   {ticket.isDeleted ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-800 border border-red-200">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#ebebec] text-[#7f0019] border border-[#7f0019]">
                       <Trash2 className="w-3 h-3" />
                       อยู่ในถังขยะ
                     </span>
@@ -222,15 +222,15 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                   )}
                   <PriorityBadge priority={ticket.priority} />
                   {ticket.rating ? (
-                    <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#faf6ee] border border-[#dfc49d] text-[#8c6b2d] text-xs font-bold shadow-sm">
-                      <div className="flex items-center text-[#d97706]">
+                    <div className="flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#ebebec] border border-[#e0e0e0] text-[#1d1d1f] text-xs font-medium">
+                      <div className="flex items-center text-[#ffa826]">
                         {[1, 2, 3, 4, 5].map((star) => (
                           <Star
                             key={star}
                             className={`w-3 h-3 ${
                               star <= (ticket.rating || 0)
-                                ? "fill-[#d97706] text-[#d97706]"
-                                : "text-gray-300"
+                                ? "fill-[#ffa826] text-[#ffa826]"
+                                : "text-[#c4c4c6]"
                             }`}
                           />
                         ))}
@@ -238,17 +238,17 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                       <span className="ml-0.5">{ticket.rating}/5</span>
                     </div>
                   ) : ticket.status === "resolved" ? (
-                    <span className="text-[10px] text-[rgba(0,0,0,0.5)] px-2 py-0.5 rounded-full bg-[#f2f0eb] border border-[#e7e7e7] font-medium">
+                    <span className="text-[10px] text-[#8f8f8f] px-2 py-0.5 rounded-full bg-[#ebebec] border border-[#e0e0e0] font-normal">
                       รอผู้ใช้ประเมิน
                     </span>
                   ) : null}
-                  <span className="text-xs text-[rgba(0,0,0,0.4)] font-mono">
+                  <span className="text-xs text-[#8f8f8f] font-mono">
                     #{ticket.id.slice(0, 8)}
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-1.5 text-xs text-[rgba(0,0,0,0.58)] font-medium">
-                    <Clock className="w-3.5 h-3.5 text-[#00754A]" />
+                  <div className="flex items-center gap-1.5 text-xs text-[#666666] font-normal">
+                    <Clock className="w-3.5 h-3.5 text-[#8f8f8f]" />
                     <span>
                       {new Date(ticket.createdAt).toLocaleString("th-TH", {
                         dateStyle: "short",
@@ -262,7 +262,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                       type="button"
                       disabled={restoringId === ticket.id}
                       onClick={() => handleRestore(ticket)}
-                      className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#00754A] hover:bg-[#006241] transition-all disabled:opacity-50 shadow-sm"
+                      className="inline-flex items-center gap-1 px-3 py-1 rounded-[2px] text-xs font-medium text-white bg-[#1d1d1f] hover:bg-[#3c3c43] transition-colors disabled:opacity-50"
                       title="กู้คืนรายการนี้กลับมาเป็นเคสปกติ"
                     >
                       {restoringId === ticket.id ? (
@@ -277,7 +277,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                       type="button"
                       disabled={deletingId === ticket.id}
                       onClick={() => setConfirmDeleteTicketItem(ticket)}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold text-red-600 hover:text-red-700 hover:bg-red-50 border border-transparent hover:border-red-200 transition-all disabled:opacity-50"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-[2px] text-xs font-medium text-[#7f0019] hover:bg-[#ebebec] border border-[#c4c4c6] transition-colors disabled:opacity-50"
                       title="ย้ายเคสนี้ลงถังขยะ (สามารถกู้คืนได้ภายหลัง)"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
@@ -289,45 +289,45 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
 
               {/* Title & Description */}
               <div className="mb-4">
-                <h3 className="text-base font-bold text-[#1E3932] tracking-[-0.16px]">
+                <h3 className="text-base font-bold text-[#1d1d1f] tracking-tight">
                   {ticket.issueType}
                 </h3>
                 {ticket.description && (
-                  <p className="text-xs text-[rgba(0,0,0,0.7)] mt-1.5 leading-relaxed bg-[#f2f0eb] p-3 rounded-xl border border-[#e7e7e7]">
+                  <p className="text-xs text-[#3c3c43] mt-1.5 leading-relaxed bg-[#ebebec] p-3 rounded-[2px] border border-[#e0e0e0]">
                     {ticket.description}
                   </p>
                 )}
               </div>
 
               {/* Requester Info */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs text-[rgba(0,0,0,0.87)] mb-4 bg-[#faf9f7] p-3 rounded-xl border border-[#e7e7e7]">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs text-[#3c3c43] mb-4 bg-[#fafafa] p-3 rounded-[2px] border border-[#e0e0e0]">
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-2">
-                    <User className="w-4 h-4 text-[#00754A] shrink-0" />
-                    <span className="font-semibold">{ticket.fullName}</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#d4e9e2] text-[#006241] font-semibold">
+                    <User className="w-4 h-4 text-[#8f8f8f] shrink-0" />
+                    <span className="font-medium text-[#1d1d1f]">{ticket.fullName}</span>
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#ebebec] text-[#3c3c43] border border-[#e0e0e0] font-normal">
                       {ticket.userType === "student" ? "นักศึกษา" : "บุคลากร"}
                     </span>
                   </div>
                   {ticket.lineDisplayName && (
-                    <div className="text-[11px] text-[rgba(0,0,0,0.55)] pl-6 flex items-center gap-1">
-                      <span className="font-medium text-[#1E3932]">LINE Profile:</span>
-                      <span className="text-[#00754A] font-semibold">{ticket.lineDisplayName}</span>
+                    <div className="text-[11px] text-[#8f8f8f] pl-6 flex items-center gap-1">
+                      <span className="font-normal text-[#666666]">LINE Profile:</span>
+                      <span className="text-[#1d1d1f] font-medium">{ticket.lineDisplayName}</span>
                     </div>
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Phone className="w-4 h-4 text-[#00754A] shrink-0" />
+                  <Phone className="w-4 h-4 text-[#8f8f8f] shrink-0" />
                   <a
                     href={`tel:${ticket.phone}`}
-                    className="text-[#00754A] hover:underline font-mono font-medium"
+                    className="text-[#1d1d1f] hover:underline font-mono font-medium"
                   >
                     {ticket.phone}
                   </a>
                 </div>
                 <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-[#00754A] shrink-0" />
-                  <span className="truncate">{ticket.location}</span>
+                  <MapPin className="w-4 h-4 text-[#8f8f8f] shrink-0" />
+                  <span className="truncate text-[#3c3c43]">{ticket.location}</span>
                 </div>
               </div>
 
@@ -338,7 +338,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                     href={ticket.imageUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs text-[#00754A] font-semibold hover:underline"
+                    className="inline-flex items-center gap-1.5 text-xs text-[#7f0019] font-medium hover:underline"
                   >
                     <ExternalLink className="w-3.5 h-3.5" />
                     ดูรูปภาพปัญหาที่แนบ
@@ -348,21 +348,21 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
 
               {/* Satisfaction Rating & Feedback Box */}
               {ticket.rating ? (
-                <div className="mb-4 bg-[#faf6ee] p-3.5 rounded-xl border border-[#dfc49d] text-xs">
+                <div className="mb-4 bg-[#ebebec] p-3.5 rounded-[2px] border border-[#e0e0e0] text-xs">
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
-                    <span className="font-bold text-[#8c6b2d] flex items-center gap-1.5">
-                      <Star className="w-4 h-4 fill-[#d97706] text-[#d97706]" />
+                    <span className="font-bold text-[#1d1d1f] flex items-center gap-1.5">
+                      <Star className="w-4 h-4 fill-[#ffa826] text-[#ffa826]" />
                       ผลการประเมินความพึงพอใจ:
                     </span>
-                    <div className="flex items-center gap-1.5 font-bold text-[#8c6b2d]">
-                      <div className="flex items-center text-[#d97706]">
+                    <div className="flex items-center gap-1.5 font-bold text-[#1d1d1f]">
+                      <div className="flex items-center text-[#ffa826]">
                         {[1, 2, 3, 4, 5].map((s) => (
                           <Star
                             key={s}
                             className={`w-3.5 h-3.5 ${
                               s <= (ticket.rating || 0)
-                                ? "fill-[#d97706] text-[#d97706]"
-                                : "text-gray-300"
+                                ? "fill-[#ffa826] text-[#ffa826]"
+                                : "text-[#c4c4c6]"
                             }`}
                           />
                         ))}
@@ -371,31 +371,31 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                     </div>
                   </div>
                   {ticket.comment && ticket.comment.trim() !== "" ? (
-                    <p className="text-[rgba(0,0,0,0.78)] bg-white/90 p-2.5 rounded-lg border border-[#dfc49d]/60 mt-1 leading-relaxed">
-                      <span className="font-semibold text-[#8c6b2d]">ความคิดเห็น/ข้อเสนอแนะ: </span>
+                    <p className="text-[#3c3c43] bg-white p-2.5 rounded-[2px] border border-[#c4c4c6] mt-1 leading-relaxed">
+                      <span className="font-medium text-[#1d1d1f]">ความคิดเห็น/ข้อเสนอแนะ: </span>
                       "{ticket.comment.trim()}"
                     </p>
                   ) : (
-                    <p className="text-[rgba(0,0,0,0.45)] text-[11px] italic mt-0.5">
+                    <p className="text-[#8f8f8f] text-[11px] italic mt-0.5">
                       (ไม่มีข้อเสนอแนะเพิ่มเติม)
                     </p>
                   )}
                 </div>
               ) : ticket.status === "resolved" ? (
-                <div className="mb-4 bg-[#faf9f7] p-2.5 rounded-xl border border-dashed border-[#d6dbde] text-xs text-[rgba(0,0,0,0.5)] flex items-center justify-between">
+                <div className="mb-4 bg-[#ebebec] p-2.5 rounded-[2px] border border-[#e0e0e0] text-xs text-[#666666] flex items-center justify-between">
                   <span>สถานะงาน: ดำเนินการเสร็จสิ้นแล้ว</span>
-                  <span className="italic text-[11px]">⏳ รอผู้ใช้กดส่งแบบประเมินความพึงพอใจผ่าน LINE...</span>
+                  <span className="italic text-[11px] text-[#8f8f8f]">รอผู้ใช้ส่งแบบประเมินความพึงพอใจผ่าน LINE</span>
                 </div>
               ) : null}
 
-              {/* Status Actions: Starbucks 50px Pills หรือ ข้อมูลถังขยะ */}
+              {/* Status Actions: MUJI 2px Action Buttons */}
               {ticket.isDeleted ? (
-                <div className="pt-3 border-t border-red-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-red-50/50 p-3 rounded-xl">
-                  <div className="flex items-center gap-2 text-xs text-red-800 font-medium">
-                    <AlertTriangle className="w-4 h-4 text-red-600 shrink-0" />
+                <div className="pt-3 border-t border-[#c4c4c6] flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#ebebec] p-3 rounded-[2px]">
+                  <div className="flex items-center gap-2 text-xs text-[#7f0019] font-medium">
+                    <AlertTriangle className="w-4 h-4 text-[#7f0019] shrink-0" />
                     <span>เคสนี้ถูกย้ายลงถังขยะแล้ว (ซ่อนจากหน้ารายงานสรุป)</span>
                     {ticket.deletedAt && (
-                      <span className="text-[11px] text-red-600/80">
+                      <span className="text-[11px] text-[#8f8f8f]">
                         เมื่อ {new Date(ticket.deletedAt).toLocaleString("th-TH", { dateStyle: "short", timeStyle: "short" })}
                       </span>
                     )}
@@ -405,7 +405,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                     type="button"
                     disabled={restoringId === ticket.id}
                     onClick={() => handleRestore(ticket)}
-                    className="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-white bg-[#00754A] hover:bg-[#006241] transition-all disabled:opacity-50 shadow-sm self-start sm:self-auto"
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-[2px] text-xs font-medium text-white bg-[#1d1d1f] hover:bg-[#3c3c43] transition-colors disabled:opacity-50 self-start sm:self-auto"
                   >
                     {restoringId === ticket.id ? (
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -416,9 +416,9 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                   </button>
                 </div>
               ) : (
-                <div className="pt-3 border-t border-[#e7e7e7] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="pt-3 border-t border-[#e0e0e0] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-xs font-semibold text-[rgba(0,0,0,0.87)] mr-1">
+                    <span className="text-xs font-medium text-[#666666] mr-1">
                       ปรับสถานะ:
                     </span>
                     {(["new", "in_progress", "pending", "resolved"] as TicketStatus[]).map(
@@ -428,10 +428,10 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                           type="button"
                           disabled={updatingId === ticket.id || ticket.status === st}
                           onClick={() => handleStatusChange(ticket, st)}
-                          className={`px-3 py-1 rounded-full text-xs font-semibold tracking-[-0.16px] border transition-all duration-200 active:scale-[0.95] disabled:opacity-40 disabled:cursor-not-allowed ${
+                          className={`px-3 py-1 rounded-[2px] text-xs font-medium tracking-[-0.16px] border transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
                             ticket.status === st
-                              ? "bg-[#00754A] text-white border-[#00754A] shadow-sm"
-                              : "bg-[#f2f0eb] text-[rgba(0,0,0,0.87)] border-[#d6dbde] hover:bg-[#edebe9]"
+                              ? "bg-[#1d1d1f] text-white border-[#1d1d1f]"
+                              : "bg-[#ebebec] text-[#3c3c43] border-[#e0e0e0] hover:bg-[#e0e0e0]"
                           }`}
                         >
                           {st === "new" && "New"}
@@ -442,7 +442,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                       )
                     )}
                     {updatingId === ticket.id && (
-                      <Loader2 className="w-4 h-4 animate-spin text-[#00754A]" />
+                      <Loader2 className="w-4 h-4 animate-spin text-[#1d1d1f]" />
                     )}
                   </div>
 
@@ -455,10 +455,10 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                         );
                         setActiveNoteTicketId(null);
                       }}
-                      className={`text-xs font-semibold inline-flex items-center gap-1.5 px-3 py-1 rounded-full border transition-all duration-200 active:scale-[0.95] ${
+                      className={`text-xs font-medium inline-flex items-center gap-1.5 px-3 py-1 rounded-[2px] border transition-colors ${
                         activeDirectMsgTicketId === ticket.id
-                          ? "bg-[#06C755] text-white border-[#06C755] shadow-sm"
-                          : "bg-white text-[#06C755] border-[#06C755]/50 hover:bg-[#06C755]/10"
+                          ? "bg-[#1d1d1f] text-white border-[#1d1d1f]"
+                          : "bg-white text-[#3c3c43] border-[#c4c4c6] hover:bg-[#ebebec]"
                       }`}
                     >
                       <Send className="w-3.5 h-3.5" />
@@ -473,7 +473,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                         );
                         setActiveDirectMsgTicketId(null);
                       }}
-                      className="text-xs text-[#00754A] hover:text-[#006241] font-semibold inline-flex items-center gap-1 px-2.5 py-1 rounded-full border border-transparent hover:bg-[#f2f0eb]"
+                      className="text-xs text-[#666666] hover:text-[#1d1d1f] font-medium inline-flex items-center gap-1 px-2.5 py-1 rounded-[2px] border border-transparent hover:bg-[#ebebec]"
                     >
                       <MessageSquare className="w-3.5 h-3.5" />
                       {activeNoteTicketId === ticket.id ? "ปิดกล่องโน้ต" : "+ โน้ตย้ายสถานะ"}
@@ -484,13 +484,13 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
 
               {/* Direct Message to User Box (แชทตรงเข้า LINE) */}
               {!ticket.isDeleted && activeDirectMsgTicketId === ticket.id && (
-                <div className="mt-3 p-3.5 bg-[#f0fdf4] border border-[#bbf7d0] rounded-xl space-y-2.5">
+                <div className="mt-3 p-3.5 bg-[#ebebec] border border-[#c4c4c6] rounded-[2px] space-y-2.5">
                   <div className="flex flex-wrap items-center justify-between gap-1">
-                    <label className="text-xs font-bold text-[#166534] flex items-center gap-1.5">
-                      <Send className="w-3.5 h-3.5 text-[#06C755]" />
-                      <span>ส่งข้อความด่วนเข้า LINE ผู้แจ้ง (Push Message ทันที):</span>
+                    <label className="text-xs font-bold text-[#1d1d1f] flex items-center gap-1.5">
+                      <Send className="w-3.5 h-3.5 text-[#1d1d1f]" />
+                      <span>ส่งข้อความด่วนเข้า LINE ผู้แจ้ง:</span>
                     </label>
-                    <span className="text-[11px] text-[#166534]/80 font-medium">
+                    <span className="text-[11px] text-[#666666] font-normal">
                       ผู้รับ: <b>{ticket.fullName}</b> {ticket.lineDisplayName ? `(@${ticket.lineDisplayName})` : ""}
                     </span>
                   </div>
@@ -499,18 +499,18 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                     rows={2}
                     value={directMsgText}
                     onChange={(e) => setDirectMsgText(e.target.value)}
-                    placeholder="พิมพ์ข้อความที่ต้องการแจ้งผู้ใช้ เช่น ช่างกำลังเข้าไปตรวจสอบที่ห้อง 201 ภายใน 10 นาที หรือ รบกวนโทรกลับ 087-xxx-xxxx..."
-                    className="w-full px-3 py-2 text-xs rounded-lg border border-[#86efac] bg-white focus:outline-none focus:ring-1 focus:ring-[#00754A] resize-none"
+                    placeholder="พิมพ์ข้อความที่ต้องการแจ้งผู้ใช้ เช่น ช่างกำลังเข้าไปตรวจสอบที่ห้อง 201 ภายใน 10 นาที..."
+                    className="w-full px-3 py-2 text-xs rounded-[2px] border border-[#c4c4c6] bg-white focus:outline-none focus:border-[#1d1d1f] resize-none"
                   />
 
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-0.5">
-                    <div className="text-[11px] text-[rgba(0,0,0,0.58)]">
+                    <div className="text-[11px] text-[#666666]">
                       {directMsgSuccessTicketId === ticket.id ? (
-                        <span className="text-[#166534] font-bold inline-flex items-center gap-1">
-                          ✅ ส่งข้อความเข้า LINE ผู้ใช้เรียบร้อยแล้ว
+                        <span className="text-[#009262] font-medium inline-flex items-center gap-1">
+                          ส่งข้อความเข้า LINE ผู้ใช้เรียบร้อยแล้ว
                         </span>
                       ) : (
-                        <span>💡 ข้อความจะเด้งเข้าแชท LINE SMKCC IT Service ของผู้ใช้ทันที</span>
+                        <span>ข้อความจะส่งตรงเข้าแชท LINE ของผู้แจ้งทันที</span>
                       )}
                     </div>
 
@@ -518,7 +518,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                       type="button"
                       disabled={sendingDirectMsgId === ticket.id || !directMsgText.trim()}
                       onClick={() => handleSendDirectMessage(ticket.id)}
-                      className="px-4 py-1.5 rounded-full text-xs font-bold text-white bg-[#06C755] hover:bg-[#05a847] transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-sm inline-flex items-center justify-center gap-1.5 self-end sm:self-auto"
+                      className="px-4 py-1.5 rounded-[2px] text-xs font-medium text-white bg-[#1d1d1f] hover:bg-[#3c3c43] transition-colors disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center justify-center gap-1.5 self-end sm:self-auto"
                     >
                       {sendingDirectMsgId === ticket.id ? (
                         <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -533,8 +533,8 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
 
               {/* Admin Note Input */}
               {!ticket.isDeleted && activeNoteTicketId === ticket.id && (
-                <div className="mt-3 p-3 bg-[#faf6ee] border border-[#dfc49d] rounded-xl">
-                  <label className="block text-xs font-semibold text-[#8c6b2d] mb-1">
+                <div className="mt-3 p-3 bg-[#ebebec] border border-[#c4c4c6] rounded-[2px]">
+                  <label className="block text-xs font-medium text-[#1d1d1f] mb-1">
                     ข้อความหมายเหตุส่งเข้าแชท LINE ผู้แจ้ง (เมื่อกดย้ายสถานะ):
                   </label>
                   <input
@@ -542,7 +542,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                     value={adminNote}
                     onChange={(e) => setAdminNote(e.target.value)}
                     placeholder="เช่น กำลังเข้าไปดูที่ห้อง 102 ภายใน 15 นาที หรือ รออะไหล่ 2 วัน..."
-                    className="w-full px-3 py-2 text-xs rounded-lg border border-[#dfc49d] bg-white focus:outline-none focus:ring-1 focus:ring-[#00754A]"
+                    className="w-full px-3 py-2 text-xs rounded-[2px] border border-[#c4c4c6] bg-white focus:outline-none focus:border-[#1d1d1f]"
                   />
                 </div>
               )}
@@ -553,21 +553,21 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
 
       {/* Confirmation Modal สำหรับการ Soft Delete */}
       {confirmDeleteTicketItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl border border-[#e7e7e7] space-y-4">
-            <div className="flex items-center gap-3 text-red-600">
-              <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center shrink-0">
-                <Trash2 className="w-5 h-5 text-red-600" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+          <div className="bg-white rounded-[2px] max-w-md w-full p-6 border border-[#e0e0e0] space-y-4">
+            <div className="flex items-center gap-3 text-[#7f0019]">
+              <div className="w-10 h-10 rounded-[2px] bg-[#ebebec] flex items-center justify-center shrink-0">
+                <Trash2 className="w-5 h-5 text-[#7f0019]" />
               </div>
               <div>
-                <h4 className="text-base font-bold text-[#1E3932]">ยืนยันการย้ายเคสลงถังขยะ?</h4>
-                <p className="text-xs text-[rgba(0,0,0,0.58)] font-mono mt-0.5">
+                <h4 className="text-base font-bold text-[#1d1d1f]">ยืนยันการย้ายเคสลงถังขยะ?</h4>
+                <p className="text-xs text-[#8f8f8f] font-mono mt-0.5">
                   #{confirmDeleteTicketItem.id.slice(0, 8)} • {confirmDeleteTicketItem.fullName}
                 </p>
               </div>
             </div>
 
-            <p className="text-xs text-[rgba(0,0,0,0.7)] leading-relaxed bg-[#faf9f7] p-3 rounded-xl border border-[#e7e7e7]">
+            <p className="text-xs text-[#3c3c43] leading-relaxed bg-[#ebebec] p-3 rounded-[2px] border border-[#e0e0e0]">
               เคสนี้จะถูกย้ายไปอยู่ในแท็บ <b>"ถังขยะ"</b> และจะไม่นำมาคำนวณในสถิติหรือรายงานสรุป (Reports) แต่ข้อมูลยังคงอยู่และสามารถกดกู้คืนได้ตลอดเวลา
             </p>
 
@@ -575,7 +575,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
               <button
                 type="button"
                 onClick={() => setConfirmDeleteTicketItem(null)}
-                className="px-4 py-2 rounded-full text-xs font-semibold text-[rgba(0,0,0,0.7)] hover:bg-[#edebe9] transition-colors"
+                className="px-4 py-2 rounded-[2px] text-xs font-medium text-[#3c3c43] hover:bg-[#ebebec] transition-colors border border-transparent"
               >
                 ยกเลิก
               </button>
@@ -583,7 +583,7 @@ export function TicketTable({ initialTickets }: TicketTableProps) {
                 type="button"
                 disabled={deletingId === confirmDeleteTicketItem.id}
                 onClick={() => handleSoftDelete(confirmDeleteTicketItem)}
-                className="px-4 py-2 rounded-full text-xs font-bold text-white bg-red-600 hover:bg-red-700 transition-colors shadow-sm inline-flex items-center gap-1.5"
+                className="px-4 py-2 rounded-[2px] text-xs font-medium text-white bg-[#7f0019] hover:bg-[#600013] transition-colors inline-flex items-center gap-1.5"
               >
                 {deletingId === confirmDeleteTicketItem.id ? (
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />

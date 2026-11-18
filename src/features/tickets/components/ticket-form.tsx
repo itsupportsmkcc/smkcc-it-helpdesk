@@ -182,12 +182,12 @@ export function TicketForm() {
 
   return (
     <div className="w-full max-w-lg mx-auto">
-      {/* Main Container Card: Warm Clean Café Aesthetic */}
-      <div className="bg-white rounded-[16px] shadow-[0_0_1px_rgba(0,0,0,0.14),0_2px_8px_rgba(0,0,0,0.08)] border border-[#e7e7e7] overflow-hidden">
-        {/* Feature Band: Starbucks House Green (#1E3932) */}
-        <div className="bg-[#1E3932] px-6 py-7 text-white text-center relative">
+      {/* Main Container Card: MUJI Two-Tier Radius & Paper-White Canvas */}
+      <div className="bg-white rounded-[2px] border border-[#e0e0e0] overflow-hidden">
+        {/* Header Band: MUJI Surface Secondary (#ebebec) */}
+        <div className="bg-[#ebebec] px-6 py-7 text-center relative border-b border-[#e0e0e0]">
           {/* Logo Badge */}
-          <div className="relative w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden shadow-lg ring-4 ring-white/15 bg-white">
+          <div className="relative w-20 h-20 mx-auto mb-3 rounded-[2px] overflow-hidden border border-[#c4c4c6] bg-white">
             <Image
               src="/logo.jpg"
               alt="SMKCC IT Support Logo"
@@ -197,16 +197,22 @@ export function TicketForm() {
             />
           </div>
 
-          <h1 className="text-xl font-bold tracking-[-0.16px] text-white">
-            บริการไอที วิทยาลัยชุมชนสมุทรสาคร
+          <div className="flex items-center justify-center gap-2 mb-1">
+            <span className="bg-[#7f0019] text-white text-[11px] font-bold px-2 py-0.5 rounded-[2px] tracking-wider uppercase">
+              SMKCC IT HELPDESK
+            </span>
+          </div>
+
+          <h1 className="text-xl font-bold tracking-tight text-[#1d1d1f]">
+            บริการแจ้งซ่อมไอที วิทยาลัยชุมชนสมุทรสาคร
           </h1>
-          <p className="text-xs text-[#d4e9e2] font-medium mt-1">
-            IT SUPPORT SMKCC • Helpdesk Service
+          <p className="text-xs text-[#666666] font-normal mt-1">
+            ฝ่ายเทคโนโลยีสารสนเทศ • บริการช่วยเหลือและสนับสนุนงานระบบ
           </p>
 
           {lineProfileName && (
-            <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs text-[#faf6ee] backdrop-blur-sm border border-white/10">
-              <span className="w-2 h-2 rounded-full bg-[#00754A] ring-2 ring-emerald-300"></span>
+            <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white text-xs text-[#3c3c43] border border-[#c4c4c6]">
+              <span className="w-2 h-2 rounded-full bg-[#009262]"></span>
               ผู้ใช้งาน LINE: {lineProfileName}
             </div>
           )}
@@ -214,34 +220,34 @@ export function TicketForm() {
 
         {/* Notices */}
         {liffError && (
-          <div className="mx-6 mt-4 p-3 bg-[#faf6ee] border border-[#dfc49d] text-[#1E3932] rounded-xl text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0 text-[#cba258]" />
+          <div className="mx-6 mt-4 p-3 bg-[#ebebec] border border-[#c4c4c6] text-[#3c3c43] rounded-[2px] text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-[#666666]" />
             <span>{liffError}</span>
           </div>
         )}
 
         {errorMessage && (
-          <div className="mx-6 mt-4 p-3 bg-red-50 border border-red-200 text-[#c82014] rounded-xl text-xs flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="mx-6 mt-4 p-3 bg-white border border-[#7f0019] text-[#7f0019] rounded-[2px] text-xs flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-[#7f0019]" />
             <span>{errorMessage}</span>
           </div>
         )}
 
         {/* Ticket Form */}
         <form onSubmit={handleSubmit} className="p-6 sm:p-7 space-y-5">
-          {/* User Type: Starbucks Pill Toggle */}
+          {/* User Type: MUJI 9999px Pill Toggle */}
           <div>
-            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-2">
-              กลุ่มผู้ใช้งาน <span className="text-[#c82014]">*</span>
+            <label className="block text-xs font-medium text-[#1d1d1f] uppercase tracking-wider mb-2">
+              กลุ่มผู้ใช้งาน <span className="text-[#7f0019]">*</span>
             </label>
             <div className="grid grid-cols-2 gap-2.5">
               <button
                 type="button"
                 onClick={() => setUserType("student")}
-                className={`py-2.5 px-4 rounded-full text-xs font-semibold tracking-[-0.16px] transition-all duration-200 active:scale-[0.95] flex items-center justify-center gap-1.5 border ${
+                className={`py-2 px-4 rounded-full text-xs font-medium tracking-[-0.16px] transition-colors flex items-center justify-center gap-1.5 border ${
                   userType === "student"
-                    ? "bg-[#00754A] text-white border-[#00754A] shadow-sm"
-                    : "bg-[#f2f0eb] text-[rgba(0,0,0,0.87)] border-[#d6dbde] hover:bg-[#edebe9]"
+                    ? "bg-[#1d1d1f] text-white border-[#1d1d1f]"
+                    : "bg-[#ebebec] text-[#666666] border-[#e0e0e0] hover:bg-[#e0e0e0]"
                 }`}
               >
                 {userType === "student" && <Check className="w-3.5 h-3.5" />}
@@ -250,10 +256,10 @@ export function TicketForm() {
               <button
                 type="button"
                 onClick={() => setUserType("staff")}
-                className={`py-2.5 px-4 rounded-full text-xs font-semibold tracking-[-0.16px] transition-all duration-200 active:scale-[0.95] flex items-center justify-center gap-1.5 border ${
+                className={`py-2 px-4 rounded-full text-xs font-medium tracking-[-0.16px] transition-colors flex items-center justify-center gap-1.5 border ${
                   userType === "staff"
-                    ? "bg-[#00754A] text-white border-[#00754A] shadow-sm"
-                    : "bg-[#f2f0eb] text-[rgba(0,0,0,0.87)] border-[#d6dbde] hover:bg-[#edebe9]"
+                    ? "bg-[#1d1d1f] text-white border-[#1d1d1f]"
+                    : "bg-[#ebebec] text-[#666666] border-[#e0e0e0] hover:bg-[#e0e0e0]"
                 }`}
               >
                 {userType === "staff" && <Check className="w-3.5 h-3.5" />}
@@ -264,32 +270,32 @@ export function TicketForm() {
 
           {/* Full Name */}
           <div>
-            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-1.5">
-              ชื่อ-นามสกุล ผู้แจ้ง <span className="text-[#c82014]">*</span>
+            <label className="block text-xs font-medium text-[#1d1d1f] uppercase tracking-wider mb-1.5">
+              ชื่อ-นามสกุล ผู้แจ้ง <span className="text-[#7f0019]">*</span>
             </label>
             <div className="relative">
-              <User className="w-4 h-4 text-[rgba(0,0,0,0.38)] absolute left-3.5 top-3.5" />
+              <User className="w-4 h-4 text-[#8f8f8f] absolute left-3.5 top-3.5" />
               <input
                 type="text"
                 required
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="กรุณากรอกชื่อ-นามสกุลจริง เช่น นายสมชาย ใจดี"
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30 focus:border-[#00754A] transition-all bg-[#faf9f7] focus:bg-white"
+                className="w-full pl-10 pr-4 py-2.5 rounded-[2px] border border-[#c4c4c6] text-sm text-[#1d1d1f] bg-white focus:outline-none focus:border-[#1d1d1f] transition-colors placeholder-[#9d9da0]"
               />
             </div>
-            <p className="text-[11px] text-[rgba(0,0,0,0.45)] mt-1">
+            <p className="text-[11px] text-[#8f8f8f] mt-1">
               กรุณาระบุชื่อ-นามสกุลจริงเพื่อความถูกต้องในการติดตามงาน
             </p>
           </div>
 
           {/* Phone */}
           <div>
-            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-1.5">
-              เบอร์โทรศัพท์ติดต่อกลับ <span className="text-[#c82014]">*</span>
+            <label className="block text-xs font-medium text-[#1d1d1f] uppercase tracking-wider mb-1.5">
+              เบอร์โทรศัพท์ติดต่อกลับ <span className="text-[#7f0019]">*</span>
             </label>
             <div className="relative">
-              <PhoneCall className="w-4 h-4 text-[rgba(0,0,0,0.38)] absolute left-3.5 top-3.5" />
+              <PhoneCall className="w-4 h-4 text-[#8f8f8f] absolute left-3.5 top-3.5" />
               <input
                 type="tel"
                 required
@@ -297,26 +303,26 @@ export function TicketForm() {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="เช่น 0812345678"
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30 focus:border-[#00754A] transition-all bg-[#faf9f7] focus:bg-white font-mono"
+                className="w-full pl-10 pr-4 py-2.5 rounded-[2px] border border-[#c4c4c6] text-sm text-[#1d1d1f] bg-white focus:outline-none focus:border-[#1d1d1f] transition-colors font-mono placeholder-[#9d9da0]"
               />
             </div>
-            <p className="text-[11px] text-[rgba(0,0,0,0.45)] mt-1">
+            <p className="text-[11px] text-[#8f8f8f] mt-1">
               เบอร์โทรศัพท์ 9-10 หลักสำหรับติดต่อประสานงาน
             </p>
           </div>
 
           {/* Issue Type */}
           <div>
-            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-1.5">
-              หัวข้อการแจ้งเรื่อง / ประเภทปัญหา <span className="text-[#c82014]">*</span>
+            <label className="block text-xs font-medium text-[#1d1d1f] uppercase tracking-wider mb-1.5">
+              หัวข้อการแจ้งเรื่อง / ประเภทปัญหา <span className="text-[#7f0019]">*</span>
             </label>
             <div className="relative">
-              <Wrench className="w-4 h-4 text-[rgba(0,0,0,0.38)] absolute left-3.5 top-3.5 pointer-events-none" />
+              <Wrench className="w-4 h-4 text-[#8f8f8f] absolute left-3.5 top-3.5 pointer-events-none" />
               <select
                 value={issueType}
                 onChange={(e) => setIssueType(e.target.value)}
                 required
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30 focus:border-[#00754A] transition-all bg-[#faf9f7] focus:bg-white"
+                className="w-full pl-10 pr-4 py-2.5 rounded-[2px] border border-[#c4c4c6] text-sm text-[#1d1d1f] bg-white focus:outline-none focus:border-[#1d1d1f] transition-colors"
               >
                 <option value="">-- เลือกประเภทปัญหา --</option>
                 {COMMON_ISSUES.map((issue) => (
@@ -333,97 +339,97 @@ export function TicketForm() {
                 value={customIssue}
                 onChange={(e) => setCustomIssue(e.target.value)}
                 placeholder="กรุณาระบุหัวข้อเรื่อง..."
-                className="mt-2 w-full px-4 py-2.5 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30"
+                className="mt-2 w-full px-4 py-2 rounded-[2px] border border-[#c4c4c6] text-sm text-[#1d1d1f] bg-white focus:outline-none focus:border-[#1d1d1f]"
               />
             )}
           </div>
 
           {/* Location */}
           <div>
-            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-1.5">
-              สถานที่ / อาคาร / ห้องที่เกิดปัญหา <span className="text-[#c82014]">*</span>
+            <label className="block text-xs font-medium text-[#1d1d1f] uppercase tracking-wider mb-1.5">
+              สถานที่ / อาคาร / ห้องที่เกิดปัญหา <span className="text-[#7f0019]">*</span>
             </label>
             <div className="relative">
-              <MapPin className="w-4 h-4 text-[rgba(0,0,0,0.38)] absolute left-3.5 top-3.5" />
+              <MapPin className="w-4 h-4 text-[#8f8f8f] absolute left-3.5 top-3.5" />
               <input
                 type="text"
                 required
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="เช่น อาคาร 1 ห้องปฏิบัติการคอมพิวเตอร์ 102"
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30 focus:border-[#00754A] transition-all bg-[#faf9f7] focus:bg-white"
+                className="w-full pl-10 pr-4 py-2.5 rounded-[2px] border border-[#c4c4c6] text-sm text-[#1d1d1f] bg-white focus:outline-none focus:border-[#1d1d1f] transition-colors placeholder-[#9d9da0]"
               />
             </div>
           </div>
 
-          {/* Priority: Starbucks Pill Selectors */}
+          {/* Priority: MUJI 9999px Pill Selectors */}
           <div>
-            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-2">
-              ระดับความเร่งด่วน (Impact / Priority) <span className="text-[#c82014]">*</span>
+            <label className="block text-xs font-medium text-[#1d1d1f] uppercase tracking-wider mb-2">
+              ระดับความเร่งด่วน (Impact / Priority) <span className="text-[#7f0019]">*</span>
             </label>
             <div className="grid grid-cols-3 gap-2">
               <button
                 type="button"
                 onClick={() => setPriority("high")}
-                className={`py-2 px-3 rounded-full text-xs font-semibold transition-all duration-200 active:scale-[0.95] border text-center ${
+                className={`py-2 px-3 rounded-full text-xs font-medium transition-colors border text-center ${
                   priority === "high"
-                    ? "bg-[#c82014] text-white border-[#c82014] shadow-sm"
-                    : "bg-[#f2f0eb] text-[rgba(0,0,0,0.87)] border-[#d6dbde] hover:bg-[#edebe9]"
+                    ? "bg-[#7f0019] text-white border-[#7f0019]"
+                    : "bg-white text-[#7f0019] border-[#c4c4c6] hover:bg-[#ebebec]"
                 }`}
               >
-                🔴 สูง (กระทบสอน)
+                สูง (กระทบสอน)
               </button>
               <button
                 type="button"
                 onClick={() => setPriority("medium")}
-                className={`py-2 px-3 rounded-full text-xs font-semibold transition-all duration-200 active:scale-[0.95] border text-center ${
+                className={`py-2 px-3 rounded-full text-xs font-medium transition-colors border text-center ${
                   priority === "medium"
-                    ? "bg-[#00754A] text-white border-[#00754A] shadow-sm"
-                    : "bg-[#f2f0eb] text-[rgba(0,0,0,0.87)] border-[#d6dbde] hover:bg-[#edebe9]"
+                    ? "bg-[#1d1d1f] text-white border-[#1d1d1f]"
+                    : "bg-[#ebebec] text-[#3c3c43] border-[#e0e0e0] hover:bg-[#e0e0e0]"
                 }`}
               >
-                🟠 ปานกลาง
+                ปานกลาง
               </button>
               <button
                 type="button"
                 onClick={() => setPriority("low")}
-                className={`py-2 px-3 rounded-full text-xs font-semibold transition-all duration-200 active:scale-[0.95] border text-center ${
+                className={`py-2 px-3 rounded-full text-xs font-medium transition-colors border text-center ${
                   priority === "low"
-                    ? "bg-[#1E3932] text-white border-[#1E3932] shadow-sm"
-                    : "bg-[#f2f0eb] text-[rgba(0,0,0,0.87)] border-[#d6dbde] hover:bg-[#edebe9]"
+                    ? "bg-[#666666] text-white border-[#666666]"
+                    : "bg-[#ebebec] text-[#666666] border-[#e0e0e0] hover:bg-[#e0e0e0]"
                 }`}
               >
-                🟢 ทั่วไป / ต่ำ
+                ทั่วไป
               </button>
             </div>
           </div>
 
           {/* Description */}
           <div>
-            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-medium text-[#1d1d1f] uppercase tracking-wider mb-1.5">
               รายละเอียดเพิ่มเติม (Description)
             </label>
             <div className="relative">
-              <FileText className="w-4 h-4 text-[rgba(0,0,0,0.38)] absolute left-3.5 top-3.5" />
+              <FileText className="w-4 h-4 text-[#8f8f8f] absolute left-3.5 top-3.5" />
               <textarea
                 rows={3}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="ระบุอาการ เช่น เปิดเครื่องแล้วจอดำ, ต่อสัญญาณโปรเจกเตอร์ไม่ขึ้น..."
-                className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#d6dbde] text-sm focus:outline-none focus:ring-2 focus:ring-[#00754A]/30 focus:border-[#00754A] transition-all bg-[#faf9f7] focus:bg-white resize-none"
+                className="w-full pl-10 pr-4 py-2.5 rounded-[2px] border border-[#c4c4c6] text-sm text-[#1d1d1f] bg-white focus:outline-none focus:border-[#1d1d1f] transition-colors resize-none placeholder-[#9d9da0]"
               />
             </div>
           </div>
 
           {/* Image Upload */}
           <div>
-            <label className="block text-xs font-semibold text-[rgba(0,0,0,0.87)] uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-medium text-[#1d1d1f] uppercase tracking-wider mb-1.5">
               รูปภาพประกอบปัญหา (ถ้ามี)
             </label>
             <div className="flex items-center gap-3">
-              <label className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-[#00754A] text-[#00754A] hover:bg-[#d4e9e2]/30 cursor-pointer text-xs font-semibold transition-all active:scale-[0.95]">
-                <Camera className="w-4 h-4 text-[#00754A]" />
-                <span>ถ่ายภาพ / เลือกรูปภาพ</span>
+              <label className="flex items-center gap-2 px-3.5 py-2 rounded-[2px] border border-[#c4c4c6] bg-white hover:bg-[#ebebec] text-[#1d1d1f] cursor-pointer text-xs font-medium transition-colors">
+                <Camera className="w-4 h-4 text-[#666666]" />
+                <span>เลือกรูปภาพ</span>
                 <input
                   type="file"
                   accept="image/*"
@@ -432,14 +438,14 @@ export function TicketForm() {
                 />
               </label>
               {imageFile && (
-                <span className="text-xs text-[rgba(0,0,0,0.6)] truncate max-w-[170px]">
+                <span className="text-xs text-[#666666] truncate max-w-[170px]">
                   {imageFile.name}
                 </span>
               )}
             </div>
 
             {previewUrl && (
-              <div className="mt-3 relative w-28 h-28 rounded-xl overflow-hidden border border-[#d6dbde] shadow-sm">
+              <div className="mt-3 relative w-24 h-24 rounded-[2px] overflow-hidden border border-[#c4c4c6]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={previewUrl}
@@ -452,7 +458,7 @@ export function TicketForm() {
                     setImageFile(null);
                     setPreviewUrl(null);
                   }}
-                  className="absolute top-1 right-1 bg-[#c82014] text-white rounded-full w-5 h-5 flex items-center justify-center text-xs shadow-md active:scale-90"
+                  className="absolute top-1 right-1 bg-[#1d1d1f] text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
                 >
                   ×
                 </button>
@@ -460,12 +466,12 @@ export function TicketForm() {
             )}
           </div>
 
-          {/* Primary CTA Button: Starbucks 50px Full-Pill with scale(0.95) */}
+          {/* Primary CTA Button: MUJI 2px Action Button */}
           <div className="pt-2">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-[50px] rounded-full bg-[#00754A] hover:bg-[#006241] active:scale-[0.95] text-white font-semibold text-sm tracking-[-0.16px] shadow-[0_2px_6px_rgba(0,117,74,0.3)] transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full h-11 rounded-[2px] bg-[#1d1d1f] hover:bg-[#3c3c43] active:bg-black text-white font-medium text-sm tracking-[-0.16px] transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? (
                 <>
@@ -483,13 +489,13 @@ export function TicketForm() {
         </form>
       </div>
 
-      {/* Signature Floating Frap-style Button: 56px circular floating quick contact */}
+      {/* Floating Quick Contact */}
       <a
         href="tel:034427500"
         title="โทรติดต่อด่วนฝ่ายไอที"
-        className="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-[#00754A] text-white shadow-[0_0_6px_rgba(0,0,0,0.24),0_8px_12px_rgba(0,0,0,0.14)] active:scale-[0.95] transition-all duration-200 flex items-center justify-center z-40 hover:bg-[#006241]"
+        className="fixed bottom-6 right-6 w-12 h-12 rounded-[2px] bg-[#1d1d1f] text-white border border-[#1d1d1f] hover:bg-[#3c3c43] transition-colors flex items-center justify-center z-40"
       >
-        <PhoneCall className="w-6 h-6" />
+        <PhoneCall className="w-5 h-5" />
       </a>
     </div>
   );

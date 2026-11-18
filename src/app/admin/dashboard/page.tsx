@@ -29,7 +29,7 @@ export default async function AdminDashboardPage({
   const result = await getAnalyticsData(range);
   if (!result.success) {
     return (
-      <main className="min-h-screen bg-[#f2f0eb] p-6 text-center text-red-600">
+      <main className="min-h-screen bg-white p-6 text-center text-[#7f0019]">
         เกิดข้อผิดพลาดในการโหลดข้อมูลสถิติ: {result.error}
       </main>
     );
@@ -38,7 +38,7 @@ export default async function AdminDashboardPage({
   const { data } = result;
 
   return (
-    <main className="min-h-screen bg-[#f2f0eb]">
+    <main className="min-h-screen bg-[#fafafa]">
       <AdminNavbar
         activeTab="dashboard"
         averageRating={data.kpis.averageRating}
@@ -48,12 +48,12 @@ export default async function AdminDashboardPage({
       {/* Main Content Area */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
         {/* Page Header & Time Filter */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-[#e7e7e7] shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-[2px] border border-[#e0e0e0]">
           <div>
-            <h1 className="text-base font-bold text-[#1E3932] tracking-tight">
+            <h1 className="text-base font-bold text-[#1d1d1f] tracking-tight">
               ภาพรวมสถิติและประสิทธิภาพการให้บริการไอที
             </h1>
-            <p className="text-xs text-[rgba(0,0,0,0.58)] mt-0.5">
+            <p className="text-xs text-[#666666] mt-0.5">
               วิเคราะห์ตัวชี้วัดสำคัญ หมวดหมู่ปัญหา และความพึงพอใจของผู้ใช้งาน
             </p>
           </div>

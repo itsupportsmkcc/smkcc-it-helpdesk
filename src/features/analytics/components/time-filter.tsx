@@ -27,16 +27,16 @@ export function TimeFilter() {
   };
 
   return (
-    <div className="flex items-center gap-1.5 bg-white p-1 rounded-full border border-[#e7e7e7] shadow-sm overflow-x-auto shrink-0">
+    <div className="flex items-center gap-1.5 bg-[#ebebec] p-1 rounded-full border border-[#e0e0e0] overflow-x-auto shrink-0">
       {options.map((opt) => (
         <button
           key={opt.id}
           type="button"
           onClick={() => handleSelect(opt.id)}
-          className={`px-3.5 py-1 rounded-full text-xs font-semibold tracking-[-0.16px] transition-all duration-200 active:scale-[0.95] shrink-0 ${
+          className={`px-3.5 py-1 rounded-full text-xs font-medium tracking-[-0.16px] transition-all duration-150 shrink-0 ${
             currentRange === opt.id
-              ? "bg-[#00754A] text-white shadow-sm"
-              : "text-[rgba(0,0,0,0.7)] hover:bg-[#edebe9]"
+              ? "bg-[#1d1d1f] text-white font-bold"
+              : "text-[#666666] hover:text-[#1d1d1f] hover:bg-white/60"
           }`}
         >
           {opt.label}

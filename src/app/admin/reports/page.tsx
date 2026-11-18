@@ -107,7 +107,7 @@ export default async function AdminReportPage({
   });
 
   return (
-    <main className="min-h-screen bg-[#f2f0eb] print:p-0 print:bg-white text-[rgba(0,0,0,0.87)] font-sarabun">
+    <main className="min-h-screen bg-[#fafafa] print:p-0 print:bg-white text-[#3c3c43] font-sarabun">
       <div className="print:hidden">
         <AdminNavbar
           activeTab="reports"
@@ -121,9 +121,9 @@ export default async function AdminReportPage({
         <div className="max-w-5xl mx-auto mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 print:hidden">
           <Link
             href="/admin/tickets"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-[#d6dbde] text-xs font-semibold text-[#1E3932] hover:bg-[#faf6ee] transition-all shadow-sm w-fit"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[2px] bg-white border border-[#c4c4c6] text-xs font-medium text-[#1d1d1f] hover:bg-[#ebebec] transition-colors w-fit"
           >
-            <ArrowLeft className="w-4 h-4 text-[#00754A]" />
+            <ArrowLeft className="w-3.5 h-3.5 text-[#666666]" />
             กลับหน้ารายการแจ้งซ่อม
           </Link>
 
@@ -141,10 +141,10 @@ export default async function AdminReportPage({
       </div>
 
       {/* Official Report Document: กระดาษรายงาน A4 สีขาว */}
-      <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-[0_0_1px_rgba(0,0,0,0.14),0_2px_8px_rgba(0,0,0,0.08)] border border-[#e7e7e7] p-8 sm:p-12 print:shadow-none print:border-none print:p-0 print:rounded-none">
+      <div className="max-w-5xl mx-auto bg-white rounded-[2px] border border-[#e0e0e0] p-8 sm:p-12 print:border-none print:p-0 print:rounded-none">
         {/* Document Header */}
-        <div className="border-b-2 border-[#1E3932] pb-6 mb-8 text-center relative">
-          <div className="relative w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden shadow-sm ring-2 ring-[#d4e9e2] bg-white">
+        <div className="border-b border-[#1d1d1f] pb-6 mb-8 text-center relative">
+          <div className="relative w-20 h-20 mx-auto mb-3 rounded-[2px] overflow-hidden border border-[#e0e0e0] bg-white">
             <Image
               src="/logo.jpg"
               alt="SMKCC IT Support Logo"
@@ -153,67 +153,67 @@ export default async function AdminReportPage({
               className="object-cover"
             />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-[-0.16px] text-[#1E3932]">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#1d1d1f]">
             วิทยาลัยชุมชนสมุทรสาคร
           </h1>
-          <h2 className="text-base sm:text-lg font-semibold text-[rgba(0,0,0,0.87)] mt-1">
+          <h2 className="text-base sm:text-lg font-medium text-[#3c3c43] mt-1">
             รายงานสรุปสถิติการให้บริการและแจ้งซ่อมงานเทคโนโลยีสารสนเทศ (IT Support)
           </h2>
-          <div className="mt-2 inline-block px-4 py-1 rounded-full bg-[#faf6ee] border border-[#dfc49d] text-xs font-bold text-[#8c6b2d]">
+          <div className="mt-2 inline-block px-3 py-0.5 rounded-full bg-[#ebebec] border border-[#e0e0e0] text-xs font-medium text-[#1d1d1f]">
             {periodLabel}
           </div>
-          <p className="text-xs text-[rgba(0,0,0,0.58)] mt-1.5 font-medium">
+          <p className="text-xs text-[#666666] mt-1.5 font-normal">
             ฝ่ายเทคโนโลยีสารสนเทศ • ข้อมูลรายงานออก ณ วันที่ {todayThai}
           </p>
         </div>
 
         {/* 1. Summary KPI Cards */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
-          <div className="p-4 rounded-xl bg-[#faf9f7] border border-[#e7e7e7] text-center">
-            <p className="text-xs font-semibold text-[rgba(0,0,0,0.58)] uppercase">คำขอในช่วงเวลา</p>
-            <p className="text-2xl sm:text-3xl font-bold text-[#1E3932] mt-1">{total}</p>
-            <p className="text-[11px] text-[rgba(0,0,0,0.45)] mt-0.5">รายการ</p>
+          <div className="p-4 rounded-[2px] bg-[#fafafa] border border-[#e0e0e0] text-center">
+            <p className="text-xs font-medium text-[#666666] uppercase">คำขอในช่วงเวลา</p>
+            <p className="text-2xl sm:text-3xl font-bold text-[#1d1d1f] mt-1">{total}</p>
+            <p className="text-[11px] text-[#8f8f8f] mt-0.5">รายการ</p>
           </div>
-          <div className="p-4 rounded-xl bg-[#faf6ee] border border-[#dfc49d] text-center">
-            <p className="text-xs font-semibold text-[#8c6b2d] uppercase">กำลังดำเนินการ</p>
-            <p className="text-2xl sm:text-3xl font-bold text-[#8c6b2d] mt-1">{inProgress + newCases + pending}</p>
-            <p className="text-[11px] text-[#8c6b2d]/80 mt-0.5">รับเรื่อง {newCases} | กำลังทำ {inProgress} | รอ {pending}</p>
+          <div className="p-4 rounded-[2px] bg-[#ebebec] border border-[#e0e0e0] text-center">
+            <p className="text-xs font-medium text-[#1d1d1f] uppercase">กำลังดำเนินการ</p>
+            <p className="text-2xl sm:text-3xl font-bold text-[#1d1d1f] mt-1">{inProgress + newCases + pending}</p>
+            <p className="text-[11px] text-[#666666] mt-0.5">รับเรื่อง {newCases} | ทำ {inProgress} | รอ {pending}</p>
           </div>
-          <div className="p-4 rounded-xl bg-[#d4e9e2]/50 border border-[#a3d2c1] text-center">
-            <p className="text-xs font-semibold text-[#006241] uppercase">เสร็จสิ้น (Complete)</p>
-            <p className="text-2xl sm:text-3xl font-bold text-[#006241] mt-1">{resolved}</p>
-            <p className="text-[11px] text-[#006241]/80 mt-0.5">สำเร็จ {resolutionRate}%</p>
+          <div className="p-4 rounded-[2px] bg-white border border-[#c4c4c6] text-center">
+            <p className="text-xs font-medium text-[#009262] uppercase">เสร็จสิ้น (Complete)</p>
+            <p className="text-2xl sm:text-3xl font-bold text-[#009262] mt-1">{resolved}</p>
+            <p className="text-[11px] text-[#666666] mt-0.5">สำเร็จ {resolutionRate}%</p>
           </div>
-          <div className="p-4 rounded-xl bg-[#faf6ee] border border-[#dfc49d] text-center">
-            <p className="text-xs font-semibold text-[#cba258] uppercase">คะแนนความพึงพอใจ</p>
+          <div className="p-4 rounded-[2px] bg-white border border-[#e0e0e0] text-center">
+            <p className="text-xs font-medium text-[#666666] uppercase">คะแนนความพึงพอใจ</p>
             <div className="flex items-center justify-center gap-1 mt-1">
-              <Star className="w-5 h-5 fill-[#cba258] text-[#cba258]" />
-              <p className="text-2xl sm:text-3xl font-bold text-[#1E3932]">{avgRating}</p>
-              <span className="text-xs text-[rgba(0,0,0,0.45)]">/5</span>
+              <Star className="w-5 h-5 fill-[#ffa826] text-[#ffa826]" />
+              <p className="text-2xl sm:text-3xl font-bold text-[#1d1d1f]">{avgRating}</p>
+              <span className="text-xs text-[#8f8f8f]">/5</span>
             </div>
-            <p className="text-[11px] text-[rgba(0,0,0,0.45)] mt-0.5">จาก {ratedReports.length} ผู้ประเมิน</p>
+            <p className="text-[11px] text-[#8f8f8f] mt-0.5">จาก {ratedReports.length} ผู้ประเมิน</p>
           </div>
         </div>
 
         {/* 2. Breakdown Tables */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
           {/* ปัญหาแยกตามประเภท */}
-          <div className="border border-[#e7e7e7] rounded-xl p-4 bg-[#faf9f7]">
-            <h3 className="text-xs font-bold text-[#1E3932] uppercase tracking-wider mb-3 pb-2 border-b border-[#e7e7e7]">
+          <div className="border border-[#e0e0e0] rounded-[2px] p-4 bg-[#fafafa]">
+            <h3 className="text-xs font-bold text-[#1d1d1f] uppercase tracking-wider mb-3 pb-2 border-b border-[#e0e0e0]">
               จำแนกตามประเภทปัญหา / บริการ ({periodLabel})
             </h3>
             {issueStats.length === 0 ? (
-              <p className="text-xs text-slate-400 py-3 text-center">ไม่มีข้อมูลในช่วงเวลานี้</p>
+              <p className="text-xs text-[#8f8f8f] py-3 text-center">ไม่มีข้อมูลในช่วงเวลานี้</p>
             ) : (
               <table className="w-full text-xs">
                 <tbody>
                   {issueStats.map(([issue, count]) => {
                     const pct = total > 0 ? ((count / total) * 100).toFixed(0) : "0";
                     return (
-                      <tr key={issue} className="border-b border-[#e7e7e7]/60 last:border-none">
-                        <td className="py-1.5 text-[rgba(0,0,0,0.87)]">{issue}</td>
-                        <td className="py-1.5 text-right font-bold text-[#1E3932]">{count} เคส</td>
-                        <td className="py-1.5 text-right text-[rgba(0,0,0,0.45)] w-14 font-mono">({pct}%)</td>
+                      <tr key={issue} className="border-b border-[#e0e0e0] last:border-none">
+                        <td className="py-1.5 text-[#3c3c43]">{issue}</td>
+                        <td className="py-1.5 text-right font-bold text-[#1d1d1f]">{count} เคส</td>
+                        <td className="py-1.5 text-right text-[#8f8f8f] w-14 font-mono">({pct}%)</td>
                       </tr>
                     );
                   })}
@@ -223,31 +223,31 @@ export default async function AdminReportPage({
           </div>
 
           {/* สัดส่วนกลุ่มผู้ใช้ */}
-          <div className="border border-[#e7e7e7] rounded-xl p-4 bg-[#faf9f7]">
-            <h3 className="text-xs font-bold text-[#1E3932] uppercase tracking-wider mb-3 pb-2 border-b border-[#e7e7e7]">
+          <div className="border border-[#e0e0e0] rounded-[2px] p-4 bg-[#fafafa]">
+            <h3 className="text-xs font-bold text-[#1d1d1f] uppercase tracking-wider mb-3 pb-2 border-b border-[#e0e0e0]">
               จำแนกตามกลุ่มผู้รับบริการ ({periodLabel})
             </h3>
             <table className="w-full text-xs mb-4">
               <tbody>
-                <tr className="border-b border-[#e7e7e7]/60">
-                  <td className="py-2 text-[rgba(0,0,0,0.87)]">🎓 นักศึกษา (Students)</td>
-                  <td className="py-2 text-right font-bold text-[#1E3932]">{studentCount} คน</td>
-                  <td className="py-2 text-right text-[rgba(0,0,0,0.45)] w-14 font-mono">
+                <tr className="border-b border-[#e0e0e0]">
+                  <td className="py-2 text-[#3c3c43]">นักศึกษา (Students)</td>
+                  <td className="py-2 text-right font-bold text-[#1d1d1f]">{studentCount} คน</td>
+                  <td className="py-2 text-right text-[#8f8f8f] w-14 font-mono">
                     ({total > 0 ? ((studentCount / total) * 100).toFixed(0) : 0}%)
                   </td>
                 </tr>
                 <tr>
-                  <td className="py-2 text-[rgba(0,0,0,0.87)]">💼 บุคลากร / อาจารย์ (Staff)</td>
-                  <td className="py-2 text-right font-bold text-[#1E3932]">{staffCount} คน</td>
-                  <td className="py-2 text-right text-[rgba(0,0,0,0.45)] w-14 font-mono">
+                  <td className="py-2 text-[#3c3c43]">บุคลากร / อาจารย์ (Staff)</td>
+                  <td className="py-2 text-right font-bold text-[#1d1d1f]">{staffCount} คน</td>
+                  <td className="py-2 text-right text-[#8f8f8f] w-14 font-mono">
                     ({total > 0 ? ((staffCount / total) * 100).toFixed(0) : 0}%)
                   </td>
                 </tr>
               </tbody>
             </table>
 
-            <div className="p-3 bg-[#d4e9e2]/30 rounded-lg border border-[#a3d2c1]/40 text-[11px] text-[#006241]">
-              <span className="font-semibold block mb-0.5">การให้บริการประจำช่วงเวลา:</span>
+            <div className="p-3 bg-[#ebebec] rounded-[2px] border border-[#e0e0e0] text-[11px] text-[#3c3c43]">
+              <span className="font-medium block mb-0.5">การให้บริการประจำช่วงเวลา:</span>
               มีอัตราการดำเนินการสำเร็จ ({resolutionRate}%) ผู้รับผิดชอบหลัก: นายเอกพงศ์ (เจ้าหน้าที่ไอที)
             </div>
           </div>
@@ -255,12 +255,12 @@ export default async function AdminReportPage({
 
         {/* 3. Detailed Tickets Log */}
         <div className="mb-10">
-          <h3 className="text-xs font-bold text-[#1E3932] uppercase tracking-wider mb-3">
+          <h3 className="text-xs font-bold text-[#1d1d1f] uppercase tracking-wider mb-3">
             รายการบันทึกการให้บริการ ({periodLabel} : รวม {reports.length} รายการ)
           </h3>
-          <div className="overflow-x-auto border border-[#e7e7e7] rounded-xl">
+          <div className="overflow-x-auto border border-[#e0e0e0] rounded-[2px]">
             <table className="w-full text-[11px] text-left">
-              <thead className="bg-[#f2f0eb] text-[#1E3932] font-semibold uppercase text-[10px] tracking-wider">
+              <thead className="bg-[#ebebec] text-[#1d1d1f] font-medium uppercase text-[10px] tracking-wider">
                 <tr>
                   <th className="p-2.5">ลำดับ</th>
                   <th className="p-2.5">วันที่</th>
@@ -271,43 +271,43 @@ export default async function AdminReportPage({
                   <th className="p-2.5 text-center">ความพึงพอใจ</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#e7e7e7]">
+              <tbody className="divide-y divide-[#e0e0e0]">
                 {reports.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="p-6 text-center text-slate-400">
+                    <td colSpan={7} className="p-6 text-center text-[#8f8f8f]">
                       ไม่พบข้อมูลรายการแจ้งซ่อมในช่วงเวลาที่เลือก
                     </td>
                   </tr>
                 ) : (
                   reports.map((row, idx) => (
-                    <tr key={row.id} className="hover:bg-slate-50">
-                      <td className="p-2.5 font-mono text-slate-500">{idx + 1}</td>
+                    <tr key={row.id} className="hover:bg-[#fafafa]">
+                      <td className="p-2.5 font-mono text-[#8f8f8f]">{idx + 1}</td>
                       <td className="p-2.5 font-mono">
                         {new Date(row.createdAt).toLocaleDateString("th-TH")}
                       </td>
                       <td className="p-2.5">
-                        <span className="font-semibold">{row.fullName}</span>
-                        <span className="text-[10px] text-slate-400 block">
+                        <span className="font-medium text-[#1d1d1f]">{row.fullName}</span>
+                        <span className="text-[10px] text-[#8f8f8f] block">
                           ({row.userType === "student" ? "นักศึกษา" : "บุคลากร"})
                         </span>
                         {row.lineDisplayName && (
-                          <span className="text-[10px] text-[#00754A] block font-medium">
+                          <span className="text-[10px] text-[#3c3c43] block font-medium">
                             LINE: {row.lineDisplayName}
                           </span>
                         )}
                       </td>
-                      <td className="p-2.5 font-medium text-[#1E3932]">{row.issueType}</td>
-                      <td className="p-2.5 text-slate-600">{row.location}</td>
+                      <td className="p-2.5 font-medium text-[#1d1d1f]">{row.issueType}</td>
+                      <td className="p-2.5 text-[#666666]">{row.location}</td>
                       <td className="p-2.5">
                         <span
-                          className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+                          className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-medium ${
                             row.status === "resolved"
-                              ? "bg-[#1E3932] text-white"
+                              ? "bg-[#1d1d1f] text-white"
                               : row.status === "pending"
-                              ? "bg-[#fff7ed] text-[#c2410c]"
+                              ? "bg-white border border-[#7f0019] text-[#7f0019]"
                               : row.status === "in_progress"
-                              ? "bg-[#d4e9e2] text-[#006241]"
-                              : "bg-[#faf6ee] text-[#8c6b2d]"
+                              ? "bg-[#ebebec] border border-[#c4c4c6] text-[#1d1d1f]"
+                              : "bg-[#ebebec] border border-[#e0e0e0] text-[#666666]"
                           }`}
                         >
                           {statusTextMap[row.status] || row.status}
@@ -315,11 +315,11 @@ export default async function AdminReportPage({
                       </td>
                       <td className="p-2.5 text-center">
                         {row.rating ? (
-                          <span className="font-bold text-[#cba258]">
+                          <span className="font-bold text-[#ffa826]">
                             ★ {row.rating}
                           </span>
                         ) : (
-                          <span className="text-slate-300">-</span>
+                          <span className="text-[#c4c4c6]">-</span>
                         )}
                       </td>
                     </tr>
@@ -331,22 +331,22 @@ export default async function AdminReportPage({
         </div>
 
         {/* 4. Signature Section (ส่วนลงนามทางการ) */}
-        <div className="grid grid-cols-2 gap-8 pt-8 border-t border-[#e7e7e7] text-center text-xs">
+        <div className="grid grid-cols-2 gap-8 pt-8 border-t border-[#e0e0e0] text-center text-xs">
           <div>
-            <p className="text-[rgba(0,0,0,0.58)] mb-14">ผู้จัดทำรายงาน</p>
-            <p className="font-bold text-[rgba(0,0,0,0.87)]">
+            <p className="text-[#666666] mb-14">ผู้จัดทำรายงาน</p>
+            <p className="font-bold text-[#1d1d1f]">
               ( นายเอกพงศ์ ................................ )
             </p>
-            <p className="text-[11px] text-[rgba(0,0,0,0.58)] mt-1">
+            <p className="text-[11px] text-[#8f8f8f] mt-1">
               เจ้าหน้าที่เทคโนโลยีสารสนเทศ
             </p>
           </div>
           <div>
-            <p className="text-[rgba(0,0,0,0.58)] mb-14">ผู้บริหารรับทราบ / อนุมัติ</p>
-            <p className="font-bold text-[rgba(0,0,0,0.87)]">
+            <p className="text-[#666666] mb-14">ผู้บริหารรับทราบ / อนุมัติ</p>
+            <p className="font-bold text-[#1d1d1f]">
               ( .............................................................. )
             </p>
-            <p className="text-[11px] text-[rgba(0,0,0,0.58)] mt-1">
+            <p className="text-[11px] text-[#8f8f8f] mt-1">
               ผู้อำนวยการวิทยาลัยชุมชนสมุทรสาคร
             </p>
           </div>

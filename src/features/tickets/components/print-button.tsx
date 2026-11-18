@@ -7,9 +7,9 @@ export function PrintButton() {
     <button
       type="button"
       onClick={() => window.print()}
-      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#00754A] hover:bg-[#006241] text-white text-xs font-semibold tracking-[-0.16px] transition-all duration-200 active:scale-[0.95] shadow-sm cursor-pointer"
+      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[2px] bg-[#1d1d1f] hover:bg-[#3c3c43] text-white text-xs font-medium tracking-[-0.16px] transition-colors cursor-pointer"
     >
-      <Printer className="w-4 h-4" />
+      <Printer className="w-3.5 h-3.5" />
       <span>พิมพ์รายงาน / บันทึก PDF</span>
     </button>
   );

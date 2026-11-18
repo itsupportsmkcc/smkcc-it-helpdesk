@@ -39,7 +39,7 @@ export default async function AdminTicketsPage() {
   const feedbackStats = await getFeedbackStats();
 
   return (
-    <main className="min-h-screen bg-[#f2f0eb]">
+    <main className="min-h-screen bg-[#fafafa]">
       <AdminNavbar
         activeTab="tickets"
         averageRating={feedbackStats.averageRating}
@@ -49,12 +49,12 @@ export default async function AdminTicketsPage() {
       {/* Main Content Area */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6">
         {/* Quick Report & Export Toolbar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-[#e7e7e7] shadow-[0_0_1px_rgba(0,0,0,0.14),0_1px_2px_rgba(0,0,0,0.12)]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-[2px] border border-[#e0e0e0]">
           <div>
-            <h2 className="text-sm font-bold text-[#1E3932] tracking-[-0.16px]">
+            <h2 className="text-sm font-bold text-[#1d1d1f] tracking-tight">
               จัดการรายการคำขอแจ้งซ่อมไอที
             </h2>
-            <p className="text-xs text-[rgba(0,0,0,0.58)] mt-0.5">
+            <p className="text-xs text-[#666666] mt-0.5">
               จัดการสถานะงาน แชทส่งข้อความตรงเข้า LINE ผู้แจ้ง และกู้คืนเคสจากถังขยะ
             </p>
           </div>
@@ -64,7 +64,7 @@ export default async function AdminTicketsPage() {
 
             <Link
               href="/admin/reports"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#00754A] hover:bg-[#006241] text-white text-xs font-semibold tracking-[-0.16px] transition-all duration-200 active:scale-[0.95] shadow-sm"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[2px] bg-[#1d1d1f] hover:bg-[#3c3c43] text-white text-xs font-medium tracking-[-0.16px] transition-colors"
               title="ดูหน้ารายงานสรุปทางการสำหรับพิมพ์หรือบันทึก PDF"
             >
               <FileText className="w-3.5 h-3.5" />

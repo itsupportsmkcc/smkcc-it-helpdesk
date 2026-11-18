@@ -18,76 +18,76 @@ export function KpiCards({
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       {/* 1. Total Tickets */}
-      <div className="bg-white p-5 rounded-2xl border border-[#e7e7e7] shadow-sm">
+      <div className="bg-white p-5 rounded-[2px] border border-[#e0e0e0]">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-semibold text-[rgba(0,0,0,0.58)] tracking-wide">
+          <p className="text-xs font-medium text-[#666666] tracking-wide">
             เคสทั้งหมด
           </p>
-          <div className="w-8 h-8 rounded-xl bg-[#f2f0eb] flex items-center justify-center text-[#1E3932]">
-            <Layers className="w-4 h-4" />
+          <div className="w-7 h-7 rounded-[2px] bg-[#ebebec] flex items-center justify-center text-[#3c3c43]">
+            <Layers className="w-3.5 h-3.5" />
           </div>
         </div>
-        <p className="text-3xl font-extrabold text-[#1E3932] mt-2 tracking-tight">
+        <p className="text-3xl font-bold text-[#1d1d1f] mt-2 tracking-tight">
           {totalTickets}
         </p>
-        <p className="text-[11px] text-[rgba(0,0,0,0.5)] mt-1">
+        <p className="text-[11px] text-[#8f8f8f] mt-1">
           รายการคำขอแจ้งซ่อมสะสม
         </p>
       </div>
 
       {/* 2. Resolved Rate */}
-      <div className="bg-white p-5 rounded-2xl border border-[#e7e7e7] shadow-sm">
+      <div className="bg-white p-5 rounded-[2px] border border-[#e0e0e0]">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-semibold text-[rgba(0,0,0,0.58)] tracking-wide">
+          <p className="text-xs font-medium text-[#666666] tracking-wide">
             อัตราแก้ไขสำเร็จ
           </p>
-          <div className="w-8 h-8 rounded-xl bg-[#d4e9e2] flex items-center justify-center text-[#006241]">
-            <CheckCircle2 className="w-4 h-4" />
+          <div className="w-7 h-7 rounded-[2px] bg-[#ebebec] flex items-center justify-center text-[#009262]">
+            <CheckCircle2 className="w-3.5 h-3.5" />
           </div>
         </div>
-        <p className="text-3xl font-extrabold text-[#00754A] mt-2 tracking-tight">
+        <p className="text-3xl font-bold text-[#009262] mt-2 tracking-tight">
           {resolvedRate}%
         </p>
-        <p className="text-[11px] text-[rgba(0,0,0,0.5)] mt-1">
+        <p className="text-[11px] text-[#8f8f8f] mt-1">
           คิดจากเคสที่สถานะเสร็จสิ้น
         </p>
       </div>
 
       {/* 3. Average Rating */}
-      <div className="bg-white p-5 rounded-2xl border border-[#e7e7e7] shadow-sm">
+      <div className="bg-white p-5 rounded-[2px] border border-[#e0e0e0]">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-semibold text-[rgba(0,0,0,0.58)] tracking-wide">
+          <p className="text-xs font-medium text-[#666666] tracking-wide">
             ความพึงพอใจเฉลี่ย
           </p>
-          <div className="w-8 h-8 rounded-xl bg-[#faf6ee] flex items-center justify-center text-[#8c6b2d]">
-            <Star className="w-4 h-4 fill-[#d97706] text-[#d97706]" />
+          <div className="w-7 h-7 rounded-[2px] bg-[#ebebec] flex items-center justify-center text-[#e48900]">
+            <Star className="w-3.5 h-3.5 fill-[#ffa826] text-[#ffa826]" />
           </div>
         </div>
-        <p className="text-3xl font-extrabold text-[#8c6b2d] mt-2 tracking-tight">
+        <p className="text-3xl font-bold text-[#1d1d1f] mt-2 tracking-tight">
           {averageRating > 0 ? averageRating : "-"}
-          <span className="text-sm font-semibold text-[rgba(0,0,0,0.4)] ml-1">
+          <span className="text-sm font-normal text-[#8f8f8f] ml-1">
             / 5
           </span>
         </p>
-        <p className="text-[11px] text-[rgba(0,0,0,0.5)] mt-1">
+        <p className="text-[11px] text-[#8f8f8f] mt-1">
           จากผู้ประเมิน {totalFeedbacks} คน
         </p>
       </div>
 
       {/* 4. Active / Pending */}
-      <div className="bg-white p-5 rounded-2xl border border-[#e7e7e7] shadow-sm">
+      <div className="bg-white p-5 rounded-[2px] border border-[#e0e0e0]">
         <div className="flex items-center justify-between">
-          <p className="text-xs font-semibold text-[rgba(0,0,0,0.58)] tracking-wide">
+          <p className="text-xs font-medium text-[#666666] tracking-wide">
             งานที่ยังค้างอยู่
           </p>
-          <div className="w-8 h-8 rounded-xl bg-[#fff7ed] flex items-center justify-center text-[#c2410c]">
-            <Clock className="w-4 h-4" />
+          <div className="w-7 h-7 rounded-[2px] bg-[#ebebec] flex items-center justify-center text-[#7f0019]">
+            <Clock className="w-3.5 h-3.5" />
           </div>
         </div>
-        <p className="text-3xl font-extrabold text-[#c2410c] mt-2 tracking-tight">
+        <p className="text-3xl font-bold text-[#7f0019] mt-2 tracking-tight">
           {activePendingCount}
         </p>
-        <p className="text-[11px] text-[rgba(0,0,0,0.5)] mt-1">
+        <p className="text-[11px] text-[#8f8f8f] mt-1">
           กำลังทำ หรือ รออะไหล่/ข้อมูล
         </p>
       </div>

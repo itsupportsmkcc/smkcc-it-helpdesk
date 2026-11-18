@@ -130,13 +130,13 @@ export function ExportCsvButton({ filteredItems, labelSuffix }: ExportCsvButtonP
       type="button"
       onClick={handleExport}
       disabled={isExporting}
-      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-[#d6dbde] text-[#1E3932] hover:bg-[#faf6ee] text-xs font-semibold tracking-[-0.16px] transition-all duration-200 active:scale-[0.95] disabled:opacity-50 shadow-sm"
+      className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[2px] bg-white border border-[#c4c4c6] text-[#1d1d1f] hover:bg-[#ebebec] text-xs font-medium tracking-[-0.16px] transition-colors disabled:opacity-50"
       title="ดาวน์โหลดไฟล์ตารางสำหรับเปิดใน Excel"
     >
       {isExporting ? (
-        <Loader2 className="w-3.5 h-3.5 animate-spin text-[#00754A]" />
+        <Loader2 className="w-3.5 h-3.5 animate-spin text-[#1d1d1f]" />
       ) : (
-        <Download className="w-3.5 h-3.5 text-[#00754A]" />
+        <Download className="w-3.5 h-3.5 text-[#1d1d1f]" />
       )}
       <span>ส่งออก Excel / CSV</span>
     </button>

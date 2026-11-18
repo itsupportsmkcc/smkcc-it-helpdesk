@@ -11,7 +11,7 @@ export default async function FeedbackPage({
   const issueType = ticketRes.success ? ticketRes.data.issueType : undefined;
 
   return (
-    <main className="min-h-screen bg-[#f2f0eb] flex items-center justify-center p-4">
+    <main className="min-h-screen bg-[#fafafa] flex items-center justify-center p-4">
       <FeedbackForm ticketId={ticketId} issueType={issueType} />
     </main>
   );
